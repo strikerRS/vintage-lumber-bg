@@ -1,3 +1,4 @@
+<!-- product-detail.html -->
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -5,11 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Продукт</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-body { background-color:#f9f7f0; font-family:sans-serif; }
-</style>
 </head>
-<body>
+<body class="font-sans bg-gray-50">
 <div class="max-w-4xl mx-auto py-16 px-4 text-center">
 
 <h1 id="product-title" class="text-3xl font-bold text-main-brown mb-4">Продукт</h1>
@@ -18,26 +16,56 @@ body { background-color:#f9f7f0; font-family:sans-serif; }
 <p id="product-price" class="font-bold text-main-brown text-xl">Цена: --</p>
 
 <script>
+// Вземаме продукта от URL
 const params = new URLSearchParams(window.location.search);
 const product = params.get('product');
+
+// Данни за продуктите
 const products = {
-  dg1: { title:"Стара дървена греда", img:"dg1.jpg?v=2", desc:"Реставрирана греда с патина", price:"120 лв."},
-  dd1: { title:"Стара дървена дъска", img:"dd1.jpg?v=2", desc:"Класическа реставрирана дъска", price:"80 лв."},
-  dd2: { title:"Стара дъска за декорация", img:"dd2.jpg?v=2", desc:"Уникална декорация за интериор", price:"250 лв."},
-  dd3: { title:"Стара дъска", img:"dd3.jpg?v=2", desc:"Описание на продукта", price:"--"},
-  dd4: { title:"Дървени дъски за декорация", img:"dd4.jpg?v=2", desc:"Перфектни за декорация на интериор", price:"--"}
+  dg1: {
+    title: "Стара дървена греда",
+    img: "dg1.jpg?v=2",
+    desc: "Реставрирана греда с патина",
+    price: "120 лв."
+  },
+  dd1: {
+    title: "Стара дървена дъска",
+    img: "dd1.jpg?v=2",
+    desc: "Класическа реставрирана дъска",
+    price: "80 лв."
+  },
+  dd2: {
+    title: "Стара дъска за декорация",
+    img: "dd2.jpg?v=2",
+    desc: "Уникална декорация за интериор",
+    price: "250 лв."
+  },
+  dd3: {
+    title: "Стара дъска",
+    img: "dd3.jpg?v=2",
+    desc: "Описание на продукта",
+    price: "--"
+  },
+  dd4: {
+    title: "Дървени дъски за декорация",
+    img: "dd4.jpg?v=2",
+    desc: "Перфектни за декорация на интериор",
+    price: "--"
+  }
 };
+
+// Зареждаме данните
 if(products[product]){
   document.getElementById("product-title").innerText = products[product].title;
   document.getElementById("product-image").src = products[product].img;
   document.getElementById("product-image").alt = products[product].title;
   document.getElementById("product-desc").innerText = products[product].desc;
-  document.getElementById("product-price").innerText = "Цена: "+products[product].price;
+  document.getElementById("product-price").innerText = "Цена: " + products[product].price;
 } else {
   document.getElementById("product-title").innerText = "Продукт не е намерен";
   document.getElementById("product-desc").innerText = "Моля, върнете се на началната страница.";
-  document.getElementById("product-image").style.display="none";
-  document.getElementById("product-price").style.display="none";
+  document.getElementById("product-image").style.display = "none";
+  document.getElementById("product-price").style.display = "none";
 }
 </script>
 
