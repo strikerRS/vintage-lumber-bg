@@ -12,52 +12,45 @@
   --text-dark: #333333;
 }
 
-/* Hero фон с overlay */
 #hero {
   background-image: url('bg-old-bulgarian-farm.jpg?v=2');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
   position: relative;
-  height: 100vh;
+  height: 90vh;
 }
 #hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+  content:"";
+  position:absolute;
+  inset:0;
   background-color: rgba(0,0,0,0.4);
 }
-#hero > * { position: relative; z-index:1; text-align: center; color: white; }
+#hero > * { position: relative; z-index:1; text-align:center; color:white; }
 
-/* Продукт карти с венецианска рамка */
 .product-card {
   position: relative;
   overflow: hidden;
   border-radius: 0.5rem;
+  background-color: #fff7f0;
   transition: transform 0.3s ease;
 }
 .product-card:hover { transform: translateY(-5px); }
-.product-card img { transition: transform 0.3s ease; border-radius: 0.5rem; }
+.product-card img { transition: transform 0.3s ease; border-radius:0.5rem; }
 .product-card:hover img { transform: scale(1.05); }
+
 .product-info {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom:0;
+  left:0;
+  right:0;
   background: rgba(255,255,255,0.9);
-  padding: 0.5rem;
+  padding:0.5rem;
   transform: translateY(100%);
   transition: transform 0.3s ease;
-  text-align: center;
+  text-align:center;
 }
 .product-card:hover .product-info { transform: translateY(0); }
-
-/* Венецианска рамка със SVG */
-.frame-svg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
 </style>
 </head>
 <body class="font-sans bg-gray-50">
@@ -85,13 +78,8 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
     <!-- Продукт 1 -->
-    <a href="product-detail.html?product=dg1" class="block">
+    <a href="dg1.html" class="block">
       <div class="product-card relative">
-        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
-          <path d="M10 0 Q0 10 10 20" stroke="#6B4226" stroke-width="3" fill="none"/>
-          <path d="M0 10 Q10 0 20 10" stroke="#6B4226" stroke-width="3" fill="none"/>
-        </svg>
         <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
@@ -102,11 +90,8 @@
     </a>
 
     <!-- Продукт 2 -->
-    <a href="product-detail.html?product=dd1" class="block">
+    <a href="dd1.html" class="block">
       <div class="product-card relative">
-        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
-        </svg>
         <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
@@ -117,11 +102,8 @@
     </a>
 
     <!-- Продукт 3 -->
-    <a href="product-detail.html?product=dd2" class="block">
+    <a href="dd2.html" class="block">
       <div class="product-card relative">
-        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
-        </svg>
         <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
@@ -132,11 +114,8 @@
     </a>
 
     <!-- Продукт 4 -->
-    <a href="product-detail.html?product=dd3" class="block">
+    <a href="dd3.html" class="block">
       <div class="product-card relative">
-        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
-        </svg>
         <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
@@ -147,11 +126,8 @@
     </a>
 
     <!-- Продукт 5 -->
-    <a href="product-detail.html?product=dd4" class="block">
+    <a href="dd4.html" class="block">
       <div class="product-card relative">
-        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
-        </svg>
         <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
@@ -161,12 +137,9 @@
       </div>
     </a>
 
-    <!-- Placeholder за останалите 15 продукта -->
+    <!-- Placeholder продукти (копирай блок за да имаш 20 продукта) -->
     <a href="#" class="block">
       <div class="product-card relative">
-        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
-        </svg>
         <img src="placeholder.jpg?v=2" alt="Скоро" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Скоро</h4>
@@ -175,6 +148,8 @@
         </div>
       </div>
     </a>
-    <!-- Копирай този блок още 14 пъти, за да станат 20 продукта -->
+
   </div>
 </section>
+</body>
+</html>
