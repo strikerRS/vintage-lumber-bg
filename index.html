@@ -51,6 +51,19 @@
   text-align:center;
 }
 .product-card:hover .product-info { transform: translateY(0); }
+
+.tab-section {
+  display:none;
+  max-width:1200px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  background-color:#fffaf0;
+  border-radius:0.5rem;
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+}
+.tab-section.active { display:block; }
+
+.tab-gallery img { border-radius:0.5rem; }
 </style>
 </head>
 <body class="font-sans bg-gray-50">
@@ -78,78 +91,167 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
     <!-- Продукт 1 -->
-    <a href="dg1.html" class="block">
-      <div class="product-card relative">
-        <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
-        <div class="product-info">
-          <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
-          <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
-          <p class="mt-2 font-bold text-main-brown">Цена: 120 лв.</p>
-        </div>
+    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dg1')">
+      <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
+        <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
+        <p class="mt-2 font-bold text-main-brown">Цена: 120 лв.</p>
       </div>
-    </a>
+    </div>
 
     <!-- Продукт 2 -->
-    <a href="dd1.html" class="block">
-      <div class="product-card relative">
-        <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
-        <div class="product-info">
-          <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
-          <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
-          <p class="mt-2 font-bold text-main-brown">Цена: 80 лв.</p>
-        </div>
+    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd1')">
+      <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
+        <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
+        <p class="mt-2 font-bold text-main-brown">Цена: 80 лв.</p>
       </div>
-    </a>
+    </div>
 
     <!-- Продукт 3 -->
-    <a href="dd2.html" class="block">
-      <div class="product-card relative">
-        <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
-        <div class="product-info">
-          <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
-          <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
-          <p class="mt-2 font-bold text-main-brown">Цена: 250 лв.</p>
-        </div>
+    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd2')">
+      <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
+        <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
+        <p class="mt-2 font-bold text-main-brown">Цена: 250 лв.</p>
       </div>
-    </a>
+    </div>
 
     <!-- Продукт 4 -->
-    <a href="dd3.html" class="block">
-      <div class="product-card relative">
-        <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
-        <div class="product-info">
-          <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
-          <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
-          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
-        </div>
+    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd3')">
+      <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
+        <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
+        <p class="mt-2 font-bold text-main-brown">Цена: --</p>
       </div>
-    </a>
+    </div>
 
     <!-- Продукт 5 -->
-    <a href="dd4.html" class="block">
-      <div class="product-card relative">
-        <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
-        <div class="product-info">
-          <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
-          <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
-          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
-        </div>
+    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd4')">
+      <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
+        <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
+        <p class="mt-2 font-bold text-main-brown">Цена: --</p>
       </div>
-    </a>
-
-    <!-- Placeholder продукти (копирай блок за да имаш 20 продукта) -->
-    <a href="#" class="block">
-      <div class="product-card relative">
-        <img src="placeholder.jpg?v=2" alt="Скоро" class="w-full h-48 object-cover">
-        <div class="product-info">
-          <h4 class="text-lg font-semibold text-dark">Скоро</h4>
-          <p class="mt-1 text-gray-700 text-sm">Описание скоро</p>
-          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
-        </div>
-      </div>
-    </a>
+    </div>
 
   </div>
 </section>
+
+<!-- Tabs секции за продуктите -->
+<section id="tabs">
+
+  <!-- Таб продукт 1 -->
+  <div id="tab-dg1" class="tab-section">
+    <button onclick="closeProductTab('tab-dg1')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
+    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дървена греда</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="tab-gallery space-y-2">
+        <img src="dg1.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img src="dg1_alt.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img src="dg1_alt2.jpg?v=2" alt="" class="w-full h-48 object-cover">
+      </div>
+      <div>
+        <p class="mb-2">Описание: Реставрирана дървена греда с уникален патинен ефект. Идеална за интериор или декорация.</p>
+        <p class="mb-2">Материал: Дърво от стара ферма.</p>
+        <p class="mb-2">Размери: 200x15x10 см</p>
+        <p class="mb-2 font-bold text-main-brown">Цена: 120 лв.</p>
+        <p class="mb-2">Доставка: Изпраща се в рамките на 3 работни дни с опция за проследяване.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Таб продукт 2 -->
+  <div id="tab-dd1" class="tab-section">
+    <button onclick="closeProductTab('tab-dd1')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
+    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дървена дъска</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="tab-gallery space-y-2">
+        <img src="dd1.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img src="dd1_alt.jpg?v=2" alt="" class="w-full h-48 object-cover">
+      </div>
+      <div>
+        <p class="mb-2">Описание: Класическа реставрирана дъска за интериорни проекти.</p>
+        <p class="mb-2">Материал: Дърво.</p>
+        <p class="mb-2">Размери: 180x12x5 см</p>
+        <p class="mb-2 font-bold text-main-brown">Цена: 80 лв.</p>
+        <p class="mb-2">Доставка: 3 работни дни.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Таб продукт 3 -->
+  <div id="tab-dd2" class="tab-section">
+    <button onclick="closeProductTab('tab-dd2')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
+    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дъска за декорация</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="tab-gallery space-y-2">
+        <img src="dd2.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img src="dd2_alt.jpg?v=2" alt="" class="w-full h-48 object-cover">
+      </div>
+      <div>
+        <p class="mb-2">Описание: Уникална дъска за декорация на интериора.</p>
+        <p class="mb-2">Материал: Дърво.</p>
+        <p class="mb-2">Размери: 150x10x4 см</p>
+        <p class="mb-2 font-bold text-main-brown">Цена: 250 лв.</p>
+        <p class="mb-2">Доставка: 3-5 дни.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Таб продукт 4 -->
+  <div id="tab-dd3" class="tab-section">
+    <button onclick="closeProductTab('tab-dd3')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
+    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дъска</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="tab-gallery space-y-2">
+        <img src="dd3.jpg?v=2" alt="" class="w-full h-48 object-cover">
+      </div>
+      <div>
+        <p class="mb-2">Описание на продукта.</p>
+        <p class="mb-2">Материал: Дърво.</p>
+        <p class="mb-2">Размери: 160x12x5 см</p>
+        <p class="mb-2 font-bold text-main-brown">Цена: --</p>
+        <p class="mb-2">Доставка: 3 дни.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Таб продукт 5 -->
+  <div id="tab-dd4" class="tab-section">
+    <button onclick="closeProductTab('tab-dd4')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
+    <h2 class="text-2xl font-bold text-main-brown mb-4">Дървени дъски за декорация</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="tab-gallery space-y-2">
+        <img src="dd4.jpg?v=2" alt="" class="w-full h-48 object-cover">
+      </div>
+      <div>
+        <p class="mb-2">Описание: Перфектни за декорация на интериор.</p>
+        <p class="mb-2">Материал: Дърво.</p>
+        <p class="mb-2">Размери: 150x10x5 см</p>
+        <p class="mb-2 font-bold text-main-brown">Цена: --</p>
+        <p class="mb-2">Доставка: 3-5 дни.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+function openProductTab(id) {
+  document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: document.getElementById(id).offsetTop - 80, behavior: 'smooth' });
+}
+function closeProductTab(id) {
+  document.getElementById(id).classList.remove('active');
+}
+</script>
+
 </body>
 </html>
