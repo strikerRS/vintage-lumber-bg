@@ -18,119 +18,108 @@
 </head>
 <body class="font-sans bg-gray-50">
 
-  <!-- Хедър -->
-  <header class="fixed w-full bg-white shadow z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-      <h1 class="text-xl font-bold text-main-brown">Vintage Lumber</h1>
-      <nav class="space-x-6">
-        <a href="#hero" class="text-dark hover:text-main-brown">Начало</a>
-        <a href="#products" class="text-dark hover:text-main-brown">Продукти</a>
-        <a href="#about" class="text-dark hover:text-main-brown">За нас</a>
-        <a href="#contact" class="text-dark hover:text-main-brown">Контакт</a>
-      </nav>
+<header class="fixed w-full bg-white shadow z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-xl font-bold text-main-brown">Vintage Lumber</h1>
+    <nav class="space-x-6">
+      <a href="#hero" class="text-dark hover:text-main-brown">Начало</a>
+      <a href="#products" class="text-dark hover:text-main-brown">Продукти</a>
+      <a href="#about" class="text-dark hover:text-main-brown">За нас</a>
+      <a href="#contact" class="text-dark hover:text-main-brown">Контакт</a>
+    </nav>
+  </div>
+</header>
+
+<section id="hero" class="bg-cover bg-center h-screen flex flex-col justify-center items-center text-white" style="background-image: url('bg-old-bulgarian-farm.jpg');">
+  <h2 class="text-5xl font-bold drop-shadow-lg text-center">Vintage Lumber с характер</h2>
+  <p class="mt-4 text-xl drop-shadow-lg text-center">Реставрирано дърво от стари ферми за твой проект</p>
+  <a href="#products" class="mt-6 px-6 py-3 bg-main-brown hover:bg-light-brown font-semibold rounded shadow">Виж продуктите</a>
+</section>
+
+<section id="products" class="max-w-7xl mx-auto py-16 px-4">
+  <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+      <img src="dg1.jpg" alt="Стара дървена греда" class="w-full h-48 object-cover">
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
+          <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
+        </div>
+        <p class="mt-2 font-bold text-main-brown">Цена: 120 лв.</p>
+      </div>
     </div>
-  </header>
 
-  <!-- Hero секция с фон -->
-  <section id="hero" class="bg-cover bg-center h-screen flex flex-col justify-center items-center text-white" style="background-image: url('bg-old-bulgarian-farm.jpg');">
-    <h2 class="text-5xl font-bold drop-shadow-lg text-center">Vintage Lumber с характер</h2>
-    <p class="mt-4 text-xl drop-shadow-lg text-center">Реставрирано дърво от стари ферми за твой проект</p>
-    <a href="#products" class="mt-6 px-6 py-3 bg-main-brown hover:bg-light-brown font-semibold rounded shadow">Виж продуктите</a>
-  </section>
-
-  <!-- Продукти -->
-  <section id="products" class="max-w-7xl mx-auto py-16 px-4">
-    <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-
-      <!-- Продукт 1 -->
-      <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
-        <img src="dg1.jpg" alt="Стара дървена греда" class="w-full h-48 object-cover">
-        <div class="p-4 flex-1 flex flex-col justify-between">
-          <div>
-            <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
-            <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
-          </div>
-          <p class="mt-2 font-bold text-main-brown">Цена: 120 лв.</p>
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+      <img src="dd1.jpg" alt="Стара дървена дъска" class="w-full h-48 object-cover">
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
+          <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
         </div>
+        <p class="mt-2 font-bold text-main-brown">Цена: 80 лв.</p>
       </div>
-
-      <!-- Продукт 2 -->
-      <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
-        <img src="dd1.jpg" alt="Стара дървена дъска" class="w-full h-48 object-cover">
-        <div class="p-4 flex-1 flex flex-col justify-between">
-          <div>
-            <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
-            <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
-          </div>
-          <p class="mt-2 font-bold text-main-brown">Цена: 80 лв.</p>
-        </div>
-      </div>
-
-      <!-- Продукт 3 -->
-      <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
-        <img src="dd2.jpg" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
-        <div class="p-4 flex-1 flex flex-col justify-between">
-          <div>
-            <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
-            <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
-          </div>
-          <p class="mt-2 font-bold text-main-brown">Цена: 250 лв.</p>
-        </div>
-      </div>
-
-      <!-- Продукт 4 -->
-      <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
-        <img src="dd3.jpg" alt="Стара дъска" class="w-full h-48 object-cover">
-        <div class="p-4 flex-1 flex flex-col justify-between">
-          <div>
-            <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
-            <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
-          </div>
-          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
-        </div>
-      </div>
-
-      <!-- Продукт 5 -->
-      <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
-        <img src="dd4.jpg" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
-        <div class="p-4 flex-1 flex flex-col justify-between">
-          <div>
-            <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
-            <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
-          </div>
-          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
-        </div>
-      </div>
-
     </div>
-  </section>
 
-  <!-- За нас -->
-  <section id="about" class="bg-gray-100 py-16 px-4">
-    <div class="max-w-4xl mx-auto text-center">
-      <h3 class="text-3xl font-bold text-main-brown mb-6">За нас</h3>
-      <p class="text-gray-700 text-lg">Vintage Lumber Bulgaria се занимава с реставрация и предлагане на висококачествено дърво с история. Всяка дъска, греда или врата има своя уникален характер, готов да придаде стил и атмосфера на твоя проект.</p>
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+      <img src="dd2.jpg" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
+          <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
+        </div>
+        <p class="mt-2 font-bold text-main-brown">Цена: 250 лв.</p>
+      </div>
     </div>
-  </section>
 
-  <!-- Контакт -->
-  <section id="contact" class="py-16 px-4">
-    <div class="max-w-4xl mx-auto text-center">
-      <h3 class="text-3xl font-bold text-main-brown mb-6">Свържи се с нас</h3>
-      <form class="grid grid-cols-1 gap-4">
-        <input type="text" placeholder="Име" class="p-3 border rounded">
-        <input type="email" placeholder="Имейл" class="p-3 border rounded">
-        <textarea placeholder="Съобщение" class="p-3 border rounded"></textarea>
-        <button class="bg-main-brown text-white py-3 rounded hover:bg-light-brown">Изпрати</button>
-      </form>
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+      <img src="dd3.jpg" alt="Стара дъска" class="w-full h-48 object-cover">
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
+          <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
+        </div>
+        <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+      </div>
     </div>
-  </section>
 
-  <!-- Футър -->
-  <footer class="bg-gray-200 py-6 text-center text-gray-700">
-    &copy; 2026 Vintage Lumber Bulgaria. Всички права запазени.
-  </footer>
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+      <img src="dd4.jpg" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
+          <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
+        </div>
+        <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="about" class="bg-gray-100 py-16 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <h3 class="text-3xl font-bold text-main-brown mb-6">За нас</h3>
+    <p class="text-gray-700 text-lg">Vintage Lumber Bulgaria се занимава с реставрация и предлагане на висококачествено дърво с история. Всяка дъска, греда или врата има своя уникален характер, готов да придаде стил и атмосфера на твоя проект.</p>
+  </div>
+</section>
+
+<section id="contact" class="py-16 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <h3 class="text-3xl font-bold text-main-brown mb-6">Свържи се с нас</h3>
+    <form class="grid grid-cols-1 gap-4">
+      <input type="text" placeholder="Име" class="p-3 border rounded">
+      <input type="email" placeholder="Имейл" class="p-3 border rounded">
+      <textarea placeholder="Съобщение" class="p-3 border rounded"></textarea>
+      <button class="bg-main-brown text-white py-3 rounded hover:bg-light-brown">Изпрати</button>
+    </form>
+  </div>
+</section>
+
+<footer class="bg-gray-200 py-6 text-center text-gray-700">
+  &copy; 2026 Vintage Lumber Bulgaria. Всички права запазени.
+</footer>
 
 </body>
 </html>
