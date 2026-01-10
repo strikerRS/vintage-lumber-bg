@@ -1,3 +1,85 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage Lumber Bulgaria</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root {
+  --main-brown: #6B4226;
+  --light-brown: #A37B58;
+  --text-dark: #333333;
+}
+
+/* Hero фон с overlay */
+#hero {
+  background-image: url('bg-old-bulgarian-farm.jpg?v=2');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 100vh;
+}
+#hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.4);
+}
+#hero > * { position: relative; z-index:1; text-align: center; color: white; }
+
+/* Продукт карти с венецианска рамка */
+.product-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+.product-card:hover { transform: translateY(-5px); }
+.product-card img { transition: transform 0.3s ease; border-radius: 0.5rem; }
+.product-card:hover img { transform: scale(1.05); }
+.product-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,0.9);
+  padding: 0.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+.product-card:hover .product-info { transform: translateY(0); }
+
+/* Венецианска рамка със SVG */
+.frame-svg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+<body class="font-sans bg-gray-50">
+
+<header class="fixed w-full bg-white shadow z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-xl font-bold text-main-brown">Vintage Lumber</h1>
+    <nav class="space-x-6">
+      <a href="#hero" class="text-dark hover:text-main-brown">Начало</a>
+      <a href="#products" class="text-dark hover:text-main-brown">Продукти</a>
+      <a href="#about" class="text-dark hover:text-main-brown">За нас</a>
+      <a href="#contact" class="text-dark hover:text-main-brown">Контакт</a>
+    </nav>
+  </div>
+</header>
+
+<section id="hero" class="flex flex-col justify-center items-center">
+  <h2 class="text-5xl font-bold drop-shadow-lg mt-24">Vintage Lumber с характер</h2>
+  <p class="mt-4 text-xl drop-shadow-lg">Реставрирано дърво от стари ферми за твой проект</p>
+  <a href="#products" class="mt-6 px-6 py-3 bg-main-brown hover:bg-light-brown font-semibold rounded shadow">Виж продуктите</a>
+</section>
+
 <section id="products" class="max-w-7xl mx-auto py-16 px-4">
   <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
@@ -5,11 +87,12 @@
     <!-- Продукт 1 -->
     <a href="product-detail.html?product=dg1" class="block">
       <div class="product-card relative">
-        <!-- Декоративна рамка (венециянска стилистика) -->
-        <div class="absolute inset-0 border-4 border-main-brown rounded-lg pointer-events-none" 
-             style="border-image: url('venetian-frame.png') 30 stretch;"></div>
-
-        <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover rounded-lg">
+        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
+          <path d="M10 0 Q0 10 10 20" stroke="#6B4226" stroke-width="3" fill="none"/>
+          <path d="M0 10 Q10 0 20 10" stroke="#6B4226" stroke-width="3" fill="none"/>
+        </svg>
+        <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
           <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
@@ -21,9 +104,10 @@
     <!-- Продукт 2 -->
     <a href="product-detail.html?product=dd1" class="block">
       <div class="product-card relative">
-        <div class="absolute inset-0 border-4 border-main-brown rounded-lg pointer-events-none" 
-             style="border-image: url('venetian-frame.png') 30 stretch;"></div>
-        <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover rounded-lg">
+        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
+        </svg>
+        <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
           <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
@@ -35,9 +119,10 @@
     <!-- Продукт 3 -->
     <a href="product-detail.html?product=dd2" class="block">
       <div class="product-card relative">
-        <div class="absolute inset-0 border-4 border-main-brown rounded-lg pointer-events-none" 
-             style="border-image: url('venetian-frame.png') 30 stretch;"></div>
-        <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover rounded-lg">
+        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
+        </svg>
+        <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
         <div class="product-info">
           <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
           <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
@@ -46,7 +131,50 @@
       </div>
     </a>
 
-    <!-- Останалите продукти – копирай същата структура и сменяй src, alt, title, price, линк -->
+    <!-- Продукт 4 -->
+    <a href="product-detail.html?product=dd3" class="block">
+      <div class="product-card relative">
+        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
+        </svg>
+        <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
+        <div class="product-info">
+          <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
+          <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+        </div>
+      </div>
+    </a>
 
+    <!-- Продукт 5 -->
+    <a href="product-detail.html?product=dd4" class="block">
+      <div class="product-card relative">
+        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
+        </svg>
+        <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
+        <div class="product-info">
+          <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
+          <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Placeholder за останалите 15 продукта -->
+    <a href="#" class="block">
+      <div class="product-card relative">
+        <svg class="frame-svg" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#6B4226" stroke-width="6" rx="8" ry="8"/>
+        </svg>
+        <img src="placeholder.jpg?v=2" alt="Скоро" class="w-full h-48 object-cover">
+        <div class="product-info">
+          <h4 class="text-lg font-semibold text-dark">Скоро</h4>
+          <p class="mt-1 text-gray-700 text-sm">Описание скоро</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+        </div>
+      </div>
+    </a>
+    <!-- Копирай този блок още 14 пъти, за да станат 20 продукта -->
   </div>
 </section>
