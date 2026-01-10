@@ -9,23 +9,16 @@
 :root {
   --main-brown: #6B4226;
   --light-brown: #A37B58;
+  --text-dark: #333333;
 }
-
-body { font-family: sans-serif; background-color: #f9f7f0; margin:0; }
 
 #hero {
   background-image: url('bg-old-bulgarian-farm.jpg?v=2');
+  background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  position: relative;
   height: 90vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction: column;
-  color:white;
-  text-align:center;
-  position:relative;
 }
 #hero::before {
   content:"";
@@ -33,133 +26,130 @@ body { font-family: sans-serif; background-color: #f9f7f0; margin:0; }
   inset:0;
   background-color: rgba(0,0,0,0.4);
 }
-#hero > * { position:relative; z-index:1; }
-
-.grid-products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4rem 1rem;
-}
+#hero > * { position: relative; z-index:1; text-align:center; color:white; }
 
 .product-card {
   position: relative;
-  border-radius: 0.5rem;
   overflow: hidden;
-  background-color: #fffaf0;
-  border: 3px solid var(--main-brown);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.5rem;
+  background-color: #fff7f0;
+  transition: transform 0.3s ease;
 }
-.product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0,0,0,0.2); }
-.product-card img { width:100%; height:200px; object-fit:cover; border-bottom: 3px solid var(--main-brown); }
+.product-card:hover { transform: translateY(-5px); }
+.product-card img { transition: transform 0.3s ease; border-radius:0.5rem; }
+.product-card:hover img { transform: scale(1.05); }
 
 .product-info {
-  padding:0.75rem;
+  position: absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background: rgba(255,255,255,0.9);
+  padding:0.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
   text-align:center;
 }
-.product-info h4 { font-size:1.1rem; font-weight:bold; color: var(--main-brown); margin-bottom:0.25rem; }
-.product-info p { font-size:0.9rem; color:#333; margin-bottom:0.25rem; }
-.product-info .price { font-weight:bold; color:var(--main-brown); }
-
-a.product-card-link { text-decoration:none; }
-
+.product-card:hover .product-info { transform: translateY(0); }
 </style>
 </head>
-<body>
+<body class="font-sans bg-gray-50">
 
 <header class="fixed w-full bg-white shadow z-50">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    <h1 class="text-xl font-bold" style="color:var(--main-brown)">Vintage Lumber</h1>
+    <h1 class="text-xl font-bold text-main-brown">Vintage Lumber</h1>
     <nav class="space-x-6">
-      <a href="#hero" class="text-gray-800 hover:text-main-brown">Начало</a>
-      <a href="#products" class="text-gray-800 hover:text-main-brown">Продукти</a>
+      <a href="#hero" class="text-dark hover:text-main-brown">Начало</a>
+      <a href="#products" class="text-dark hover:text-main-brown">Продукти</a>
+      <a href="#about" class="text-dark hover:text-main-brown">За нас</a>
+      <a href="#contact" class="text-dark hover:text-main-brown">Контакт</a>
     </nav>
   </div>
 </header>
 
-<section id="hero">
+<section id="hero" class="flex flex-col justify-center items-center">
   <h2 class="text-5xl font-bold drop-shadow-lg mt-24">Vintage Lumber с характер</h2>
-  <p class="mt-4 text-xl drop-shadow-lg max-w-xl">Реставрирано дърво от стари ферми за твой проект</p>
+  <p class="mt-4 text-xl drop-shadow-lg">Реставрирано дърво от стари ферми за твой проект</p>
   <a href="#products" class="mt-6 px-6 py-3 bg-main-brown hover:bg-light-brown font-semibold rounded shadow">Виж продуктите</a>
 </section>
 
-<section id="products">
+<section id="products" class="max-w-7xl mx-auto py-16 px-4">
   <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
-  <div class="grid-products">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
-    <a href="#dg1" class="product-card-link">
-      <div class="product-card">
-        <img src="dg1.jpg?v=2" alt="Стара дървена греда">
+    <!-- Продукт 1 -->
+    <a href="dg1.html" class="block">
+      <div class="product-card relative">
+        <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
         <div class="product-info">
-          <h4>Стара дървена греда</h4>
-          <p>Реставрирана греда с патина</p>
-          <p class="price">120 лв.</p>
+          <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
+          <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: 120 лв.</p>
         </div>
       </div>
     </a>
 
-    <a href="#dd1" class="product-card-link">
-      <div class="product-card">
-        <img src="dd1.jpg?v=2" alt="Стара дървена дъска">
+    <!-- Продукт 2 -->
+    <a href="dd1.html" class="block">
+      <div class="product-card relative">
+        <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
         <div class="product-info">
-          <h4>Стара дървена дъска</h4>
-          <p>Класическа реставрирана дъска</p>
-          <p class="price">80 лв.</p>
+          <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
+          <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: 80 лв.</p>
         </div>
       </div>
     </a>
 
-    <a href="#dd2" class="product-card-link">
-      <div class="product-card">
-        <img src="dd2.jpg?v=2" alt="Стара дъска за декорация">
+    <!-- Продукт 3 -->
+    <a href="dd2.html" class="block">
+      <div class="product-card relative">
+        <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
         <div class="product-info">
-          <h4>Стара дъска за декорация</h4>
-          <p>Уникална декорация за интериор</p>
-          <p class="price">250 лв.</p>
+          <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
+          <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: 250 лв.</p>
         </div>
       </div>
     </a>
 
-    <a href="#dd3" class="product-card-link">
-      <div class="product-card">
-        <img src="dd3.jpg?v=2" alt="Стара дъска">
+    <!-- Продукт 4 -->
+    <a href="dd3.html" class="block">
+      <div class="product-card relative">
+        <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
         <div class="product-info">
-          <h4>Стара дъска</h4>
-          <p>Описание на продукта</p>
-          <p class="price">--</p>
+          <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
+          <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
         </div>
       </div>
     </a>
 
-    <a href="#dd4" class="product-card-link">
-      <div class="product-card">
-        <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация">
+    <!-- Продукт 5 -->
+    <a href="dd4.html" class="block">
+      <div class="product-card relative">
+        <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
         <div class="product-info">
-          <h4>Дървени дъски за декорация</h4>
-          <p>Перфектни за декорация на интериор</p>
-          <p class="price">--</p>
+          <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
+          <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
         </div>
       </div>
     </a>
 
-    <!-- Placeholder продукти за общо 20 -->
-    <a href="#" class="product-card-link">
-      <div class="product-card">
-        <img src="placeholder.jpg?v=2" alt="Скоро">
+    <!-- Placeholder продукти (копирай блок за да имаш 20 продукта) -->
+    <a href="#" class="block">
+      <div class="product-card relative">
+        <img src="placeholder.jpg?v=2" alt="Скоро" class="w-full h-48 object-cover">
         <div class="product-info">
-          <h4>Скоро</h4>
-          <p>Описание скоро</p>
-          <p class="price">--</p>
+          <h4 class="text-lg font-semibold text-dark">Скоро</h4>
+          <p class="mt-1 text-gray-700 text-sm">Описание скоро</p>
+          <p class="mt-2 font-bold text-main-brown">Цена: --</p>
         </div>
       </div>
     </a>
 
-    <!-- Копирай блока за повече продукти -->
   </div>
 </section>
-
 </body>
 </html>
