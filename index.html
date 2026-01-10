@@ -1,100 +1,165 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vintage Harvest Lumber Bulgaria</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .hero-img { height: 60vh; width: 100%; object-fit: cover; }
-        .product-img { height: 250px; width: 100%; object-fit: cover; }
-        .cta-button { background-color: #fbbf24; color: #fff; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: bold; }
-        .cta-button:hover { background-color: #f59e0b; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage Lumber Bulgaria</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root {
+  --main-brown: #6B4226;
+  --light-brown: #A37B58;
+}
+
+body { font-family: sans-serif; background-color: #f9f7f0; margin:0; }
+
+#hero {
+  background-image: url('bg-old-bulgarian-farm.jpg?v=2');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 90vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction: column;
+  color:white;
+  text-align:center;
+  position:relative;
+}
+#hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background-color: rgba(0,0,0,0.4);
+}
+#hero > * { position:relative; z-index:1; }
+
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.product-card {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: #fffaf0;
+  border: 3px solid var(--main-brown);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0,0,0,0.2); }
+.product-card img { width:100%; height:200px; object-fit:cover; border-bottom: 3px solid var(--main-brown); }
+
+.product-info {
+  padding:0.75rem;
+  text-align:center;
+}
+.product-info h4 { font-size:1.1rem; font-weight:bold; color: var(--main-brown); margin-bottom:0.25rem; }
+.product-info p { font-size:0.9rem; color:#333; margin-bottom:0.25rem; }
+.product-info .price { font-weight:bold; color:var(--main-brown); }
+
+a.product-card-link { text-decoration:none; }
+
+</style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
+<body>
 
-    <!-- Header -->
-    <header class="bg-gray-900 text-white p-6 fixed w-full z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Vintage Harvest Lumber Bulgaria</h1>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="#hero" class="hover:text-yellow-400">Начало</a></li>
-                    <li><a href="#products" class="hover:text-yellow-400">Продукти</a></li>
-                    <li><a href="#about" class="hover:text-yellow-400">За нас</a></li>
-                    <li><a href="#contact" class="hover:text-yellow-400">Контакт</a></li>
-                </ul>
-            </nav>
+<header class="fixed w-full bg-white shadow z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-xl font-bold" style="color:var(--main-brown)">Vintage Lumber</h1>
+    <nav class="space-x-6">
+      <a href="#hero" class="text-gray-800 hover:text-main-brown">Начало</a>
+      <a href="#products" class="text-gray-800 hover:text-main-brown">Продукти</a>
+    </nav>
+  </div>
+</header>
+
+<section id="hero">
+  <h2 class="text-5xl font-bold drop-shadow-lg mt-24">Vintage Lumber с характер</h2>
+  <p class="mt-4 text-xl drop-shadow-lg max-w-xl">Реставрирано дърво от стари ферми за твой проект</p>
+  <a href="#products" class="mt-6 px-6 py-3 bg-main-brown hover:bg-light-brown font-semibold rounded shadow">Виж продуктите</a>
+</section>
+
+<section id="products">
+  <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
+  <div class="grid-products">
+
+    <a href="#dg1" class="product-card-link">
+      <div class="product-card">
+        <img src="dg1.jpg?v=2" alt="Стара дървена греда">
+        <div class="product-info">
+          <h4>Стара дървена греда</h4>
+          <p>Реставрирана греда с патина</p>
+          <p class="price">120 лв.</p>
         </div>
-    </header>
+      </div>
+    </a>
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative mt-20">
-        <img src="bg-old-bulgarian-farm.jpg" alt="Стара българска ферма" class="hero-img">
-        <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
-            <h2 class="text-4xl md:text-5xl text-white font-bold text-center px-4">Реставрирано дърво с история</h2>
-            <a href="#products" class="cta-button mt-6">Виж продуктите</a>
+    <a href="#dd1" class="product-card-link">
+      <div class="product-card">
+        <img src="dd1.jpg?v=2" alt="Стара дървена дъска">
+        <div class="product-info">
+          <h4>Стара дървена дъска</h4>
+          <p>Класическа реставрирана дъска</p>
+          <p class="price">80 лв.</p>
         </div>
-    </section>
+      </div>
+    </a>
 
-    <!-- Products Section -->
-    <section id="products" class="py-16 bg-gray-50">
-        <div class="container mx-auto">
-            <h3 class="text-3xl font-bold text-center mb-10">Нашите продукти</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                    <img src="product1.jpg" alt="Дървена дъска" class="product-img">
-                    <div class="p-4">
-                        <h4 class="font-bold text-xl mb-2">Дървена дъска</h4>
-                        <p class="text-gray-700">Висококачествено реставрирано дърво, подходящо за интериорни проекти.</p>
-                    </div>
-                </div>
-                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                    <img src="product2.jpg" alt="Дървена греда" class="product-img">
-                    <div class="p-4">
-                        <h4 class="font-bold text-xl mb-2">Дървена греда</h4>
-                        <p class="text-gray-700">Идеална за конструкции, декорации или реставрационни проекти.</p>
-                    </div>
-                </div>
-                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                    <img src="product3.jpg" alt="Старинна врата" class="product-img">
-                    <div class="p-4">
-                        <h4 class="font-bold text-xl mb-2">Старинна врата</h4>
-                        <p class="text-gray-700">Уникален елемент с автентичен характер за вашия проект.</p>
-                    </div>
-                </div>
-            </div>
+    <a href="#dd2" class="product-card-link">
+      <div class="product-card">
+        <img src="dd2.jpg?v=2" alt="Стара дъска за декорация">
+        <div class="product-info">
+          <h4>Стара дъска за декорация</h4>
+          <p>Уникална декорация за интериор</p>
+          <p class="price">250 лв.</p>
         </div>
-    </section>
+      </div>
+    </a>
 
-    <!-- About Section -->
-    <section id="about" class="py-16">
-        <div class="container mx-auto text-center">
-            <h3 class="text-3xl font-bold mb-6">За нас</h3>
-            <p class="max-w-2xl mx-auto text-gray-700">Vintage Harvest Lumber Bulgaria се фокусира върху реставрирането и предлагането на висококачествено дърво с история. Нашите материали идват от стари български ферми и постройки, съхранявайки автентичния чар на миналото.</p>
+    <a href="#dd3" class="product-card-link">
+      <div class="product-card">
+        <img src="dd3.jpg?v=2" alt="Стара дъска">
+        <div class="product-info">
+          <h4>Стара дъска</h4>
+          <p>Описание на продукта</p>
+          <p class="price">--</p>
         </div>
-    </section>
+      </div>
+    </a>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-50">
-        <div class="container mx-auto text-center">
-            <h3 class="text-3xl font-bold mb-6">Контакт</h3>
-            <p class="mb-6">Свържете се с нас за поръчки или въпроси:</p>
-            <form class="max-w-xl mx-auto space-y-4">
-                <input type="text" placeholder="Име" class="w-full p-3 border border-gray-300 rounded">
-                <input type="email" placeholder="Имейл" class="w-full p-3 border border-gray-300 rounded">
-                <textarea placeholder="Съобщение" class="w-full p-3 border border-gray-300 rounded h-32"></textarea>
-                <button type="submit" class="cta-button">Изпрати</button>
-            </form>
+    <a href="#dd4" class="product-card-link">
+      <div class="product-card">
+        <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация">
+        <div class="product-info">
+          <h4>Дървени дъски за декорация</h4>
+          <p>Перфектни за декорация на интериор</p>
+          <p class="price">--</p>
         </div>
-    </section>
+      </div>
+    </a>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-6 text-center">
-        &copy; 2026 Vintage Harvest Lumber Bulgaria. Всички права запазени.
-    </footer>
+    <!-- Placeholder продукти за общо 20 -->
+    <a href="#" class="product-card-link">
+      <div class="product-card">
+        <img src="placeholder.jpg?v=2" alt="Скоро">
+        <div class="product-info">
+          <h4>Скоро</h4>
+          <p>Описание скоро</p>
+          <p class="price">--</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Копирай блока за повече продукти -->
+  </div>
+</section>
 
 </body>
 </html>
-
