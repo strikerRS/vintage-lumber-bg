@@ -12,7 +12,7 @@
       --text-dark: #333333;
     }
 
-    /* Hero ефект - паралакс и overlay */
+    /* Hero фон с паралакс и overlay */
     #hero {
       background-image: url('bg-old-bulgarian-farm.jpg?v=2');
       background-attachment: fixed;
@@ -26,12 +26,9 @@
       inset: 0;
       background-color: rgba(0,0,0,0.4);
     }
-    #hero > * {
-      position: relative;
-      z-index: 1;
-    }
+    #hero > * { position: relative; z-index: 1; }
 
-    /* Продукт карти с rustic рамка и hover ефект */
+    /* Продукт карти */
     .product-card {
       position: relative;
       overflow: hidden;
@@ -41,15 +38,9 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
     }
-    .product-card:hover {
-      transform: translateY(-5px);
-    }
-    .product-card img {
-      transition: transform 0.3s ease;
-    }
-    .product-card:hover img {
-      transform: scale(1.05);
-    }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-card img { transition: transform 0.3s ease; }
+    .product-card:hover img { transform: scale(1.05); }
     .product-info {
       position: absolute;
       bottom: 0;
@@ -61,17 +52,10 @@
       transition: transform 0.3s ease;
       text-align: center;
     }
-    .product-card:hover .product-info {
-      transform: translateY(0);
-    }
+    .product-card:hover .product-info { transform: translateY(0); }
 
     /* Rustic decorative corners */
-    .decorative-corner {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--main-brown);
-    }
+    .decorative-corner { position: absolute; width: 20px; height: 20px; border: 2px solid var(--main-brown); }
     .decorative-corner.tl { top: 0; left: 0; border-right: none; border-bottom: none; }
     .decorative-corner.tr { top: 0; right: 0; border-left: none; border-bottom: none; }
     .decorative-corner.bl { bottom: 0; left: 0; border-right: none; border-top: none; }
@@ -102,12 +86,10 @@
   <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
-    <!-- Продукт 1 -->
+    <!-- Първите 5 реални продукта -->
     <div class="product-card">
-      <div class="decorative-corner tl"></div>
-      <div class="decorative-corner tr"></div>
-      <div class="decorative-corner bl"></div>
-      <div class="decorative-corner br"></div>
+      <div class="decorative-corner tl"></div><div class="decorative-corner tr"></div>
+      <div class="decorative-corner bl"></div><div class="decorative-corner br"></div>
       <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
@@ -116,12 +98,9 @@
       </div>
     </div>
 
-    <!-- Продукт 2 -->
     <div class="product-card">
-      <div class="decorative-corner tl"></div>
-      <div class="decorative-corner tr"></div>
-      <div class="decorative-corner bl"></div>
-      <div class="decorative-corner br"></div>
+      <div class="decorative-corner tl"></div><div class="decorative-corner tr"></div>
+      <div class="decorative-corner bl"></div><div class="decorative-corner br"></div>
       <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
@@ -130,12 +109,9 @@
       </div>
     </div>
 
-    <!-- Продукт 3 -->
     <div class="product-card">
-      <div class="decorative-corner tl"></div>
-      <div class="decorative-corner tr"></div>
-      <div class="decorative-corner bl"></div>
-      <div class="decorative-corner br"></div>
+      <div class="decorative-corner tl"></div><div class="decorative-corner tr"></div>
+      <div class="decorative-corner bl"></div><div class="decorative-corner br"></div>
       <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
@@ -144,12 +120,9 @@
       </div>
     </div>
 
-    <!-- Продукт 4 -->
     <div class="product-card">
-      <div class="decorative-corner tl"></div>
-      <div class="decorative-corner tr"></div>
-      <div class="decorative-corner bl"></div>
-      <div class="decorative-corner br"></div>
+      <div class="decorative-corner tl"></div><div class="decorative-corner tr"></div>
+      <div class="decorative-corner bl"></div><div class="decorative-corner br"></div>
       <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
@@ -158,12 +131,9 @@
       </div>
     </div>
 
-    <!-- Продукт 5 -->
     <div class="product-card">
-      <div class="decorative-corner tl"></div>
-      <div class="decorative-corner tr"></div>
-      <div class="decorative-corner bl"></div>
-      <div class="decorative-corner br"></div>
+      <div class="decorative-corner tl"></div><div class="decorative-corner tr"></div>
+      <div class="decorative-corner bl"></div><div class="decorative-corner br"></div>
       <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
@@ -172,8 +142,21 @@
       </div>
     </div>
 
-    <!-- Останалите 15 продукта - просто копирай същата структура и смени src, alt, заглавие и описание -->
-    
+    <!-- Placeholder за останалите 15 продукта -->
+    <!-- Можеш да смениш src и alt за реални снимки -->
+    <!-- Примерен блок -->
+    <div class="product-card">
+      <div class="decorative-corner tl"></div><div class="decorative-corner tr"></div>
+      <div class="decorative-corner bl"></div><div class="decorative-corner br"></div>
+      <img src="placeholder.jpg?v=2" alt="Скоро" class="w-full h-48 object-cover">
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Скоро</h4>
+        <p class="mt-1 text-gray-700 text-sm">Описание скоро</p>
+        <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+      </div>
+    </div>
+    <!-- Копирай горния блок още 14 пъти, за да станат 20 продукта общо -->
+
   </div>
 </section>
 
