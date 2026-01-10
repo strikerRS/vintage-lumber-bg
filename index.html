@@ -34,6 +34,7 @@
   border-radius: 0.5rem;
   background-color: #fff7f0;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 .product-card:hover { transform: translateY(-5px); }
 .product-card img { transition: transform 0.3s ease; border-radius:0.5rem; }
@@ -64,6 +65,8 @@
 .tab-section.active { display:block; }
 
 .tab-gallery img { border-radius:0.5rem; }
+.tab-gallery .thumbnail { width:64px; height:64px; object-fit:cover; cursor:pointer; border-radius:0.25rem; border:2px solid transparent; }
+.tab-gallery .thumbnail:hover { border-color:var(--main-brown); }
 </style>
 </head>
 <body class="font-sans bg-gray-50">
@@ -91,7 +94,7 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
     <!-- Продукт 1 -->
-    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dg1')">
+    <div class="product-card relative" onclick="openProductTab('tab-dg1')">
       <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
@@ -101,7 +104,7 @@
     </div>
 
     <!-- Продукт 2 -->
-    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd1')">
+    <div class="product-card relative" onclick="openProductTab('tab-dd1')">
       <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
@@ -111,7 +114,7 @@
     </div>
 
     <!-- Продукт 3 -->
-    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd2')">
+    <div class="product-card relative" onclick="openProductTab('tab-dd2')">
       <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
@@ -121,7 +124,7 @@
     </div>
 
     <!-- Продукт 4 -->
-    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd3')">
+    <div class="product-card relative" onclick="openProductTab('tab-dd3')">
       <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
@@ -131,7 +134,7 @@
     </div>
 
     <!-- Продукт 5 -->
-    <div class="product-card relative cursor-pointer" onclick="openProductTab('tab-dd4')">
+    <div class="product-card relative" onclick="openProductTab('tab-dd4')">
       <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
       <div class="product-info">
         <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
@@ -143,7 +146,7 @@
   </div>
 </section>
 
-<!-- Tabs секции за продуктите -->
+<!-- Tabs за продуктите с миниатюри -->
 <section id="tabs">
 
   <!-- Таб продукт 1 -->
@@ -151,11 +154,16 @@
     <button onclick="closeProductTab('tab-dg1')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
     <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дървена греда</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Галерия -->
       <div class="tab-gallery space-y-2">
-        <img src="dg1.jpg?v=2" alt="" class="w-full h-48 object-cover">
-        <img src="dg1_alt.jpg?v=2" alt="" class="w-full h-48 object-cover">
-        <img src="dg1_alt2.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img id="dg1-main" src="dg1.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
+        <div class="flex gap-2 mt-2">
+          <img src="dg1.jpg?v=2" class="thumbnail" onclick="changeMainImage('dg1-main','dg1.jpg?v=2')">
+          <img src="dg1_alt.jpg?v=2" class="thumbnail" onclick="changeMainImage('dg1-main','dg1_alt.jpg?v=2')">
+          <img src="dg1_alt2.jpg?v=2" class="thumbnail" onclick="changeMainImage('dg1-main','dg1_alt2.jpg?v=2')">
+        </div>
       </div>
+      <!-- Информация -->
       <div>
         <p class="mb-2">Описание: Реставрирана дървена греда с уникален патинен ефект. Идеална за интериор или декорация.</p>
         <p class="mb-2">Материал: Дърво от стара ферма.</p>
@@ -172,8 +180,11 @@
     <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дървена дъска</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="tab-gallery space-y-2">
-        <img src="dd1.jpg?v=2" alt="" class="w-full h-48 object-cover">
-        <img src="dd1_alt.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img id="dd1-main" src="dd1.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
+        <div class="flex gap-2 mt-2">
+          <img src="dd1.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd1-main','dd1.jpg?v=2')">
+          <img src="dd1_alt.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd1-main','dd1_alt.jpg?v=2')">
+        </div>
       </div>
       <div>
         <p class="mb-2">Описание: Класическа реставрирана дъска за интериорни проекти.</p>
@@ -191,8 +202,11 @@
     <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дъска за декорация</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="tab-gallery space-y-2">
-        <img src="dd2.jpg?v=2" alt="" class="w-full h-48 object-cover">
-        <img src="dd2_alt.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img id="dd2-main" src="dd2.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
+        <div class="flex gap-2 mt-2">
+          <img src="dd2.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd2-main','dd2.jpg?v=2')">
+          <img src="dd2_alt.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd2-main','dd2_alt.jpg?v=2')">
+        </div>
       </div>
       <div>
         <p class="mb-2">Описание: Уникална дъска за декорация на интериора.</p>
@@ -210,7 +224,7 @@
     <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дъска</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="tab-gallery space-y-2">
-        <img src="dd3.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img id="dd3-main" src="dd3.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
       </div>
       <div>
         <p class="mb-2">Описание на продукта.</p>
@@ -228,7 +242,7 @@
     <h2 class="text-2xl font-bold text-main-brown mb-4">Дървени дъски за декорация</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="tab-gallery space-y-2">
-        <img src="dd4.jpg?v=2" alt="" class="w-full h-48 object-cover">
+        <img id="dd4-main" src="dd4.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
       </div>
       <div>
         <p class="mb-2">Описание: Перфектни за декорация на интериор.</p>
@@ -250,6 +264,9 @@ function openProductTab(id) {
 }
 function closeProductTab(id) {
   document.getElementById(id).classList.remove('active');
+}
+function changeMainImage(mainId, newSrc) {
+  document.getElementById(mainId).src = newSrc;
 }
 </script>
 
