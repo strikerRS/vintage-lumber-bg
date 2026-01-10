@@ -14,6 +14,11 @@
     .bg-main-brown { background-color: var(--main-brown); }
     .bg-light-brown { background-color: var(--light-brown); }
     .text-dark { color: var(--text-dark); }
+    .product-card { position: relative; overflow: hidden; }
+    .product-card img { transition: transform 0.3s ease; }
+    .product-card:hover img { transform: scale(1.1); }
+    .product-info { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.9); padding: 0.5rem; transform: translateY(100%); transition: transform 0.3s ease; }
+    .product-card:hover .product-info { transform: translateY(0); }
   </style>
 </head>
 <body class="font-sans bg-gray-50">
@@ -40,57 +45,47 @@
   <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
-    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col product-card">
       <img src="dg1.jpg" alt="Стара дървена греда" class="w-full h-48 object-cover">
-      <div class="p-4 flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
-          <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
-        </div>
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
+        <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
         <p class="mt-2 font-bold text-main-brown">Цена: 120 лв.</p>
       </div>
     </div>
 
-    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col product-card">
       <img src="dd1.jpg" alt="Стара дървена дъска" class="w-full h-48 object-cover">
-      <div class="p-4 flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
-          <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
-        </div>
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
+        <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
         <p class="mt-2 font-bold text-main-brown">Цена: 80 лв.</p>
       </div>
     </div>
 
-    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col product-card">
       <img src="dd2.jpg" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
-      <div class="p-4 flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
-          <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
-        </div>
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
+        <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
         <p class="mt-2 font-bold text-main-brown">Цена: 250 лв.</p>
       </div>
     </div>
 
-    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col product-card">
       <img src="dd3.jpg" alt="Стара дъска" class="w-full h-48 object-cover">
-      <div class="p-4 flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
-          <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
-        </div>
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
+        <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
         <p class="mt-2 font-bold text-main-brown">Цена: --</p>
       </div>
     </div>
 
-    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col">
+    <div class="bg-white shadow-lg rounded overflow-hidden flex flex-col product-card">
       <img src="dd4.jpg" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
-      <div class="p-4 flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
-          <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
-        </div>
+      <div class="product-info">
+        <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
+        <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
         <p class="mt-2 font-bold text-main-brown">Цена: --</p>
       </div>
     </div>
