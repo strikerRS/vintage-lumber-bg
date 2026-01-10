@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
 :root {
   --main-brown: #6B4226;
@@ -12,6 +13,7 @@
   --text-dark: #333333;
 }
 
+/* HERO */
 #hero {
   background-image: url('bg-old-bulgarian-farm.jpg?v=2');
   background-attachment: fixed;
@@ -24,249 +26,187 @@
   content:"";
   position:absolute;
   inset:0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.45);
 }
-#hero > * { position: relative; z-index:1; text-align:center; color:white; }
+#hero > * { position: relative; z-index:1; color:white; text-align:center; }
 
+/* PRODUCTS */
 .product-card {
   position: relative;
   overflow: hidden;
-  border-radius: 0.5rem;
+  border-radius: 12px;
   background-color: #fff7f0;
-  transition: transform 0.3s ease;
+  transition: transform .3s ease;
   cursor: pointer;
 }
-.product-card:hover { transform: translateY(-5px); }
-.product-card img { transition: transform 0.3s ease; border-radius:0.5rem; }
-.product-card:hover img { transform: scale(1.05); }
+.product-card:hover { transform: translateY(-6px); }
 
 .product-info {
-  position: absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  background: rgba(255,255,255,0.9);
-  padding:0.5rem;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
+  position:absolute;
+  bottom:0; left:0; right:0;
+  background:rgba(255,255,255,.92);
+  padding:.6rem;
+  transform:translateY(100%);
+  transition:.3s;
   text-align:center;
 }
-.product-card:hover .product-info { transform: translateY(0); }
+.product-card:hover .product-info { transform:translateY(0); }
 
+/* PRODUCT TABS */
 .tab-section {
   display:none;
   max-width:1200px;
-  margin: 2rem auto;
-  padding: 2rem 1rem;
-  background-color:#fffaf0;
-  border-radius:0.5rem;
-  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+  margin:3rem auto;
+  padding:2rem;
+  background:#fffaf3;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
 }
 .tab-section.active { display:block; }
 
-.tab-gallery img { border-radius:0.5rem; }
-.tab-gallery .thumbnail { width:64px; height:64px; object-fit:cover; cursor:pointer; border-radius:0.25rem; border:2px solid transparent; }
-.tab-gallery .thumbnail:hover { border-color:var(--main-brown); }
+.thumbnail {
+  width:64px;
+  height:64px;
+  object-fit:cover;
+  cursor:pointer;
+  border-radius:6px;
+  border:2px solid transparent;
+}
+.thumbnail:hover { border-color:var(--main-brown); }
+
+/* CART BUTTON */
+.cart-btn {
+  position:relative;
+}
+.cart-badge {
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  background:#b45309;
+  color:white;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:999px;
+}
 </style>
 </head>
-<body class="font-sans bg-gray-50">
 
+<body class="bg-gray-50 font-sans">
+
+<!-- HEADER -->
 <header class="fixed w-full bg-white shadow z-50">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    <h1 class="text-xl font-bold text-main-brown">Vintage Lumber</h1>
-    <nav class="space-x-6">
-      <a href="#hero" class="text-dark hover:text-main-brown">Начало</a>
-      <a href="#products" class="text-dark hover:text-main-brown">Продукти</a>
-      <a href="#about" class="text-dark hover:text-main-brown">За нас</a>
-      <a href="#contact" class="text-dark hover:text-main-brown">Контакт</a>
+
+    <h1 class="text-xl font-bold text-[var(--main-brown)]">Vintage Lumber</h1>
+
+    <nav class="space-x-6 flex items-center">
+      <a href="#hero">Начало</a>
+      <a href="#products">Продукти</a>
+      <a href="#about">За нас</a>
+      <a href="#contact">Контакт</a>
+
+      <!-- CART -->
+      <button class="cart-btn ml-4">
+        🛒
+        <span class="cart-badge">0</span>
+      </button>
     </nav>
   </div>
 </header>
 
+<!-- HERO -->
 <section id="hero" class="flex flex-col justify-center items-center">
-  <h2 class="text-5xl font-bold drop-shadow-lg mt-24">Vintage Lumber с характер</h2>
-  <p class="mt-4 text-xl drop-shadow-lg">Реставрирано дърво от стари ферми за твой проект</p>
-  <a href="#products" class="mt-6 px-6 py-3 bg-main-brown hover:bg-light-brown font-semibold rounded shadow">Виж продуктите</a>
+  <h2 class="text-5xl font-bold mt-24 drop-shadow">Vintage Lumber с характер</h2>
+  <p class="mt-4 text-xl drop-shadow">
+    Автентично старо дърво от български ферми
+  </p>
+  <a href="#products"
+     class="mt-6 px-8 py-3 bg-[var(--main-brown)] rounded text-white font-semibold hover:bg-[var(--light-brown)]">
+    Виж продуктите
+  </a>
 </section>
 
-<section id="products" class="max-w-7xl mx-auto py-16 px-4">
-  <h3 class="text-3xl font-bold text-center text-main-brown mb-12">Нашите продукти</h3>
+<!-- PRODUCTS -->
+<section id="products" class="max-w-7xl mx-auto py-20 px-4">
+  <h3 class="text-3xl font-bold text-center mb-12 text-[var(--main-brown)]">
+    Нашите продукти
+  </h3>
+
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
-    <!-- Продукт 1 -->
-    <div class="product-card relative" onclick="openProductTab('tab-dg1')">
-      <img src="dg1.jpg?v=2" alt="Стара дървена греда" class="w-full h-48 object-cover">
+    <div class="product-card" onclick="openProductTab('tab-dg1')">
+      <img src="dg1.jpg?v=2" class="h-48 w-full object-cover">
       <div class="product-info">
-        <h4 class="text-lg font-semibold text-dark">Стара дървена греда</h4>
-        <p class="mt-1 text-gray-700 text-sm">Реставрирана греда с патина</p>
-        <p class="mt-2 font-bold text-main-brown">Цена: 120 лв.</p>
+        <h4 class="font-semibold">Стара дървена греда</h4>
+        <p>120 лв.</p>
       </div>
     </div>
 
-    <!-- Продукт 2 -->
-    <div class="product-card relative" onclick="openProductTab('tab-dd1')">
-      <img src="dd1.jpg?v=2" alt="Стара дървена дъска" class="w-full h-48 object-cover">
+    <div class="product-card" onclick="openProductTab('tab-dd1')">
+      <img src="dd1.jpg?v=2" class="h-48 w-full object-cover">
       <div class="product-info">
-        <h4 class="text-lg font-semibold text-dark">Стара дървена дъска</h4>
-        <p class="mt-1 text-gray-700 text-sm">Класическа реставрирана дъска</p>
-        <p class="mt-2 font-bold text-main-brown">Цена: 80 лв.</p>
+        <h4 class="font-semibold">Стара дървена дъска</h4>
+        <p>80 лв.</p>
       </div>
     </div>
 
-    <!-- Продукт 3 -->
-    <div class="product-card relative" onclick="openProductTab('tab-dd2')">
-      <img src="dd2.jpg?v=2" alt="Стара дъска за декорация" class="w-full h-48 object-cover">
+    <div class="product-card" onclick="openProductTab('tab-dd2')">
+      <img src="dd2.jpg?v=2" class="h-48 w-full object-cover">
       <div class="product-info">
-        <h4 class="text-lg font-semibold text-dark">Стара дъска за декорация</h4>
-        <p class="mt-1 text-gray-700 text-sm">Уникална декорация за интериор</p>
-        <p class="mt-2 font-bold text-main-brown">Цена: 250 лв.</p>
+        <h4 class="font-semibold">Дъска за декорация</h4>
+        <p>250 лв.</p>
       </div>
     </div>
 
-    <!-- Продукт 4 -->
-    <div class="product-card relative" onclick="openProductTab('tab-dd3')">
-      <img src="dd3.jpg?v=2" alt="Стара дъска" class="w-full h-48 object-cover">
+    <div class="product-card" onclick="openProductTab('tab-dd3')">
+      <img src="dd3.jpg?v=2" class="h-48 w-full object-cover">
       <div class="product-info">
-        <h4 class="text-lg font-semibold text-dark">Стара дъска</h4>
-        <p class="mt-1 text-gray-700 text-sm">Описание на продукта</p>
-        <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+        <h4 class="font-semibold">Стара дъска</h4>
       </div>
     </div>
 
-    <!-- Продукт 5 -->
-    <div class="product-card relative" onclick="openProductTab('tab-dd4')">
-      <img src="dd4.jpg?v=2" alt="Дървени дъски за декорация" class="w-full h-48 object-cover">
+    <div class="product-card" onclick="openProductTab('tab-dd4')">
+      <img src="dd4.jpg?v=2" class="h-48 w-full object-cover">
       <div class="product-info">
-        <h4 class="text-lg font-semibold text-dark">Дървени дъски за декорация</h4>
-        <p class="mt-1 text-gray-700 text-sm">Перфектни за декорация на интериор</p>
-        <p class="mt-2 font-bold text-main-brown">Цена: --</p>
+        <h4 class="font-semibold">Декоративни дъски</h4>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- Tabs за продуктите с миниатюри -->
-<section id="tabs">
-
-  <!-- Таб продукт 1 -->
-  <div id="tab-dg1" class="tab-section">
-    <button onclick="closeProductTab('tab-dg1')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
-    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дървена греда</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <!-- Галерия -->
-      <div class="tab-gallery space-y-2">
-        <img id="dg1-main" src="dg1.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
-        <div class="flex gap-2 mt-2">
-          <img src="dg1.jpg?v=2" class="thumbnail" onclick="changeMainImage('dg1-main','dg1.jpg?v=2')">
-          <img src="dg1_alt.jpg?v=2" class="thumbnail" onclick="changeMainImage('dg1-main','dg1_alt.jpg?v=2')">
-          <img src="dg1_alt2.jpg?v=2" class="thumbnail" onclick="changeMainImage('dg1-main','dg1_alt2.jpg?v=2')">
-        </div>
-      </div>
-      <!-- Информация -->
-      <div>
-        <p class="mb-2">Описание: Реставрирана дървена греда с уникален патинен ефект. Идеална за интериор или декорация.</p>
-        <p class="mb-2">Материал: Дърво от стара ферма.</p>
-        <p class="mb-2">Размери: 200x15x10 см</p>
-        <p class="mb-2 font-bold text-main-brown">Цена: 120 лв.</p>
-        <p class="mb-2">Доставка: Изпраща се в рамките на 3 работни дни с опция за проследяване.</p>
-      </div>
-    </div>
+<!-- ABOUT -->
+<section id="about" class="bg-[#f8efe6] py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <h3 class="text-3xl font-bold mb-6 text-[var(--main-brown)]">За нас</h3>
+    <p class="text-lg leading-relaxed">
+      Vintage Lumber Bulgaria е малка семейна фирма, специализирана в
+      събирането, реставрацията и повторната употреба на автентично старо дърво
+      от български ферми, хамбари и селски постройки.
+      Всяко парче носи история, характер и уникална патина, която не може да бъде
+      възпроизведена индустриално.
+    </p>
   </div>
-
-  <!-- Таб продукт 2 -->
-  <div id="tab-dd1" class="tab-section">
-    <button onclick="closeProductTab('tab-dd1')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
-    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дървена дъска</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="tab-gallery space-y-2">
-        <img id="dd1-main" src="dd1.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
-        <div class="flex gap-2 mt-2">
-          <img src="dd1.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd1-main','dd1.jpg?v=2')">
-          <img src="dd1_alt.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd1-main','dd1_alt.jpg?v=2')">
-        </div>
-      </div>
-      <div>
-        <p class="mb-2">Описание: Класическа реставрирана дъска за интериорни проекти.</p>
-        <p class="mb-2">Материал: Дърво.</p>
-        <p class="mb-2">Размери: 180x12x5 см</p>
-        <p class="mb-2 font-bold text-main-brown">Цена: 80 лв.</p>
-        <p class="mb-2">Доставка: 3 работни дни.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Таб продукт 3 -->
-  <div id="tab-dd2" class="tab-section">
-    <button onclick="closeProductTab('tab-dd2')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
-    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дъска за декорация</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="tab-gallery space-y-2">
-        <img id="dd2-main" src="dd2.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
-        <div class="flex gap-2 mt-2">
-          <img src="dd2.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd2-main','dd2.jpg?v=2')">
-          <img src="dd2_alt.jpg?v=2" class="thumbnail" onclick="changeMainImage('dd2-main','dd2_alt.jpg?v=2')">
-        </div>
-      </div>
-      <div>
-        <p class="mb-2">Описание: Уникална дъска за декорация на интериора.</p>
-        <p class="mb-2">Материал: Дърво.</p>
-        <p class="mb-2">Размери: 150x10x4 см</p>
-        <p class="mb-2 font-bold text-main-brown">Цена: 250 лв.</p>
-        <p class="mb-2">Доставка: 3-5 дни.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Таб продукт 4 -->
-  <div id="tab-dd3" class="tab-section">
-    <button onclick="closeProductTab('tab-dd3')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
-    <h2 class="text-2xl font-bold text-main-brown mb-4">Стара дъска</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="tab-gallery space-y-2">
-        <img id="dd3-main" src="dd3.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
-      </div>
-      <div>
-        <p class="mb-2">Описание на продукта.</p>
-        <p class="mb-2">Материал: Дърво.</p>
-        <p class="mb-2">Размери: 160x12x5 см</p>
-        <p class="mb-2 font-bold text-main-brown">Цена: --</p>
-        <p class="mb-2">Доставка: 3 дни.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Таб продукт 5 -->
-  <div id="tab-dd4" class="tab-section">
-    <button onclick="closeProductTab('tab-dd4')" class="mb-4 px-4 py-2 bg-main-brown text-white rounded hover:bg-light-brown">Затвори</button>
-    <h2 class="text-2xl font-bold text-main-brown mb-4">Дървени дъски за декорация</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="tab-gallery space-y-2">
-        <img id="dd4-main" src="dd4.jpg?v=2" alt="" class="w-full h-48 object-cover rounded">
-      </div>
-      <div>
-        <p class="mb-2">Описание: Перфектни за декорация на интериор.</p>
-        <p class="mb-2">Материал: Дърво.</p>
-        <p class="mb-2">Размери: 150x10x5 см</p>
-        <p class="mb-2 font-bold text-main-brown">Цена: --</p>
-        <p class="mb-2">Доставка: 3-5 дни.</p>
-      </div>
-    </div>
-  </div>
-
 </section>
 
+<!-- CONTACT -->
+<section id="contact" class="py-20 px-4">
+  <div class="max-w-3xl mx-auto text-center">
+    <h3 class="text-3xl font-bold mb-6 text-[var(--main-brown)]">Контакт</h3>
+    <p class="text-lg mb-2">📞 Телефон: <strong>+359 88 123 4567</strong></p>
+    <p class="text-lg">✉️ Имейл: <strong>info@vintagelumber.bg</strong></p>
+  </div>
+</section>
+
+<!-- JS -->
 <script>
-function openProductTab(id) {
-  document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo({ top: document.getElementById(id).offsetTop - 80, behavior: 'smooth' });
-}
-function closeProductTab(id) {
-  document.getElementById(id).classList.remove('active');
-}
-function changeMainImage(mainId, newSrc) {
-  document.getElementById(mainId).src = newSrc;
+function openProductTab(id){
+  document.querySelectorAll('.tab-section').forEach(t=>t.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el){
+    el.classList.add('active');
+    window.scrollTo({top:el.offsetTop-80,behavior:'smooth'});
+  }
 }
 </script>
 
