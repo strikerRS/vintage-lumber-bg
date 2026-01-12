@@ -8,7 +8,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* ===== BACKGROUND EFFECT ===== */
 .hero::before {
   content:"";
   position:absolute;
@@ -16,8 +15,6 @@
   background:rgba(0,0,0,.45);
 }
 .hero { position:relative }
-
-/* ===== ORNAMENT FRAME ===== */
 .product-frame {
   position: relative;
   padding: 14px;
@@ -40,18 +37,11 @@
   border-radius:12px;
   overflow:hidden;
 }
-
-/* ===== MODAL ===== */
-#modal {
-  display:none;
-  background:rgba(0,0,0,.7);
-}
 </style>
 </head>
 
 <body class="font-sans text-gray-800">
 
-<!-- ===== HEADER ===== -->
 <header class="fixed w-full z-50 bg-white shadow">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
     <h1 class="text-xl font-bold text-[#6B4226]">Vintage Lumber</h1>
@@ -61,7 +51,6 @@
       <a href="#about">За нас</a>
       <a href="#contact">Контакт</a>
 
-      <!-- CART -->
       <button class="relative bg-[#6B4226] w-12 h-12 rounded-full flex items-center justify-center text-white">
         🛒
         <span class="absolute -top-1 -right-1 bg-red-600 w-5 h-5 text-xs rounded-full flex items-center justify-center">0</span>
@@ -70,48 +59,45 @@
   </div>
 </header>
 
-<!-- ===== HERO ===== -->
-<section class="hero h-screen flex items-center justify-center text-center text-white"
-style="background:url('bg-old-bulgarian-farm.jpg') center/cover no-repeat;">
+<section class="hero h-screen flex items-center justify-center text-center text-white" style="background:url('bg-old-bulgarian-farm.jpg') center/cover no-repeat;">
   <div class="relative z-10">
     <h2 class="text-5xl font-bold mb-4">Дърво с история</h2>
     <p class="text-xl">Автентични стари български материали</p>
   </div>
 </section>
 
-<!-- ===== PRODUCTS ===== -->
 <section id="products" class="py-20 bg-[#f4eadf]">
   <h3 class="text-4xl text-center font-bold mb-12 text-[#6B4226]">Продукти</h3>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
 
-    <!-- PRODUCT TEMPLATE x20 -->
     <script>
       const products=[
-        {img:"dg1.jpg",name:"Стара дървена греда"},
-        {img:"dd1.jpg",name:"Стара дървена дъска"},
-        {img:"dd2.jpg",name:"Стара дъска за декорация"},
-        {img:"dd3.jpg",name:"Стара дъска"},
-        {img:"dd4.jpg",name:"Дървени дъски за декорация"},
+        {img:"dg1.jpg", name:"Стара дървена греда", price:"120 лв", link:"https://productdomain1.com"},
+        {img:"dd1.jpg", name:"Стара дървена дъска", price:"80 лв", link:"https://productdomain2.com"},
+        {img:"dd2.jpg", name:"Стара дъска за декорация", price:"60 лв", link:"https://productdomain3.com"},
+        {img:"dd3.jpg", name:"Стара дъска", price:"70 лв", link:"https://productdomain4.com"},
+        {img:"dd4.jpg", name:"Дървени дъски за декорация", price:"90 лв", link:"https://productdomain5.com"},
       ];
-      for(let i=0;i<20;i++){
-        const p=products[i%products.length];
+
+      products.forEach(p => {
         document.write(`
-        <div onclick="openModal('${p.img}','${p.name}')" class="cursor-pointer product-frame">
+        <div class="cursor-pointer product-frame" onclick="window.location.href='${p.link}'">
           <div class="product-card">
             <img src="${p.img}" class="w-full h-48 object-cover">
             <div class="p-4 text-center">
-              <h4 class="font-semibold">${p.name}</h4>
+              <h4 class="font-semibold mb-2">${p.name}</h4>
+              <p class="text-[#6B4226] font-bold">${p.price}</p>
             </div>
           </div>
-        </div>`);
-      }
+        </div>
+        `);
+      });
     </script>
 
   </div>
 </section>
 
-<!-- ===== ABOUT ===== -->
 <section id="about" class="py-20 bg-white">
   <div class="max-w-4xl mx-auto text-center px-4">
     <h3 class="text-3xl font-bold mb-6 text-[#6B4226]">За нас</h3>
@@ -123,7 +109,6 @@ style="background:url('bg-old-bulgarian-farm.jpg') center/cover no-repeat;">
   </div>
 </section>
 
-<!-- ===== CONTACT ===== -->
 <section id="contact" class="py-20 bg-[#f4eadf]">
   <div class="max-w-3xl mx-auto text-center">
     <h3 class="text-3xl font-bold mb-6 text-[#6B4226]">Контакти</h3>
@@ -131,26 +116,6 @@ style="background:url('bg-old-bulgarian-farm.jpg') center/cover no-repeat;">
     <p class="text-lg">✉️ info@vintagelumber.bg</p>
   </div>
 </section>
-
-<!-- ===== MODAL ===== -->
-<div id="modal" class="fixed inset-0 flex items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-lg max-w-lg w-full relative">
-    <button onclick="closeModal()" class="absolute top-2 right-3 text-xl">✖</button>
-    <img id="modalImg" class="w-full h-64 object-cover mb-4">
-    <h4 id="modalTitle" class="text-xl font-bold text-center"></h4>
-  </div>
-</div>
-
-<script>
-function openModal(img,title){
-  document.getElementById('modalImg').src=img;
-  document.getElementById('modalTitle').innerText=title;
-  document.getElementById('modal').style.display='flex';
-}
-function closeModal(){
-  document.getElementById('modal').style.display='none';
-}
-</script>
 
 </body>
 </html>
