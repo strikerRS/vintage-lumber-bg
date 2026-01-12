@@ -1,45 +1,113 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Продукт 1 - Vintage Lumber</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage Lumber Bulgaria</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <header class="bg-yellow-100 p-4 text-center">
-        <h1 class="text-2xl font-bold">Продукт 1</h1>
-    </header>
 
-    <main class="max-w-4xl mx-auto p-4">
-        <!-- Галерия -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            <img src="dd1.jpg" alt="Продукт 1 - Снимка 1" class="w-full rounded shadow">
-            <img src="dd2.jpg" alt="Продукт 1 - Снимка 2" class="w-full rounded shadow">
-            <img src="dd3.jpg" alt="Продукт 1 - Снимка 3" class="w-full rounded shadow">
-            <img src="dd4.jpg" alt="Продукт 1 - Снимка 4" class="w-full rounded shadow">
-            <img src="dg1.jpg" alt="Продукт 1 - Снимка 5" class="w-full rounded shadow">
-        </section>
+<body class="bg-[#f4eadf] text-gray-800">
 
-        <!-- Описание -->
-        <section class="mb-6">
-            <h2 class="text-xl font-semibold mb-2">Описание на продукта</h2>
-            <p>Този продукт е ръчно изработен от висококачествено дърво. Перфектен за интериор и подарък. Всяка част е внимателно обработена и има уникален ретро стил.</p>
-        </section>
+<script>
+const products = {
+  dd1: {
+    title: "Стара дървена дъска",
+    images: ["dd1.jpg", "dd2.jpg", "dg1.jpg"],
+    description: "Автентична стара дървена дъска, демонтирана от български селски постройки. Запазена естествена патина, следи от времето и уникален характер.",
+    specs: ["Естествено старо дърво", "Ръчна селекция", "Подходящо за интериор и декорация"],
+    delivery: "Доставка в цялата страна с куриер. Възможно лично предаване след предварителна уговорка."
+  }
+};
 
-        <!-- Информация за доставка -->
-        <section class="mb-6">
-            <h2 class="text-xl font-semibold mb-2">Информация за доставка</h2>
-            <ul class="list-disc list-inside">
-                <li>Доставка до 3-5 работни дни.</li>
-                <li>Възможност за проследяване на пратката.</li>
-                <li>Безплатна доставка при поръчки над 150 лв.</li>
-            </ul>
-        </section>
+const params = new URLSearchParams(window.location.search);
+const productKey = params.get("product");
+</script>
 
-        <div class="text-center">
-            <a href="index.html" class="inline-block bg-yellow-300 hover:bg-yellow-400 text-gray-800 font-semibold py-2 px-4 rounded">Назад към продукти</a>
-        </div>
-    </main>
+<!-- ================= PRODUCT PAGE ================= -->
+<div id="productPage" class="hidden max-w-6xl mx-auto p-8">
+  <a href="index.html" class="text-[#6B4226] font-bold">← Назад</a>
+
+  <div class="grid md:grid-cols-2 gap-10 mt-6">
+    <div id="gallery" class="grid grid-cols-2 gap-4"></div>
+
+    <div>
+      <h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
+
+      <p id="description" class="mb-6"></p>
+
+      <h2 class="text-xl font-bold mb-2">Характеристики</h2>
+      <ul id="specs" class="list-disc ml-5 mb-6"></ul>
+
+      <h2 class="text-xl font-bold mb-2">Доставка</h2>
+      <p id="delivery"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MAIN PAGE ================= -->
+<div id="mainPage">
+
+<header class="bg-white shadow p-6 text-center text-3xl font-bold text-[#6B4226]">
+  Vintage Lumber Bulgaria
+</header>
+
+<main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
+
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+    </div>
+  </a>
+
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Рустик дъска</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+    </div>
+  </a>
+
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Стара масивна греда</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+    </div>
+  </a>
+
+</main>
+</div>
+
+<script>
+if (productKey && products[productKey]) {
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("productPage").style.display = "block";
+
+  const p = products[productKey];
+  document.getElementById("title").innerText = p.title;
+  document.getElementById("description").innerText = p.description;
+  document.getElementById("delivery").innerText = p.delivery;
+
+  p.images.forEach(img => {
+    const i = document.createElement("img");
+    i.src = img;
+    i.className = "rounded-xl shadow";
+    document.getElementById("gallery").appendChild(i);
+  });
+
+  p.specs.forEach(s => {
+    const li = document.createElement("li");
+    li.innerText = s;
+    document.getElementById("specs").appendChild(li);
+  });
+}
+</script>
+
 </body>
 </html>
