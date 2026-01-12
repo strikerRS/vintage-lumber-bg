@@ -2,108 +2,110 @@
 <html lang="bg">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body { font-family: sans-serif; }
-  .modal-bg {
-    background: rgba(0,0,0,0.75);
-    position: fixed;
-    inset: 0;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 50;
-  }
-  .modal {
-    background: white;
-    max-width: 600px;
-    width: 90%;
-    border-radius: 10px;
-    padding: 20px;
-  }
-</style>
 </head>
 
 <body class="bg-[#f4eadf] text-gray-800">
 
-<header class="bg-white shadow p-4 text-center font-bold text-xl text-[#6B4226]">
+<script>
+const products = {
+  dd1: {
+    title: "Стара дървена дъска",
+    images: ["dd1.jpg", "dd2.jpg", "dg1.jpg"],
+    description: "Автентична стара дървена дъска, демонтирана от български селски постройки. Запазена естествена патина, следи от времето и уникален характер.",
+    specs: ["Естествено старо дърво", "Ръчна селекция", "Подходящо за интериор и декорация"],
+    delivery: "Доставка в цялата страна с куриер. Възможно лично предаване след предварителна уговорка."
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const productKey = params.get("product");
+</script>
+
+<!-- ================= PRODUCT PAGE ================= -->
+<div id="productPage" class="hidden max-w-6xl mx-auto p-8">
+  <a href="index.html" class="text-[#6B4226] font-bold">← Назад</a>
+
+  <div class="grid md:grid-cols-2 gap-10 mt-6">
+    <div id="gallery" class="grid grid-cols-2 gap-4"></div>
+
+    <div>
+      <h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
+
+      <p id="description" class="mb-6"></p>
+
+      <h2 class="text-xl font-bold mb-2">Характеристики</h2>
+      <ul id="specs" class="list-disc ml-5 mb-6"></ul>
+
+      <h2 class="text-xl font-bold mb-2">Доставка</h2>
+      <p id="delivery"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MAIN PAGE ================= -->
+<div id="mainPage">
+
+<header class="bg-white shadow p-6 text-center text-3xl font-bold text-[#6B4226]">
   Vintage Lumber Bulgaria
 </header>
 
-<section class="p-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+<main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
 
-  <!-- Продукт 1 -->
-  <div class="bg-white rounded-lg shadow cursor-pointer" onclick="openProduct('p1')">
-    <img src="dd1.jpg" class="rounded-t-lg w-full h-48 object-cover">
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
     <div class="p-4 text-center">
-      <h3 class="font-semibold">Стара дървена дъска</h3>
-      <p class="text-[#6B4226] font-bold">80 лв</p>
+      <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
     </div>
-  </div>
+  </a>
 
-  <!-- Продукт 2 -->
-  <div class="bg-white rounded-lg shadow cursor-pointer" onclick="openProduct('p2')">
-    <img src="dd2.jpg" class="rounded-t-lg w-full h-48 object-cover">
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
     <div class="p-4 text-center">
-      <h3 class="font-semibold">Декоративна стара дъска</h3>
-      <p class="text-[#6B4226] font-bold">60 лв</p>
+      <h3 class="font-semibold text-lg">Рустик дъска</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
     </div>
-  </div>
+  </a>
 
-  <!-- Продукт 3 -->
-  <div class="bg-white rounded-lg shadow cursor-pointer" onclick="openProduct('p3')">
-    <img src="dg1.jpg" class="rounded-t-lg w-full h-48 object-cover">
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
     <div class="p-4 text-center">
-      <h3 class="font-semibold">Стара дървена греда</h3>
-      <p class="text-[#6B4226] font-bold">120 лв</p>
+      <h3 class="font-semibold text-lg">Стара масивна греда</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
     </div>
-  </div>
+  </a>
 
-</section>
-
-<!-- MODALS -->
-
-<!-- Продукт 1 -->
-<div id="p1" class="modal-bg" onclick="closeProduct('p1')">
-  <div class="modal" onclick="event.stopPropagation()">
-    <h2 class="text-2xl font-bold text-[#6B4226] mb-2">Стара дървена дъска</h2>
-    <img src="dd1.jpg" class="w-full rounded-lg mb-4">
-    <p class="text-xl font-bold mb-2">80 лв</p>
-    <p class="mb-4">Автентична стара дървена дъска, идеална за декорация и интериор.</p>
-    <button class="bg-[#6B4226] text-white px-4 py-2 rounded" onclick="closeProduct('p1')">Затвори</button>
-  </div>
-</div>
-
-<!-- Продукт 2 -->
-<div id="p2" class="modal-bg" onclick="closeProduct('p2')">
-  <div class="modal" onclick="event.stopPropagation()">
-    <h2 class="text-2xl font-bold text-[#6B4226] mb-2">Декоративна стара дъска</h2>
-    <img src="dd2.jpg" class="w-full rounded-lg mb-4">
-    <p class="text-xl font-bold mb-2">60 лв</p>
-    <p class="mb-4">Стилна стара дъска за декорация и творчески проекти.</p>
-    <button class="bg-[#6B4226] text-white px-4 py-2 rounded" onclick="closeProduct('p2')">Затвори</button>
-  </div>
-</div>
-
-<!-- Продукт 3 -->
-<div id="p3" class="modal-bg" onclick="closeProduct('p3')">
-  <div class="modal" onclick="event.stopPropagation()">
-    <h2 class="text-2xl font-bold text-[#6B4226] mb-2">Стара дървена греда</h2>
-    <img src="dg1.jpg" class="w-full rounded-lg mb-4">
-    <p class="text-xl font-bold mb-2">120 лв</p>
-    <p class="mb-4">Масивна стара греда, запазена за интериорни решения и мебели.</p>
-    <button class="bg-[#6B4226] text-white px-4 py-2 rounded" onclick="closeProduct('p3')">Затвори</button>
-  </div>
+</main>
 </div>
 
 <script>
-function openProduct(id) {
-  document.getElementById(id).style.display = "flex";
-}
-function closeProduct(id) {
-  document.getElementById(id).style.display = "none";
+if (productKey && products[productKey]) {
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("productPage").style.display = "block";
+
+  const p = products[productKey];
+  document.getElementById("title").innerText = p.title;
+  document.getElementById("description").innerText = p.description;
+  document.getElementById("delivery").innerText = p.delivery;
+
+  p.images.forEach(img => {
+    const i = document.createElement("img");
+    i.src = img;
+    i.className = "rounded-xl shadow";
+    document.getElementById("gallery").appendChild(i);
+  });
+
+  p.specs.forEach(s => {
+    const li = document.createElement("li");
+    li.innerText = s;
+    document.getElementById("specs").appendChild(li);
+  });
 }
 </script>
 
