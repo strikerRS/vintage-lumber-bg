@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
-
 <script src="https://cdn.tailwindcss.com"></script>
-
 <style>
 .hero::before {
   content:"";
@@ -39,18 +37,14 @@
 }
 </style>
 </head>
-
 <body class="font-sans text-gray-800">
-
 <header class="fixed w-full z-50 bg-white shadow">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
     <h1 class="text-xl font-bold text-[#6B4226]">Vintage Lumber</h1>
-
     <nav class="flex items-center gap-6">
       <a href="#products">Продукти</a>
       <a href="#about">За нас</a>
       <a href="#contact">Контакт</a>
-
       <button class="relative bg-[#6B4226] w-12 h-12 rounded-full flex items-center justify-center text-white">
         🛒
         <span class="absolute -top-1 -right-1 bg-red-600 w-5 h-5 text-xs rounded-full flex items-center justify-center">0</span>
@@ -58,28 +52,23 @@
     </nav>
   </div>
 </header>
-
 <section class="hero h-screen flex items-center justify-center text-center text-white" style="background:url('bg-old-bulgarian-farm.jpg') center/cover no-repeat;">
   <div class="relative z-10">
     <h2 class="text-5xl font-bold mb-4">Дърво с история</h2>
     <p class="text-xl">Автентични стари български материали</p>
   </div>
 </section>
-
 <section id="products" class="py-20 bg-[#f4eadf]">
   <h3 class="text-4xl text-center font-bold mb-12 text-[#6B4226]">Продукти</h3>
-
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
-
     <script>
-      const products=[
-        {img:"dg1.jpg", name:"Стара дървена греда", price:"120 лв", link:"https://productdomain1.com"},
-        {img:"dd1.jpg", name:"Стара дървена дъска", price:"80 лв", link:"https://productdomain2.com"},
-        {img:"dd2.jpg", name:"Стара дъска за декорация", price:"60 лв", link:"https://productdomain3.com"},
-        {img:"dd3.jpg", name:"Стара дъска", price:"70 лв", link:"https://productdomain4.com"},
-        {img:"dd4.jpg", name:"Дървени дъски за декорация", price:"90 лв", link:"https://productdomain5.com"},
+      const products = [
+        {img:"dg1.jpg", name:"Стара дървена греда", price:"120 лв", link:"dg1.html"},
+        {img:"dd1.jpg", name:"Стара дървена дъска", price:"80 лв", link:"dd1.html"},
+        {img:"dd2.jpg", name:"Стара дъска за декорация", price:"60 лв", link:"dd2.html"},
+        {img:"dd3.jpg", name:"Стара дъска", price:"70 лв", link:"dd3.html"},
+        {img:"dd4.jpg", name:"Дървени дъски за декорация", price:"90 лв", link:"dd4.html"},
       ];
-
       products.forEach(p => {
         document.write(`
         <div class="cursor-pointer product-frame" onclick="window.location.href='${p.link}'">
@@ -94,21 +83,16 @@
         `);
       });
     </script>
-
   </div>
 </section>
-
 <section id="about" class="py-20 bg-white">
   <div class="max-w-4xl mx-auto text-center px-4">
     <h3 class="text-3xl font-bold mb-6 text-[#6B4226]">За нас</h3>
     <p class="text-lg">
-      Vintage Lumber Bulgaria работи със стари селски постройки,
-      хамбари и ферми. Съхраняваме духа на българското дърво
-      и го превръщаме в уникални материали за интериор и декорация.
+      Vintage Lumber Bulgaria работи със стари селски постройки, хамбари и ферми. Съхраняваме духа на българското дърво и го превръщаме в уникални материали за интериор и декорация.
     </p>
   </div>
 </section>
-
 <section id="contact" class="py-20 bg-[#f4eadf]">
   <div class="max-w-3xl mx-auto text-center">
     <h3 class="text-3xl font-bold mb-6 text-[#6B4226]">Контакти</h3>
@@ -116,6 +100,5 @@
     <p class="text-lg">✉️ info@vintagelumber.bg</p>
   </div>
 </section>
-
 </body>
 </html>
