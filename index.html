@@ -2,103 +2,110 @@
 <html lang="bg">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-.hero::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.45);
-}
-.hero { position:relative }
-.product-frame {
-  position: relative;
-  padding: 14px;
-  background: linear-gradient(135deg,#8b5a2b,#e0c097,#8b5a2b);
-  border-radius: 18px;
-}
-.product-frame::before {
-  content:"✦ ❦ ✦";
-  position:absolute;
-  top:-10px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#fff;
-  padding:0 10px;
-  color:#6b4226;
-  font-size:14px;
-}
-.product-card {
-  background:#fff;
-  border-radius:12px;
-  overflow:hidden;
-}
+  body { font-family: sans-serif; }
+  .modal-bg {
+    background: rgba(0,0,0,0.75);
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+  }
+  .modal {
+    background: white;
+    max-width: 600px;
+    width: 90%;
+    border-radius: 10px;
+    padding: 20px;
+  }
 </style>
 </head>
-<body class="font-sans text-gray-800">
-<header class="fixed w-full z-50 bg-white shadow">
-  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    <h1 class="text-xl font-bold text-[#6B4226]">Vintage Lumber</h1>
-    <nav class="flex items-center gap-6">
-      <a href="#products">Продукти</a>
-      <a href="#about">За нас</a>
-      <a href="#contact">Контакт</a>
-      <button class="relative bg-[#6B4226] w-12 h-12 rounded-full flex items-center justify-center text-white">
-        🛒
-        <span class="absolute -top-1 -right-1 bg-red-600 w-5 h-5 text-xs rounded-full flex items-center justify-center">0</span>
-      </button>
-    </nav>
-  </div>
+
+<body class="bg-[#f4eadf] text-gray-800">
+
+<header class="bg-white shadow p-4 text-center font-bold text-xl text-[#6B4226]">
+  Vintage Lumber Bulgaria
 </header>
-<section class="hero h-screen flex items-center justify-center text-center text-white" style="background:url('bg-old-bulgarian-farm.jpg') center/cover no-repeat;">
-  <div class="relative z-10">
-    <h2 class="text-5xl font-bold mb-4">Дърво с история</h2>
-    <p class="text-xl">Автентични стари български материали</p>
+
+<section class="p-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+
+  <!-- Продукт 1 -->
+  <div class="bg-white rounded-lg shadow cursor-pointer" onclick="openProduct('p1')">
+    <img src="dd1.jpg" class="rounded-t-lg w-full h-48 object-cover">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена дъска</h3>
+      <p class="text-[#6B4226] font-bold">80 лв</p>
+    </div>
   </div>
-</section>
-<section id="products" class="py-20 bg-[#f4eadf]">
-  <h3 class="text-4xl text-center font-bold mb-12 text-[#6B4226]">Продукти</h3>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
-    <script>
-      const products = [
-        {img:"dg1.jpg", name:"Стара дървена греда", price:"120 лв", link:"dg1.html"},
-        {img:"dd1.jpg", name:"Стара дървена дъска", price:"80 лв", link:"dd1.html"},
-        {img:"dd2.jpg", name:"Стара дъска за декорация", price:"60 лв", link:"dd2.html"},
-        {img:"dd3.jpg", name:"Стара дъска", price:"70 лв", link:"dd3.html"},
-        {img:"dd4.jpg", name:"Дървени дъски за декорация", price:"90 лв", link:"dd4.html"},
-      ];
-      products.forEach(p => {
-        document.write(`
-        <div class="cursor-pointer product-frame" onclick="window.location.href='${p.link}'">
-          <div class="product-card">
-            <img src="${p.img}" class="w-full h-48 object-cover">
-            <div class="p-4 text-center">
-              <h4 class="font-semibold mb-2">${p.name}</h4>
-              <p class="text-[#6B4226] font-bold">${p.price}</p>
-            </div>
-          </div>
-        </div>
-        `);
-      });
-    </script>
+
+  <!-- Продукт 2 -->
+  <div class="bg-white rounded-lg shadow cursor-pointer" onclick="openProduct('p2')">
+    <img src="dd2.jpg" class="rounded-t-lg w-full h-48 object-cover">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Декоративна стара дъска</h3>
+      <p class="text-[#6B4226] font-bold">60 лв</p>
+    </div>
   </div>
-</section>
-<section id="about" class="py-20 bg-white">
-  <div class="max-w-4xl mx-auto text-center px-4">
-    <h3 class="text-3xl font-bold mb-6 text-[#6B4226]">За нас</h3>
-    <p class="text-lg">
-      Vintage Lumber Bulgaria работи със стари селски постройки, хамбари и ферми. Съхраняваме духа на българското дърво и го превръщаме в уникални материали за интериор и декорация.
-    </p>
+
+  <!-- Продукт 3 -->
+  <div class="bg-white rounded-lg shadow cursor-pointer" onclick="openProduct('p3')">
+    <img src="dg1.jpg" class="rounded-t-lg w-full h-48 object-cover">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена греда</h3>
+      <p class="text-[#6B4226] font-bold">120 лв</p>
+    </div>
   </div>
+
 </section>
-<section id="contact" class="py-20 bg-[#f4eadf]">
-  <div class="max-w-3xl mx-auto text-center">
-    <h3 class="text-3xl font-bold mb-6 text-[#6B4226]">Контакти</h3>
-    <p class="text-lg">📞 +359 88 123 4567</p>
-    <p class="text-lg">✉️ info@vintagelumber.bg</p>
+
+<!-- MODALS -->
+
+<!-- Продукт 1 -->
+<div id="p1" class="modal-bg" onclick="closeProduct('p1')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 class="text-2xl font-bold text-[#6B4226] mb-2">Стара дървена дъска</h2>
+    <img src="dd1.jpg" class="w-full rounded-lg mb-4">
+    <p class="text-xl font-bold mb-2">80 лв</p>
+    <p class="mb-4">Автентична стара дървена дъска, идеална за декорация и интериор.</p>
+    <button class="bg-[#6B4226] text-white px-4 py-2 rounded" onclick="closeProduct('p1')">Затвори</button>
   </div>
-</section>
+</div>
+
+<!-- Продукт 2 -->
+<div id="p2" class="modal-bg" onclick="closeProduct('p2')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 class="text-2xl font-bold text-[#6B4226] mb-2">Декоративна стара дъска</h2>
+    <img src="dd2.jpg" class="w-full rounded-lg mb-4">
+    <p class="text-xl font-bold mb-2">60 лв</p>
+    <p class="mb-4">Стилна стара дъска за декорация и творчески проекти.</p>
+    <button class="bg-[#6B4226] text-white px-4 py-2 rounded" onclick="closeProduct('p2')">Затвори</button>
+  </div>
+</div>
+
+<!-- Продукт 3 -->
+<div id="p3" class="modal-bg" onclick="closeProduct('p3')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 class="text-2xl font-bold text-[#6B4226] mb-2">Стара дървена греда</h2>
+    <img src="dg1.jpg" class="w-full rounded-lg mb-4">
+    <p class="text-xl font-bold mb-2">120 лв</p>
+    <p class="mb-4">Масивна стара греда, запазена за интериорни решения и мебели.</p>
+    <button class="bg-[#6B4226] text-white px-4 py-2 rounded" onclick="closeProduct('p3')">Затвори</button>
+  </div>
+</div>
+
+<script>
+function openProduct(id) {
+  document.getElementById(id).style.display = "flex";
+}
+function closeProduct(id) {
+  document.getElementById(id).style.display = "none";
+}
+</script>
+
 </body>
 </html>
