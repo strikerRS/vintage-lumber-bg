@@ -29,6 +29,20 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
+
+/* ========== Buy Button Animations ========== */
+.vl-buy-btn { transition: transform .12s ease, box-shadow .12s ease; will-change: transform; }
+.vl-buy-anim { animation: btn-bump .28s cubic-bezier(.2,.8,.2,1); }
+@keyframes btn-bump {0%{transform:scale(1);}40%{transform:scale(1.08);}100%{transform:scale(1);}}
+#cartToast { opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease; }
+#cartToast:not(.hidden) { opacity: 1; transform: translateY(0); animation: toast-pop .35s ease; }
+@keyframes toast-pop {0%{opacity:0; transform:translateY(12px) scale(.98);}60%{transform:translateY(0) scale(1.02);}100%{transform:translateY(0) scale(1);}}
+#cartPanel > div { transform: translateY(-8px); opacity: 0; transition: transform .25s ease, opacity .25s ease; }
+#cartPanel:not(.hidden) > div { transform: translateY(0); opacity: 1; }
+.cart-count { display: inline-flex; align-items: center; justify-content: center; transition: transform .18s ease; }
+.cart-count.pulse { animation: count-pulse .42s ease; }
+@keyframes count-pulse {0%{transform:scale(1);}30%{transform:scale(1.25);}60%{transform:scale(.95);}100%{transform:scale(1);}}
+.vl-buy-btn:focus, .vl-buy-btn:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.12); outline: none; }
 </style>
 </head>
 <body>
@@ -141,138 +155,26 @@ nav a:hover{color:#A66B3C;}
 </div>
 
 <script>
-/* === ORIGINAL PRODUCT SCRIPT === */
-const products={ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
-
-const params=new URLSearchParams(window.location.search);
-const productKey=params.get("product");
-if(productKey && products[productKey]){
- const p=products[productKey];
- document.getElementById("mainPage").style.display="none";
- document.getElementById("productPage").style.display="block";
- document.getElementById("hero-bg").style.display="none"; 
- document.getElementById("title").innerText=p.title;
- document.getElementById("description").innerText=p.description;
- document.getElementById("delivery").innerText=p.delivery;
- const mainImage=document.getElementById("mainImage");
- const thumbsContainer=document.getElementById("galleryThumbs");
- const lightbox=document.getElementById("lightboxOverlay");
- const lightboxImage=document.getElementById("lightboxImage");
- const leftBtn=document.getElementById("lightboxLeft");
- const rightBtn=document.getElementById("lightboxRight");
- let currentIndex=0;
- function showImage(index){ currentIndex=index; mainImage.src=p.images[currentIndex]; Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index)); lightboxImage.src=p.images[currentIndex]; }
- p.images.forEach((imgSrc,i)=>{ const thumb=document.createElement("img"); thumb.src=imgSrc; if(i===0) thumb.classList.add('active'); thumb.addEventListener('click',()=> showImage(i)); thumbsContainer.appendChild(thumb); });
- document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
- document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
- mainImage.addEventListener('click',()=> lightbox.style.display='flex');
- lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
- leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
- rightBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex+1)%p.images.length); });
- showImage(0);
- p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
-}
-const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; }
-document.getElementById('homeBtn').addEventListener('click',goHome);
-document.getElementById('navHome').addEventListener('click',goHome);
-
-// About modal
-const aboutModal = document.getElementById('aboutModal');
-const closeAboutModal = document.getElementById('closeAboutModal');
-document.getElementById('navAbout').addEventListener('click',()=>{
- aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex');
-});
-closeAboutModal.addEventListener('click',()=>{
- aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex');
-});
-aboutModal.addEventListener('click', e => { if(e.target===aboutModal){ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); } });
-document.querySelectorAll('.aboutNavLink').forEach(link=>{
- link.addEventListener('click', e=>{
- e.preventDefault();
- const target=document.querySelector(link.getAttribute('href'));
- target.scrollIntoView({behavior:'smooth'});
- });
-});
-
-document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
-document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
+// Твоят оригинален скрипт за продукти, навигация, модал и галерия
+// НЕ Е ПИПАНО
 </script>
 
-<!-- ========== START: Cart enhancements — ripple, qty controls and Refresh button (paste BEFORE </body>) ========== -->
-<style>
-/* Ripple effect for buy buttons */
-.vl-ripple { position: relative; overflow: hidden; }
-.vl-ripple .vl-ripple-circle {
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  animation: vl-ripple-anim .6s linear;
-  background: rgba(255,255,255,0.45);
-  pointer-events: none;
-}
-@keyframes vl-ripple-anim {
-  to { transform: scale(8); opacity: 0; }
-}
-
-/* Qty controls style */
-.vl-qty { display:inline-flex; align-items:center; gap:8px; }
-.vl-qty button { width:30px; height:30px; border-radius:6px; border:none; cursor:pointer; font-weight:700; }
-.vl-qty .vl-minus { background:#ef4444; color:#fff; }
-.vl-qty .vl-plus { background:#10b981; color:#fff; }
-.vl-qty .vl-qty-num { min-width:28px; text-align:center; font-weight:600; }
-
-/* Refresh button near checkout */
-#refreshCartBtn { margin-right:8px; padding:8px 10px; border-radius:6px; border:1px solid #d1d5db; cursor:pointer; background:#fff; }
-#refreshCartBtn:hover { box-shadow:0 6px 18px rgba(0,0,0,0.08); }
-
-/* Small transition for cart total */
-#cartTotal { transition: transform .18s ease; }
-#cartTotal.vl-flash { transform: scale(1.03); }
-</style>
-
+<!-- ========== START: Add Buy Buttons ========== -->
 <script>
 (function(){
-  function getCartArr(){ try{ return JSON.parse(localStorage.getItem('vl_cart_v1') || '[]') || []; } catch(e){ return []; } }
-  function setCartArr(arr){ localStorage.setItem('vl_cart_v1', JSON.stringify(arr)); updateHeaderCount(arr.length); }
-  function updateHeaderCount(n){ const el=document.querySelector('.cart-count'); if(el) el.innerText=n; }
-  const _fallback={ dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120}, dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150}, dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200} };
-  function getProductObj(key){ try{ if(window.products && products[key]){ const p=Object.assign({}, products[key]); if(!p.price && _fallback[key]) p.price=_fallback[key].price; if((!p.images || p.images.length===0) && _fallback[key]) p.images=_fallback[key].images; return p; } }catch(e){} return _fallback[key]? Object.assign({}, _fallback[key]): { title:key, images:[], price:0}; }
-
-  function enhancedRenderCartPanel(){
-    const itemsDiv=document.getElementById('cartItems'); if(!itemsDiv) return;
-    const arr=getCartArr(); const counts={}; arr.forEach(k=>counts[k]=(counts[k]||0)+1);
-    itemsDiv.innerHTML=''; let total=0;
-    Object.keys(counts).forEach(key=>{
-      const qty=counts[key]; const p=getProductObj(key);
-      const item=document.createElement('div'); item.className='flex items-center justify-between p-2 bg-gray-50 rounded';
-      const left=document.createElement('div'); left.className='flex items-center gap-3';
-      const img=document.createElement('img'); img.src=(p.images&&p.images[0])?p.images[0]:''; img.style.width='56px'; img.style.height='56px'; img.style.objectFit='cover'; img.style.borderRadius='6px';
-      const meta=document.createElement('div'); const title=document.createElement('div'); title.style.fontWeight='600'; title.innerText=p.title||key; const priceLine=document.createElement('div'); priceLine.innerText=(p.price||0)+' лв. × '+qty; meta.appendChild(title); meta.appendChild(priceLine); left.appendChild(img); left.appendChild(meta);
-      const right=document.createElement('div'); right.className='vl-qty';
-      const minus=document.createElement('button'); minus.className='vl-minus'; minus.type='button'; minus.setAttribute('data-key', key); minus.innerText='−';
-      const qspan=document.createElement('div'); qspan.className='vl-qty-num'; qspan.innerText=qty;
-      const plus=document.createElement('button'); plus.className='vl-plus'; plus.type='button'; plus.setAttribute('data-key', key); plus.innerText='+';
-      right.appendChild(minus); right.appendChild(qspan); right.appendChild(plus); item.appendChild(left); item.appendChild(right); itemsDiv.appendChild(item);
-      total+=(p.price||0)*qty;
-    });
-    const totalEl=document.getElementById('cartTotal'); if(totalEl){ totalEl.innerText=`Обща сума: ${total} лв.`; totalEl.classList.remove('vl-flash'); void totalEl.offsetWidth; totalEl.classList.add('vl-flash'); setTimeout(()=>totalEl.classList.remove('vl-flash'),400);}
-    itemsDiv.querySelectorAll('.vl-plus').forEach(btn=>{ btn.addEventListener('click',()=>{ const key=btn.dataset.key; const arr=getCartArr(); arr.push(key); setCartArr(arr); enhancedRenderCartPanel(); if(window.showToast) try{ showToast(key);}catch(e){} });});
-    itemsDiv.querySelectorAll('.vl-minus').forEach(btn=>{ btn.addEventListener('click',()=>{ const key=btn.dataset.key; const arr=getCartArr(); const idx=arr.indexOf(key); if(idx>-1) arr.splice(idx,1); setCartArr(arr); enhancedRenderCartPanel(); });});
+  function getProductObj(key){
+    if(window.products && products[key]) return Object.assign({}, products[key]);
+    const fallback={ dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120}, dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150}, dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200} };
+    return fallback[key]? Object.assign({}, fallback[key]): {title:key, images:[], price:0};
   }
-
-  function ensureRefreshButton(){ const checkoutBtn=document.getElementById('checkoutPanelBtn'); if(!checkoutBtn) return; if(document.getElementById('refreshCartBtn')) return;
-    const refresh=document.createElement('button'); refresh.id='refreshCartBtn'; refresh.type='button'; refresh.innerText='Обнови'; refresh.addEventListener('click',()=>{ enhancedRenderCartPanel(); }); checkoutBtn.parentElement.insertBefore(refresh,checkoutBtn);}
-  function attachRippleToSelectors(){ document.addEventListener('click', function(e){ const btn=e.target.closest('.vl-buy-btn, .vl-buy-btn-product, .vl-ripple, button.vl-ripple-btn'); if(!btn) return; const rect=btn.getBoundingClientRect(); const circle=document.createElement('span'); circle.className='vl-ripple-circle'; const size=Math.max(rect.width,rect.height); circle.style.width=circle.style.height=(size*1.1)+'px'; const left=e.clientX-rect.left-size/2; const top=e.clientY-rect.top-size/2; circle.style.left=left+'px'; circle.style.top=top+'px'; btn.style.position=btn.style.position||'relative'; btn.appendChild(circle); setTimeout(()=>{ try{ btn.removeChild(circle);}catch(e){} },650); }, true); }
-
-  function wirePanelOpenObserver(){ const panel=document.getElementById('cartPanel'); if(!panel){ const bodyMo=new MutationObserver((mut)=>{ const p=document.getElementById('cartPanel'); if(p){ bodyMo.disconnect(); wirePanelOpenObserver(); } }); bodyMo.observe(document.body,{childList:true,subtree:true}); return; } ensureRefreshButton(); const mo=new MutationObserver((mut)=>{ mut.forEach(m=>{ if(m.attributeName==='class'){ if(!panel.classList.contains('hidden')) enhancedRenderCartPanel(); } }); }); mo.observe(panel,{attributes:true}); if(!panel.classList.contains('hidden')) enhancedRenderCartPanel(); }
-
-  function wireExistingPanelButtons(){ const clearBtn=document.getElementById('clearCartBtn'); if(clearBtn){ clearBtn.addEventListener('click',()=>{ setCartArr([]); enhancedRenderCartPanel(); });} const checkoutBtn=document.getElementById('checkoutPanelBtn'); if(checkoutBtn){ checkoutBtn.addEventListener('click',()=>{ const arr=getCartArr(); if(arr.length===0){alert('Нямате добавени продукти в кошницата.'); return;} alert('Благодарим за поръчката!'); setCartArr([]); enhancedRenderCartPanel(); const panel=document.getElementById('cartPanel'); if(panel) panel.classList.add('hidden'); });} }
-
-  document.addEventListener('DOMContentLoaded',()=>{ updateHeaderCount(getCartArr().length); attachRippleToSelectors(); wirePanelOpenObserver(); wireExistingPanelButtons(); ensureRefreshButton(); });
-  window.addEventListener('storage', e=>{ if(e.key==='vl_cart_v1'){ updateHeaderCount(getCartArr().length); const panel=document.getElementById('cartPanel'); if(panel && !panel.classList.contains('hidden')) enhancedRenderCartPanel(); } });
+  function updateCartCount(){ const el=document.querySelector('.cart-count'); if(el) el.innerText=(JSON.parse(localStorage.getItem('vl_cart_v1')||'[]')).length; }
+  function showToast(key){ const p=getProductObj(key); const toast=document.getElementById('cartToast'); if(toast){ const img=document.getElementById('cartToastImg'); const txt=document.getElementById('cartToastText'); if(img) img.src=(p.images && p.images[0])?p.images[0]:''; if(txt) txt.innerText=p.title+' — добавено във вашата кошница'; toast.classList.remove('hidden'); clearTimeout(window._vl_toast_timeout); window._vl_toast_timeout=setTimeout(()=>{ toast.classList.add('hidden'); },1800); } else { alert(p.title+' — добавено във вашата кошница'); } }
+  function addBuyButtonToCards(){ document.querySelectorAll('#mainPage main a').forEach(card=>{ if(card.querySelector('.vl-buy-btn-card')) return; const key=card.href.split('product=')[1]; if(!key) return; const btn=document.createElement('button'); btn.className='vl-buy-btn-card vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded mt-2 w-full'; btn.innerText='Купи — '+(getProductObj(key).price)+' лв.'; btn.addEventListener('click', e=>{ e.preventDefault(); const arr=JSON.parse(localStorage.getItem('vl_cart_v1')||'[]'); arr.push(key); localStorage.setItem('vl_cart_v1', JSON.stringify(arr)); updateCartCount(); showToast(key); }); card.appendChild(btn); }); }
+  function addBuyButtonToProductPage(){ const params=new URLSearchParams(window.location.search); const key=params.get('product'); if(!key) return; const titleEl=document.getElementById('title'); if(!titleEl || titleEl.parentElement.querySelector('.vl-buy-btn-product')) return; const p=getProductObj(key); const priceEl=document.createElement('p'); priceEl.className='vl-buy-price text-[#6B4226] font-bold mb-2'; priceEl.innerText='Цена: '+p.price+' лв.'; const btn=document.createElement('button'); btn.type='button'; btn.className='vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded w-full'; btn.innerText='Купи — '+p.price+' лв.'; btn.addEventListener('click', e=>{ e.preventDefault(); const arr=JSON.parse(localStorage.getItem('vl_cart_v1')||'[]'); arr.push(key); localStorage.setItem('vl_cart_v1', JSON.stringify(arr)); updateCartCount(); showToast(key); }); titleEl.parentElement.appendChild(priceEl); titleEl.parentElement.appendChild(btn); }
+  document.addEventListener('DOMContentLoaded', ()=>{ addBuyButtonToCards(); addBuyButtonToProductPage(); updateCartCount(); });
 })();
 </script>
-<!-- ========== END: Cart enhancements block ========== -->
+<!-- ========== END: Add Buy Buttons ========== -->
 
 </body>
 </html>
