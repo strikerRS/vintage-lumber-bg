@@ -13,13 +13,6 @@
   background-size: cover;
   background-position: center;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-  position: relative;
 }
 
 /* ===== НАВИГАЦИЯ ===== */
@@ -47,9 +40,7 @@ nav a {
   color: #6B4226;
   transition: 0.3s;
 }
-nav a:hover {
-  color: #A66B3C;
-}
+nav a:hover { color: #A66B3C; }
 .cart-btn {
   background: #6B4226;
   color: white;
@@ -75,22 +66,21 @@ nav a:hover {
   align-items: center;
   justify-content: center;
 }
-/* ===== ЗА НАС БУТОН ===== */
-nav a#about-btn {
-  background: transparent;
-  color: #6B4226;
-  border-radius: 0;
-  padding: 0.5rem 1rem;
-}
-nav a#about-btn:hover {
-  background: rgba(107,66,38,0.1);
-}
+nav a#about-btn { background: transparent; color: #6B4226; border-radius: 0; padding: 0.5rem 1rem; }
+nav a#about-btn:hover { background: rgba(107,66,38,0.1); }
+/* ===== ГАЛЕРИЯ ===== */
+.gallery-container { position: relative; display: flex; flex-direction: column; }
+.gallery-main { width: 100%; height: 300px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem; }
+.gallery-thumbs { display: flex; gap: 0.5rem; }
+.gallery-thumbs img { width: 70px; height: 70px; object-fit: cover; border-radius: 0.25rem; cursor: pointer; border: 2px solid transparent; }
+.gallery-thumbs img.active { border-color: #6B4226; }
+.arrow-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: white; border: none; font-size: 2rem; padding: 0.25rem 0.5rem; cursor: pointer; border-radius: 0.25rem; }
+.arrow-left { left: 0; }
+.arrow-right { right: 0; }
 </style>
 </head>
-
 <body class="bg-[#f4eadf] text-gray-800">
 
-<!-- ===== HEADER / НАВИГАЦИЯ ===== -->
 <header>
   <h1>Vintage Lumber</h1>
   <nav class="flex items-center">
@@ -98,42 +88,34 @@ nav a#about-btn:hover {
     <a href="#mainPage">Продукти</a>
     <a href="#contact">Свържете се с нас</a>
     <a href="#about" id="about-btn">За нас</a>
-    <div class="cart-btn ml-4">
-      🛒
-      <span class="cart-count">0</span>
-    </div>
+    <div class="cart-btn ml-4">🛒<span class="cart-count">0</span></div>
   </nav>
 </header>
 
-<!-- ===== HERO ПАРАЛАКС СЕКЦИЯ (Премахнат централният надпис) ===== -->
-<section id="hero-bg">
-  <!-- Централният надпис е премахнат -->
-</section>
+<section id="hero-bg"></section>
 
-<!-- ================= PRODUCT PAGE ================= -->
 <div id="productPage" class="hidden max-w-6xl mx-auto p-8 mt-24">
   <a href="index.html" class="text-[#6B4226] font-bold">← Назад</a>
-
   <div class="grid md:grid-cols-2 gap-10 mt-6">
-    <div id="gallery" class="grid grid-cols-2 gap-4"></div>
-
+    <div class="gallery-container">
+      <button class="arrow-btn arrow-left">&#8592;</button>
+      <img id="mainImage" class="gallery-main" src="" alt="Продукт">
+      <button class="arrow-btn arrow-right">&#8594;</button>
+      <div id="galleryThumbs" class="gallery-thumbs"></div>
+    </div>
     <div>
       <h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
       <p id="description" class="mb-6"></p>
-
       <h2 class="text-xl font-bold mb-2">Характеристики</h2>
       <ul id="specs" class="list-disc ml-5 mb-6"></ul>
-
       <h2 class="text-xl font-bold mb-2">Доставка</h2>
       <p id="delivery"></p>
     </div>
   </div>
 </div>
 
-<!-- ================= MAIN PAGE ================= -->
 <div id="mainPage" class="mt-24">
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-
   <a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
     <img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
     <div class="p-4 text-center">
@@ -141,7 +123,6 @@ nav a#about-btn:hover {
       <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
     </div>
   </a>
-
   <a href="index.html?product=dd2" class="bg-white rounded-xl shadow hover:scale-105 transition">
     <img src="images/dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
     <div class="p-4 text-center">
@@ -149,7 +130,6 @@ nav a#about-btn:hover {
       <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
     </div>
   </a>
-
   <a href="index.html?product=dg1" class="bg-white rounded-xl shadow hover:scale-105 transition">
     <img src="images/dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
     <div class="p-4 text-center">
@@ -157,23 +137,20 @@ nav a#about-btn:hover {
       <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
     </div>
   </a>
-
 </main>
 </div>
 
-<!-- ================= CONTACT SECTION ================= -->
 <section id="contact" class="max-w-7xl mx-auto p-10 mt-20">
   <h2 class="text-2xl font-bold mb-4">Свържете се с нас</h2>
   <p>Телефон: +359 88 123 4567</p>
   <p>Имейл: info@vintagelumber.bg</p>
 </section>
 
-<!-- ================= SCRIPT ================= -->
 <script>
 const products = {
-  dd1: { title: "Стара дървена дъска", images: ["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg","images/27586f7a-32cc-4a29-a1e5-3637dfa12d8e.png","images/Capture.PNG","images/dd3.jpg","images/dd4.jpg","images/dd5.jpg","images/logo.png","images/prоduct1.jpg"], description: "Автентична стара дървена дъска, демонтирана от български селски постройки. Запазена естествена патина, следи от времето и уникален характер.", specs: ["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"], delivery: "Доставка в цялата страна с куриер. Възможно лично предаване след предварителна уговорка."},
-  dd2: { title: "Рустик дъска", images: ["images/dd2.jpg"], description: "Автентична рустик дъска с характерна текстура и патина.", specs: ["Ръчно подбрана","Уникален релеф"], delivery: "Доставка по куриер или лично предаване."},
-  dg1: { title: "Стара масивна греда", images: ["images/dg1.jpg"], description: "Масивна греда от стара българска постройка, подходяща за интериор и декорация.", specs: ["Масивно дърво","Естествена патина"], delivery: "Доставка по куриер или лично предаване."}
+  dd1: { title: "Стара дървена дъска", images: ["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg","images/27586f7a-32cc-4a29-a1e5-3637dfa12d8e.png","images/Capture.PNG"], description: "Автентична стара дървена дъска...", specs: ["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"], delivery: "Доставка..."},
+  dd2: { title: "Рустик дъска", images: ["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"], description: "Автентична рустик дъска...", specs: ["Ръчно подбрана","Уникален релеф"], delivery: "Доставка..."},
+  dg1: { title: "Стара масивна греда", images: ["images/logo.png","images/prоduct1.jpg"], description: "Масивна греда...", specs: ["Масивно дърво","Естествена патина"], delivery: "Доставка..."}
 };
 
 const params = new URLSearchParams(window.location.search);
@@ -188,18 +165,29 @@ if(productKey && products[productKey]){
   document.getElementById("description").innerText = p.description;
   document.getElementById("delivery").innerText = p.delivery;
 
-  p.images.forEach(img=>{
-    const i = document.createElement("img");
-    i.src = img;
-    i.className="rounded-xl shadow";
-    document.getElementById("gallery").appendChild(i);
+  const mainImage = document.getElementById("mainImage");
+  const thumbsContainer = document.getElementById("galleryThumbs");
+  let currentIndex = 0;
+
+  function showImage(index){
+    currentIndex = index;
+    mainImage.src = p.images[currentIndex];
+    Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index));
+  }
+
+  p.images.forEach((imgSrc, i)=>{
+    const thumb = document.createElement("img");
+    thumb.src = imgSrc;
+    if(i===0) thumb.classList.add('active');
+    thumb.addEventListener('click', ()=> showImage(i));
+    thumbsContainer.appendChild(thumb);
   });
 
-  p.specs.forEach(s=>{
-    const li = document.createElement("li");
-    li.innerText=s;
-    document.getElementById("specs").appendChild(li);
-  });
+  document.querySelector('.arrow-left').addEventListener('click', ()=> showImage((currentIndex-1+p.images.length)%p.images.length));
+  document.querySelector('.arrow-right').addEventListener('click', ()=> showImage((currentIndex+1)%p.images.length));
+  showImage(0);
+
+  p.specs.forEach(s=>{ const li = document.createElement("li"); li.innerText=s; document.getElementById("specs").appendChild(li); });
 }
 </script>
 
