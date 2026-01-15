@@ -1,16 +1,19 @@
+<!DOCTYPE html>
+<html lang="bg">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
 /* ===== ПАРАЛАКС ФОН ===== */
-.hero {
+#hero-bg {
   background-image: url('bg-old-bulgarian-farm.jpg');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  height: 60vh; /* Можеш да промениш височината */
+  height: 60vh; /* височина на паралакс секцията */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,15 +22,52 @@
 }
 </style>
 </head>
+
 <body class="bg-[#f4eadf] text-gray-800">
 
-<!-- ===== HERO SECTION ===== -->
-<section class="hero text-center">
-  <div>
+<!-- ===== HERO ПАРАЛАКС СЕКЦИЯ ===== -->
+<section id="hero-bg">
+  <div class="text-center">
     <h1 class="text-4xl md:text-6xl font-bold">Vintage Lumber Bulgaria</h1>
     <p class="mt-4 text-xl md:text-2xl">Автентични стари български материали</p>
   </div>
 </section>
+
+<script>
+const products = {
+  dd1: {
+    title: "Стара дървена дъска",
+    images: ["dd1.jpg", "dd2.jpg", "dg1.jpg"],
+    description: "Автентична стара дървена дъска, демонтирана от български селски постройки. Запазена естествена патина, следи от времето и уникален характер.",
+    specs: ["Естествено старо дърво", "Ръчна селекция", "Подходящо за интериор и декорация"],
+    delivery: "Доставка в цялата страна с куриер. Възможно лично предаване след предварителна уговорка."
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const productKey = params.get("product");
+</script>
+
+<!-- ================= PRODUCT PAGE ================= -->
+<div id="productPage" class="hidden max-w-6xl mx-auto p-8">
+  <a href="index.html" class="text-[#6B4226] font-bold">← Назад</a>
+
+  <div class="grid md:grid-cols-2 gap-10 mt-6">
+    <div id="gallery" class="grid grid-cols-2 gap-4"></div>
+
+    <div>
+      <h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
+
+      <p id="description" class="mb-6"></p>
+
+      <h2 class="text-xl font-bold mb-2">Характеристики</h2>
+      <ul id="specs" class="list-disc ml-5 mb-6"></ul>
+
+      <h2 class="text-xl font-bold mb-2">Доставка</h2>
+      <p id="delivery"></p>
+    </div>
+  </div>
+</div>
 
 <!-- ================= MAIN PAGE ================= -->
 <div id="mainPage">
@@ -37,6 +77,61 @@
 </header>
 
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-<!-- продуктите си остават тук -->
+
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+    </div>
+  </a>
+
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Рустик дъска</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+    </div>
+  </a>
+
+  <a href="index.html?product=dd1" target="_blank"
+     class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Стара масивна греда</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+    </div>
+  </a>
+
 </main>
 </div>
+
+<script>
+if (productKey && products[productKey]) {
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("productPage").style.display = "block";
+
+  const p = products[productKey];
+  document.getElementById("title").innerText = p.title;
+  document.getElementById("description").innerText = p.description;
+  document.getElementById("delivery").innerText = p.delivery;
+
+  p.images.forEach(img => {
+    const i = document.createElement("img");
+    i.src = img;
+    i.className = "rounded-xl shadow";
+    document.getElementById("gallery").appendChild(i);
+  });
+
+  p.specs.forEach(s => {
+    const li = document.createElement("li");
+    li.innerText = s;
+    document.getElementById("specs").appendChild(li);
+  });
+}
+</script>
+
+</body>
+</html>
