@@ -33,6 +33,11 @@ nav a:hover{color:#A66B3C;}
 /* Анимации за модала и линковете */
 .aboutModalSection { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
 .aboutModalSection.visible { opacity: 1; transform: translateY(0); }
+.aboutModalSection p { opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.aboutModalSection.visible p { opacity: 1; transform: translateY(0); }
+.aboutModalSection p:nth-child(2){ transition-delay:0.1s; }
+.aboutModalSection p:nth-child(3){ transition-delay:0.2s; }
+.aboutModalSection p:nth-child(4){ transition-delay:0.3s; }
 .aboutNavLink { transition: color 0.3s, transform 0.3s; }
 .aboutNavLink:hover { color: #A66B3C; transform: translateY(-2px); }
 </style>
@@ -76,7 +81,6 @@ nav a:hover{color:#A66B3C;}
 </div>
 </a>
 </main>
-
 <div id="about">
 <h2 class="text-2xl font-bold mb-4">За нас</h2>
 <p>Vintage Lumber Bulgaria е малка семейна компания, която възстановява и предлага автентични български дървени дъски и греди с уникална патина и характер. Нашата мисия е да съхраним традицията и красотата на старото дърво и да я интегрираме в модерния интериор.</p>
@@ -129,19 +133,23 @@ nav a:hover{color:#A66B3C;}
     </nav>
     <section id="aboutIntro" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Въведение</h3>
-      <p>Vintage Lumber Bulgaria започва като малка семейна инициатива преди десетилетие, със страст към възстановяването на автентични български дървени дъски и греди. Основателите вярват, че всяко парче дърво носи своя уникална история и характер, и че тези истории заслужават да бъдат предадени на следващите поколения.</p>
+      <p>Vintage Lumber Bulgaria започва като малка семейна инициатива преди десетилетие, със страст към възстановяването на автентични български дървени дъски и греди.</p>
+      <p>Основателите вярват, че всяко парче дърво носи своя уникална история и характер, и че тези истории заслужават да бъдат предадени на следващите поколения.</p>
     </section>
     <section id="aboutGrowth" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Развитие</h3>
-      <p>През годините компанията се разраства, като съчетава традиционните техники на ръчна обработка на дърво с модерни интериорни тенденции. Всеки продукт преминава през внимателен процес на подбор, реставрация и финално обработване, за да се запази естествената му красота и патина.</p>
+      <p>През годините компанията се разраства, като съчетава традиционните техники на ръчна обработка на дърво с модерни интериорни тенденции.</p>
+      <p>Всеки продукт преминава през внимателен процес на подбор, реставрация и финално обработване, за да се запази естествената му красота и патина.</p>
     </section>
     <section id="aboutMission" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Мисия</h3>
-      <p>Нашата мисия е да съхраним и популяризираме уникалното наследство на българското дърво, да предложим продукти, които вдъхновяват и създават топлина в домовете и интериорите на клиентите ни. Вярваме, че всеки дом заслужава да има своята история и характер, а нашите продукти са част от тази история.</p>
+      <p>Нашата мисия е да съхраним и популяризираме уникалното наследство на българското дърво, да предложим продукти, които вдъхновяват и създават топлина в домовете и интериорите на клиентите ни.</p>
+      <p>Вярваме, че всеки дом заслужава да има своята история и характер, а нашите продукти са част от тази история.</p>
     </section>
     <section id="aboutLegacy" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Наследство</h3>
-      <p>С течение на времето Vintage Lumber Bulgaria се утвърждава като символ на качество, автентичност и любов към детайла, а клиентите ни са нашата най-голяма гордост и вдъхновение за бъдещи проекти.</p>
+      <p>С течение на времето Vintage Lumber Bulgaria се утвърждава като символ на качество, автентичност и любов към детайла.</p>
+      <p>Клиентите ни са нашата най-голяма гордост и вдъхновение за бъдещи проекти.</p>
     </section>
   </div>
 </div>
@@ -185,32 +193,12 @@ document.getElementById('navHome').addEventListener('click',goHome);
 // About modal
 const aboutModal = document.getElementById('aboutModal');
 const closeAboutModal = document.getElementById('closeAboutModal');
-document.getElementById('navAbout').addEventListener('click',()=>{
- aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex');
-});
-closeAboutModal.addEventListener('click',()=>{
- aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex');
-});
+document.getElementById('navAbout').addEventListener('click',()=>{ aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex'); });
+closeAboutModal.addEventListener('click',()=>{ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); });
 aboutModal.addEventListener('click', e => { if(e.target===aboutModal){ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); } });
-document.querySelectorAll('.aboutNavLink').forEach(link=>{
- link.addEventListener('click', e=>{
- e.preventDefault();
- const target=document.querySelector(link.getAttribute('href'));
- target.scrollIntoView({behavior:'smooth'});
- });
-});
+document.querySelectorAll('.aboutNavLink').forEach(link=>{ link.addEventListener('click', e=>{ e.preventDefault(); const target=document.querySelector(link.getAttribute('href')); target.scrollIntoView({behavior:'smooth'}); }); });
 
-// Intersection observer за анимация на секциите в модала
+// Intersection observer за анимация на секциите и параграфите
 const aboutSections = document.querySelectorAll('#aboutModal section');
 aboutSections.forEach(section => section.classList.add('aboutModalSection'));
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('visible'); } });
-},{ threshold: 0.3 });
-aboutSections.forEach(section => observer.observe(section));
-
-document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
-document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
-</script>
-
-</body>
-</html>
+const observer = new Intersection
