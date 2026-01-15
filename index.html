@@ -29,6 +29,12 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
+
+/* Анимации за модала и линковете */
+.aboutModalSection { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.aboutModalSection.visible { opacity: 1; transform: translateY(0); }
+.aboutNavLink { transition: color 0.3s, transform 0.3s; }
+.aboutNavLink:hover { color: #A66B3C; transform: translateY(-2px); }
 </style>
 </head>
 <body>
@@ -110,7 +116,7 @@ nav a:hover{color:#A66B3C;}
 <button id="lightboxRight">→</button>
 </div>
 
-<!-- Инпрегниран модал за За нас -->
+<!-- Модал За нас -->
 <div id="aboutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
   <div class="bg-white rounded-xl max-w-4xl w-full p-8 overflow-y-auto max-h-[90vh] relative">
     <button id="closeAboutModal" class="text-[#6B4226] font-bold text-lg mb-4 absolute top-4 right-4">✕ Затвори</button>
@@ -171,6 +177,7 @@ if(productKey && products[productKey]){
  showImage(0);
  p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
 }
+
 const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; }
 document.getElementById('homeBtn').addEventListener('click',goHome);
 document.getElementById('navHome').addEventListener('click',goHome);
@@ -192,6 +199,14 @@ document.querySelectorAll('.aboutNavLink').forEach(link=>{
  target.scrollIntoView({behavior:'smooth'});
  });
 });
+
+// Intersection observer за анимация на секциите в модала
+const aboutSections = document.querySelectorAll('#aboutModal section');
+aboutSections.forEach(section => section.classList.add('aboutModalSection'));
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('visible'); } });
+},{ threshold: 0.3 });
+aboutSections.forEach(section => observer.observe(section));
 
 document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
 document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
