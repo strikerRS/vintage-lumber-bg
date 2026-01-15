@@ -29,10 +29,6 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
-/* Анимации за About modal */
-#aboutModal section{opacity:0;transform:translateY(20px);transition:all 0.5s ease-in-out;}
-#aboutModal section:target{opacity:1;transform:translateY(0);}
-#aboutModal a.aboutNavLink:hover{color:#A66B3C;text-decoration:underline;transform:translateY(-2px);transition:all 0.2s ease-in-out;}
 </style>
 </head>
 <body>
@@ -67,7 +63,7 @@ nav a:hover{color:#A66B3C;}
 </div>
 </a>
 <a href="index.html?product=dg1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/ddg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+<img src="images/dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара масивна греда</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
@@ -114,7 +110,7 @@ nav a:hover{color:#A66B3C;}
 <button id="lightboxRight">→</button>
 </div>
 
-<!-- About Modal вграден -->
+<!-- Инпрегниран модал за За нас -->
 <div id="aboutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
   <div class="bg-white rounded-xl max-w-4xl w-full p-8 overflow-y-auto max-h-[90vh] relative">
     <button id="closeAboutModal" class="text-[#6B4226] font-bold text-lg mb-4 absolute top-4 right-4">✕ Затвори</button>
@@ -127,19 +123,19 @@ nav a:hover{color:#A66B3C;}
     </nav>
     <section id="aboutIntro" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Въведение</h3>
-      <p>Vintage Lumber Bulgaria започва като малка семейна инициатива преди десетилетие, със страст към възстановяването на автентични български дървени дъски и греди...</p>
+      <p>Vintage Lumber Bulgaria започва като малка семейна инициатива преди десетилетие, със страст към възстановяването на автентични български дървени дъски и греди. Основателите вярват, че всяко парче дърво носи своя уникална история и характер, и че тези истории заслужават да бъдат предадени на следващите поколения.</p>
     </section>
     <section id="aboutGrowth" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Развитие</h3>
-      <p>През годините компанията се разраства, като съчетава традиционните техники на ръчна обработка на дърво с модерни интериорни тенденции...</p>
+      <p>През годините компанията се разраства, като съчетава традиционните техники на ръчна обработка на дърво с модерни интериорни тенденции. Всеки продукт преминава през внимателен процес на подбор, реставрация и финално обработване, за да се запази естествената му красота и патина.</p>
     </section>
     <section id="aboutMission" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Мисия</h3>
-      <p>Нашата мисия е да съхраним и популяризираме уникалното наследство на българското дърво...</p>
+      <p>Нашата мисия е да съхраним и популяризираме уникалното наследство на българското дърво, да предложим продукти, които вдъхновяват и създават топлина в домовете и интериорите на клиентите ни. Вярваме, че всеки дом заслужава да има своята история и характер, а нашите продукти са част от тази история.</p>
     </section>
     <section id="aboutLegacy" class="mb-4">
       <h3 class="text-xl font-bold mb-2">Наследство</h3>
-      <p>С течение на времето Vintage Lumber Bulgaria се утвърждава като символ на качество, автентичност и любов към детайла...</p>
+      <p>С течение на времето Vintage Lumber Bulgaria се утвърждава като символ на качество, автентичност и любов към детайла, а клиентите ни са нашата най-голяма гордост и вдъхновение за бъдещи проекти.</p>
     </section>
   </div>
 </div>
@@ -182,10 +178,20 @@ document.getElementById('navHome').addEventListener('click',goHome);
 // About modal
 const aboutModal = document.getElementById('aboutModal');
 const closeAboutModal = document.getElementById('closeAboutModal');
-document.getElementById('navAbout').addEventListener('click',()=>{ aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex'); });
-closeAboutModal.addEventListener('click',()=>{ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); });
+document.getElementById('navAbout').addEventListener('click',()=>{
+ aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex');
+});
+closeAboutModal.addEventListener('click',()=>{
+ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex');
+});
 aboutModal.addEventListener('click', e => { if(e.target===aboutModal){ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); } });
-document.querySelectorAll('.aboutNavLink').forEach(link=>{ link.addEventListener('click', e=>{ e.preventDefault(); const target=document.querySelector(link.getAttribute('href')); target.scrollIntoView({behavior:'smooth'}); }); });
+document.querySelectorAll('.aboutNavLink').forEach(link=>{
+ link.addEventListener('click', e=>{
+ e.preventDefault();
+ const target=document.querySelector(link.getAttribute('href'));
+ target.scrollIntoView({behavior:'smooth'});
+ });
+});
 
 document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
 document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
