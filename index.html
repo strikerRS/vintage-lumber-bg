@@ -14,13 +14,13 @@ nav a { margin-left:1rem; font-weight:500; color:#6B4226; transition:0.3s; curso
 nav a:hover{color:#A66B3C;}
 .cart-btn{background:#6B4226;color:white;border-radius:50%;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
 .cart-count{position:absolute;top:-0.5rem;right:-0.5rem;background:red;width:1.25rem;height:1.25rem;font-size:0.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+#about { max-width:7xl; margin: 2rem auto; padding:2rem; background:#fff; border-radius:0.5rem; }
 .gallery-container { position: relative; display: flex; flex-direction: column; }
-.gallery-main { width: 100%; height:300px; object-fit: cover; border-radius:0.5rem; margin-bottom:1rem; cursor:pointer; }
+.gallery-main { width: 100%; height: 300px; object-fit: cover; border-radius:0.5rem; margin-bottom:1rem; cursor:pointer; }
 .gallery-thumbs { display: flex; gap:0.5rem; }
 .gallery-thumbs img { width:70px;height:70px;object-fit:cover;border-radius:0.25rem;cursor:pointer;border:2px solid transparent; }
 .gallery-thumbs img.active{border-color:#6B4226;}
-.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.9);color:white;border:none;font-size:2rem;padding:0.25rem 0.5rem;cursor:pointer;border-radius:0.25rem;transition:0.3s;}
-.arrow-btn:hover{background:rgba(107,66,38,1); transform:scale(1.2);}
+.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.25rem 0.5rem;cursor:pointer;border-radius:0.25rem;}
 .arrow-left{left:0;}
 .arrow-right{right:0;}
 #lightboxOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px);}
@@ -29,7 +29,6 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
-#about { max-width:7xl; margin:2rem auto; padding:2rem; background:#fff; border-radius:0.5rem; }
 </style>
 </head>
 <body>
@@ -38,7 +37,7 @@ nav a:hover{color:#A66B3C;}
 <h1 id="homeBtn">Vintage Lumber</h1>
 <nav class="flex items-center">
 <a id="navHome">Начало</a>
-<a href="#mainPage">Продукти</a>
+<a id="navProducts">Продукти</a>
 <a href="#contact">Свържете се с нас</a>
 <a id="navAbout">За нас</a>
 <div class="cart-btn ml-4">🛒<span class="cart-count">0</span></div>
@@ -78,7 +77,6 @@ nav a:hover{color:#A66B3C;}
 </div>
 </div>
 
-<!-- Product Page -->
 <div id="productPage">
 <div class="content">
 <div class="grid md:grid-cols-2 gap-10 mt-6">
@@ -106,7 +104,6 @@ nav a:hover{color:#A66B3C;}
 <p>Имейл: info@vintagelumber.bg</p>
 </section>
 
-<!-- Lightbox -->
 <div id="lightboxOverlay" class="flex">
 <button id="lightboxLeft">←</button>
 <img id="lightboxImage" src="" alt="Продукт">
@@ -127,6 +124,7 @@ if(productKey && products[productKey]){
  const p=products[productKey];
  document.getElementById("mainPage").style.display="none";
  document.getElementById("productPage").style.display="block";
+ document.getElementById("hero-bg").style.display="none"; // премахваме bg
 
  document.getElementById("title").innerText=p.title;
  document.getElementById("description").innerText=p.description;
@@ -177,6 +175,7 @@ const goHome=()=>{
 document.getElementById('homeBtn').addEventListener('click',goHome);
 document.getElementById('navHome').addEventListener('click',goHome);
 document.getElementById('navAbout').addEventListener('click',()=> document.getElementById('about').scrollIntoView({behavior:'smooth'}));
+document.getElementById('navProducts').addEventListener('click',goHome); // връща в началната страница при продуктите
 </script>
 
 </body>
