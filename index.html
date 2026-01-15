@@ -150,9 +150,9 @@ thumb.addEventListener('click',()=> showImage(i));
 thumbsContainer.appendChild(thumb);
 });
 
-// arrows for product gallery
-document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
-document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
+// gallery arrows
+document.querySelector('.arrow-left').addEventListener('click',()=> lightbox.style.display='none');
+document.querySelector('.arrow-right').addEventListener('click',()=> lightbox.style.display='none');
 
 // lightbox
 mainImage.addEventListener('click',()=> lightbox.style.display='flex');
@@ -164,8 +164,9 @@ p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; docu
 }
 
 // Scroll to top
-document.getElementById('homeBtn').addEventListener('click',()=> window.scrollTo({top:0, behavior:'smooth'}));
-document.getElementById('navHome').addEventListener('click',()=> window.scrollTo({top:0, behavior:'smooth'}));
+const goHome=()=>{window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block';}
+document.getElementById('homeBtn').addEventListener('click',goHome);
+document.getElementById('navHome').addEventListener('click',goHome);
 document.getElementById('navAbout').addEventListener('click',()=> document.getElementById('about').scrollIntoView({behavior:'smooth'}));
 </script>
 
