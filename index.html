@@ -99,7 +99,7 @@ nav a:hover{color:#A66B3C;}
 </div>
 
 <section id="contact" class="max-w-7xl mx-auto p-10 mt-20">
-<h2 class="text-2xl font-bold mb-4">Свържете се с нас</h2>
+<h2 class="text-2xl font-bold mb-4">Контакти</h2>
 <p>Телефон: +359 88 123 4567</p>
 <p>Имейл: info@vintagelumber.bg</p>
 </section>
@@ -174,7 +174,12 @@ const goHome=()=>{
 document.getElementById('homeBtn').addEventListener('click',goHome);
 document.getElementById('navHome').addEventListener('click',goHome);
 document.getElementById('navAbout').addEventListener('click',()=> document.getElementById('about').scrollIntoView({behavior:'smooth'}));
-document.getElementById('navProducts').addEventListener('click',()=>{ window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
+document.getElementById('navProducts').addEventListener('click',()=>{
+ if(document.getElementById('productPage').style.display==='block'){
+   goHome();
+ }
+ window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'});
+});
 document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
 </script>
 
