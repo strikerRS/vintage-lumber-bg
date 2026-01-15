@@ -14,18 +14,21 @@ nav a { margin-left:1rem; font-weight:500; color:#6B4226; transition:0.3s; curso
 nav a:hover{color:#A66B3C;}
 .cart-btn{background:#6B4226;color:white;border-radius:50%;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
 .cart-count{position:absolute;top:-0.5rem;right:-0.5rem;background:red;width:1.25rem;height:1.25rem;font-size:0.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;}
-#about { max-width:7xl; margin: 4rem auto; padding:2rem; background:#fff; border-radius:0.5rem; }
+#about { max-width:7xl; margin: 2rem auto; padding:2rem; background:#fff; border-radius:0.5rem; }
 .gallery-container { position: relative; display: flex; flex-direction: column; }
 .gallery-main { width: 100%; height: 300px; object-fit: cover; border-radius:0.5rem; margin-bottom:1rem; cursor:pointer; }
 .gallery-thumbs { display: flex; gap:0.5rem; }
 .gallery-thumbs img { width:70px;height:70px;object-fit:cover;border-radius:0.25rem;cursor:pointer;border:2px solid transparent; }
 .gallery-thumbs img.active{border-color:#6B4226;}
-.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:none;color:white;border:none;font-size:3rem;padding:0.25rem 0.5rem;cursor:pointer;}
-#arrowLeftIcon, #arrowRightIcon { width:60px; height:60px; }
-#lightboxOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;z-index:100; background-image: url('900abbea7956a94668856cf84ba8e55e.jpg'); background-size: cover; background-position: center;}
+.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.25rem 0.5rem;cursor:pointer;border-radius:0.25rem;}
+.arrow-left{left:0;}
+.arrow-right{right:0;}
+#lightboxOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px);}
 #lightboxOverlay img{max-width:90%;max-height:90%;}
-#lightboxOverlay button{position:absolute;top:50%;transform:translateY(-50%);background:none;color:white;border:none;font-size:2rem;padding:0.5rem;cursor:pointer;}
-#lightboxLeft{left:20px;} #lightboxRight{right:20px;}
+#lightboxOverlay button{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.5rem;cursor:pointer;border-radius:0.25rem;}
+#lightboxLeft{left:10px;} #lightboxRight{right:10px;}
+#productPageWithBg { display:none; position:relative; background-image:url('images/900abbea7956a94668856cf84ba8e55e.jpg'); background-size:cover; background-position:center; backdrop-filter:blur(6px); padding-top:4rem; }
+#productPageWithBg .content { background: rgba(255,255,255,0.85); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
 </style>
 </head>
 <body>
@@ -42,30 +45,6 @@ nav a:hover{color:#A66B3C;}
 </header>
 
 <section id="hero-bg"></section>
-
-<div id="about">
-<h2 class="text-2xl font-bold mb-4">За нас</h2>
-<p>Vintage Lumber Bulgaria е малка семейна компания, която възстановява и предлага автентични български дървени дъски и греди с уникална патина и характер. Нашата мисия е да съхраним традицията и красотата на старото дърво и да я интегрираме в модерния интериор.</p>
-</div>
-
-<div id="productPage" class="hidden max-w-6xl mx-auto p-8 mt-24">
-<div class="grid md:grid-cols-2 gap-10 mt-6">
-<div class="gallery-container">
-<button class="arrow-btn arrow-left"><img id="arrowLeftIcon" src="images/branch-left.png" alt="Left"></button>
-<img id="mainImage" class="gallery-main" src="" alt="Продукт">
-<button class="arrow-btn arrow-right"><img id="arrowRightIcon" src="images/branch-right.png" alt="Right"></button>
-<div id="galleryThumbs" class="gallery-thumbs"></div>
-</div>
-<div>
-<h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
-<p id="description" class="mb-6"></p>
-<h2 class="text-xl font-bold mb-2">Характеристики</h2>
-<ul id="specs" class="list-disc ml-5 mb-6"></ul>
-<h2 class="text-xl font-bold mb-2">Доставка</h2>
-<p id="delivery"></p>
-</div>
-</div>
-</div>
 
 <div id="mainPage" class="mt-24">
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
@@ -91,6 +70,32 @@ nav a:hover{color:#A66B3C;}
 </div>
 </a>
 </main>
+
+<div id="about">
+<h2 class="text-2xl font-bold mb-4">За нас</h2>
+<p>Vintage Lumber Bulgaria е малка семейна компания, която възстановява и предлага автентични български дървени дъски и греди с уникална патина и характер. Нашата мисия е да съхраним традицията и красотата на старото дърво и да я интегрираме в модерния интериор.</p>
+</div>
+</div>
+
+<div id="productPageWithBg">
+<div class="content">
+<div class="grid md:grid-cols-2 gap-10 mt-6">
+<div class="gallery-container">
+<button class="arrow-btn arrow-left">&#8592;</button>
+<img id="mainImage" class="gallery-main" src="" alt="Продукт">
+<button class="arrow-btn arrow-right">&#8594;</button>
+<div id="galleryThumbs" class="gallery-thumbs"></div>
+</div>
+<div>
+<h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
+<p id="description" class="mb-6"></p>
+<h2 class="text-xl font-bold mb-2">Характеристики</h2>
+<ul id="specs" class="list-disc ml-5 mb-6"></ul>
+<h2 class="text-xl font-bold mb-2">Доставка</h2>
+<p id="delivery"></p>
+</div>
+</div>
+</div>
 </div>
 
 <section id="contact" class="max-w-7xl mx-auto p-10 mt-20">
@@ -101,9 +106,9 @@ nav a:hover{color:#A66B3C;}
 
 <!-- Lightbox -->
 <div id="lightboxOverlay" class="flex">
-<button id="lightboxLeft"></button>
+<button id="lightboxLeft">←</button>
 <img id="lightboxImage" src="" alt="Продукт">
-<button id="lightboxRight"></button>
+<button id="lightboxRight">→</button>
 </div>
 
 <script>
@@ -119,8 +124,7 @@ const productKey=params.get("product");
 if(productKey && products[productKey]){
  const p=products[productKey];
  document.getElementById("mainPage").style.display="none";
- document.getElementById("productPage").style.display="block";
- document.getElementById("hero-bg").style.display="none";
+ document.getElementById("productPageWithBg").style.display="block";
 
  document.getElementById("title").innerText=p.title;
  document.getElementById("description").innerText=p.description;
@@ -149,9 +153,11 @@ if(productKey && products[productKey]){
    thumbsContainer.appendChild(thumb);
  });
 
+ // arrows for gallery navigation
  document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
  document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
 
+ // lightbox open/close
  mainImage.addEventListener('click',()=> lightbox.style.display='flex');
  lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
  leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
@@ -161,10 +167,11 @@ if(productKey && products[productKey]){
  p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
 }
 
+// Go home
 const goHome=()=>{
  window.scrollTo({top:0, behavior:'smooth'});
  document.getElementById('mainPage').style.display='block';
- document.getElementById('productPage').style.display='none';
+ document.getElementById('productPageWithBg').style.display='none';
  document.getElementById('hero-bg').style.display='block';
 }
 document.getElementById('homeBtn').addEventListener('click',goHome);
