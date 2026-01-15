@@ -141,7 +141,60 @@ nav a:hover{color:#A66B3C;}
 </div>
 
 <script>
-/* ...твоят оригинален JS код за products, галерия, About модал, навигация и т.н. ... */
+const products={ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
+
+const params=new URLSearchParams(window.location.search);
+const productKey=params.get("product");
+if(productKey && products[productKey]){
+ const p=products[productKey];
+ document.getElementById("mainPage").style.display="none";
+ document.getElementById("productPage").style.display="block";
+ document.getElementById("hero-bg").style.display="none"; 
+ document.getElementById("title").innerText=p.title;
+ document.getElementById("description").innerText=p.description;
+ document.getElementById("delivery").innerText=p.delivery;
+ const mainImage=document.getElementById("mainImage");
+ const thumbsContainer=document.getElementById("galleryThumbs");
+ const lightbox=document.getElementById("lightboxOverlay");
+ const lightboxImage=document.getElementById("lightboxImage");
+ const leftBtn=document.getElementById("lightboxLeft");
+ const rightBtn=document.getElementById("lightboxRight");
+ let currentIndex=0;
+ function showImage(index){ currentIndex=index; mainImage.src=p.images[currentIndex]; Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index)); lightboxImage.src=p.images[currentIndex]; }
+ p.images.forEach((imgSrc,i)=>{ const thumb=document.createElement("img"); thumb.src=imgSrc; if(i===0) thumb.classList.add('active'); thumb.addEventListener('click',()=> showImage(i)); thumbsContainer.appendChild(thumb); });
+ document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
+ document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
+ mainImage.addEventListener('click',()=> lightbox.style.display='flex');
+ lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
+ leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
+ rightBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex+1)%p.images.length); });
+ showImage(0);
+ p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
+}
+const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; }
+document.getElementById('homeBtn').addEventListener('click',goHome);
+document.getElementById('navHome').addEventListener('click',goHome);
+
+// About modal
+const aboutModal = document.getElementById('aboutModal');
+const closeAboutModal = document.getElementById('closeAboutModal');
+document.getElementById('navAbout').addEventListener('click',()=>{
+ aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex');
+});
+closeAboutModal.addEventListener('click',()=>{
+ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex');
+});
+aboutModal.addEventListener('click', e => { if(e.target===aboutModal){ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); } });
+document.querySelectorAll('.aboutNavLink').forEach(link=>{
+ link.addEventListener('click', e=>{
+ e.preventDefault();
+ const target=document.querySelector(link.getAttribute('href'));
+ target.scrollIntoView({behavior:'smooth'});
+ });
+});
+
+document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
+document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
 </script>
 
 <!-- ===================== START: Cart UI + Buy Buttons (paste BEFORE </body>) ===================== -->
@@ -152,71 +205,346 @@ nav a:hover{color:#A66B3C;}
 <div id="vl-cart-toast-placeholder"></div>
 
 <script>
-/* ...твоят оригинален Cart + Buy Buttons JS код ... */
-</script>
-<!-- ====================== END: Cart UI + Buy Buttons ====================== -->
+/* ===================== Cart + Buy buttons injection =====================
+   Paste this block before </body>. It does NOT modify existing markup,
+   only appends UI elements if missing and injects Buy buttons into your cards.
+   It uses existing `products` object if available, otherwise uses fallback prices.
+   ======================================================================= */
 
-<!-- ======= START: Enhanced Wood Texture for Buy Buttons ======= -->
-<script>
 (function(){
-  const woodImages = [
-    'images/board_1.png',
-    'images/board_2.png',
-    'images/board_3.png',
-    'images/board_4.png',
-    'images/board_5.png',
-    'images/board_6.png',
-    'images/board_7.png',
-    'images/board_8.png',
-    'images/board_9.png',
-    'images/board_10.png'
-  ];
+  // --- fallback product info (only used if your `products` object lacks price/images) ---
+  const FALLBACK = {
+    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
+    dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
+    dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
+  };
 
-  function getRandomWood() {
-    return woodImages[Math.floor(Math.random() * woodImages.length)];
+  // --- ensure cart panel DOM exists (create only if not present) ---
+  function ensureCartDOM(){
+    // Cart panel
+    if(!document.getElementById('vl-cart-panel')){
+      const panel = document.createElement('div');
+      panel.id = 'vl-cart-panel';
+      panel.className = 'fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4';
+      panel.innerHTML = `
+        <div class="bg-white rounded-xl w-full max-w-3xl p-6 relative">
+          <button id="vl-close-cart" class="absolute top-4 right-4 text-[#6B4226] font-bold">✕</button>
+          <h2 class="text-2xl font-bold mb-4">Вашата кошница</h2>
+          <div id="vl-cart-items" class="space-y-4 max-h-[50vh] overflow-auto"></div>
+          <div id="vl-cart-summary" class="mt-4 flex justify-between items-center">
+            <div id="vl-cart-total" class="text-xl font-bold">Обща сума: 0 лв.</div>
+            <div>
+              <button id="vl-refresh-cart" class="mr-2 px-3 py-2 rounded border">Рефреш</button>
+              <button id="vl-clear-cart" class="mr-2 px-3 py-2 rounded border">Изчисти</button>
+              <button id="vl-checkout" class="bg-[#6B4226] text-white px-4 py-2 rounded">Финализирай поръчката</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(panel);
+    }
+
+    // Toast
+    if(!document.getElementById('vl-cart-toast')){
+      const toast = document.createElement('div');
+      toast.id = 'vl-cart-toast';
+      toast.className = 'fixed bottom-6 right-6 hidden bg-white border-2 border-[#6B4226] rounded p-3 flex items-center gap-3 z-60';
+      toast.style.alignItems = 'center';
+      toast.innerHTML = `<img id="vl-cart-toast-img" src="" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:4px;"><div id="vl-cart-toast-text" style="font-weight:600;">Добавено във вашата кошница</div>`;
+      document.body.appendChild(toast);
+    }
   }
 
-  function getRandomTextColor() {
-    const colors = ['#fff', '#f3e1c0', '#fffbf0', '#f0e6d2'];
-    return colors[Math.floor(Math.random() * colors.length)];
+  // --- helpers to read product data (use page's products if present) ---
+  function getProductObj(key){
+    if(window.products && products[key]){
+      // ensure price/images exist (fallback)
+      const p = Object.assign({}, products[key]);
+      if(!p.price && FALLBACK[key]) p.price = FALLBACK[key].price;
+      if(!p.images || !p.images.length) p.images = FALLBACK[key] ? FALLBACK[key].images : [];
+      return p;
+    }
+    return FALLBACK[key] ? Object.assign({}, FALLBACK[key]) : {title:key, images:[], price:0};
   }
 
-  function applyWoodTexture() {
-    document.querySelectorAll('.vl-buy-btn-card, .vl-buy-btn-product').forEach(btn => {
-      const wood = getRandomWood();
-      const textColor = getRandomTextColor();
-      btn.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url("${wood}")`;
-      btn.style.backgroundSize = 'cover';
-      btn.style.backgroundPosition = 'center';
-      btn.style.color = textColor;
-      btn.style.fontWeight = 'bold';
-      btn.style.border = '2px solid #6B4226';
-      btn.style.boxShadow = '0 3px 6px rgba(0,0,0,0.4)';
-      btn.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
-      btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'scale(1.07)';
-        btn.style.boxShadow = '0 6px 12px rgba(0,0,0,0.5)';
+  // --- cart stored in localStorage as array of item objects {key, qty} OR simple array of keys ---
+  // We'll store as array of keys allowing duplicates (ease of operations) similar to previous code.
+  function loadCart(){
+    try{ return JSON.parse(localStorage.getItem('vl_cart_v1') || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveCart(arr){
+    localStorage.setItem('vl_cart_v1', JSON.stringify(arr));
+  }
+
+  // get aggregated counts map {key: qty}
+  function aggregate(cartArr){
+    const counts = {};
+    cartArr.forEach(k => counts[k] = (counts[k] || 0) + 1);
+    return counts;
+  }
+
+  // update header count
+  function updateHeaderCount(){
+    const el = document.querySelector('.cart-count');
+    if(!el) return;
+    const arr = loadCart();
+    el.innerText = arr.length;
+    // pulse effect
+    el.classList.remove('vl-count-pulse');
+    void el.offsetWidth;
+    el.classList.add('vl-count-pulse');
+    setTimeout(()=> el.classList.remove('vl-count-pulse'), 600);
+  }
+
+  // show toast
+  let _vl_toast_timer = null;
+  function showToast(key){
+    const p = getProductObj(key);
+    const toast = document.getElementById('vl-cart-toast');
+    if(!toast) return;
+    const img = document.getElementById('vl-cart-toast-img');
+    const txt = document.getElementById('vl-cart-toast-text');
+    img.src = (p.images && p.images[0])? p.images[0] : '';
+    txt.innerText = `${p.title} — добавено във вашата кошница`;
+    toast.classList.remove('hidden');
+    clearTimeout(_vl_toast_timer);
+    _vl_toast_timer = setTimeout(()=> toast.classList.add('hidden'), 1800);
+  }
+
+  // render Buy buttons inside product cards (does not remove/modify your original content)
+  function injectBuyButtonsToCards(){
+    const main = document.getElementById('mainPage');
+    if(!main) return;
+    const anchors = main.querySelectorAll('a[href*="product="]');
+    anchors.forEach(a=>{
+      // avoid duplicating
+      if(a.querySelector('.vl-buy-btn-card')) return;
+      // extract product key
+      let key = null;
+      try{ const u = new URL(a.href, location.href); key = u.searchParams.get('product'); }catch(e){}
+      if(!key) return;
+      const p = getProductObj(key);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'vl-buy-btn-card vl-buy-btn mt-2 bg-[#6B4226] text-white px-4 py-2 rounded';
+      btn.dataset.key = key;
+      btn.innerText = `Купи — ${p.price} лв.`;
+      // append to sensible container inside card
+      const target = a.querySelector('.p-4') || a.querySelector('.text-center') || a;
+      target.appendChild(btn);
+      btn.addEventListener('click', function(ev){
+        ev.preventDefault();
+        const arr = loadCart();
+        arr.push(key);
+        saveCart(arr);
+        updateHeaderCount();
+        showToast(key);
       });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'scale(1)';
-        btn.style.boxShadow = '0 3px 6px rgba(0,0,0,0.4)';
+    });
+  }
+
+  // inject buy button on single product page (if opened with ?product=...)
+  function injectBuyOnProductPage(){
+    const params = new URLSearchParams(location.search);
+    const key = params.get('product');
+    if(!key) return;
+    const content = document.querySelector('#productPage .content');
+    if(!content) return;
+    // avoid duplicates
+    if(content.querySelector('.vl-buy-btn-product')) return;
+    const p = getProductObj(key);
+    // price line
+    const priceP = document.createElement('p');
+    priceP.className = 'vl-buy-price text-[#6B4226] font-bold mb-2';
+    priceP.innerText = `Цена: ${p.price} лв.`;
+    // buy button
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded w-full';
+    btn.dataset.key = key;
+    btn.innerText = `Купи — ${p.price} лв.`;
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      const arr = loadCart();
+      arr.push(key);
+      saveCart(arr);
+      updateHeaderCount();
+      showToast(key);
+    });
+    // append after product title/description block (try to find a good place)
+    const rightCol = document.querySelector('#productPage .content > .grid > div:nth-child(2)');
+    if(rightCol){
+      rightCol.insertBefore(priceP, rightCol.firstChild.nextSibling);
+      rightCol.insertBefore(btn, priceP.nextSibling);
+    } else {
+      content.appendChild(priceP);
+      content.appendChild(btn);
+    }
+  }
+
+  // render cart panel items with qty controls (+/-) and refresh button
+  function renderCartPanel(){
+    const panel = document.getElementById('vl-cart-panel');
+    if(!panel) return;
+    const itemsDiv = document.getElementById('vl-cart-items');
+    const totalEl = document.getElementById('vl-cart-total');
+    itemsDiv.innerHTML = '';
+    const arr = loadCart();
+    const counts = aggregate(arr);
+    let total = 0;
+    Object.keys(counts).forEach(key=>{
+      const qty = counts[key];
+      const p = getProductObj(key);
+      total += (p.price || 0) * qty;
+      // item row
+      const item = document.createElement('div');
+      item.className = 'flex items-center justify-between p-2 bg-gray-50 rounded';
+      // left block
+      const left = document.createElement('div');
+      left.className = 'flex items-center gap-3';
+      const img = document.createElement('img');
+      img.src = (p.images && p.images[0])? p.images[0] : '';
+      img.style.width = '56px';
+      img.style.height = '56px';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = '6px';
+      const info = document.createElement('div');
+      info.innerHTML = `<div style="font-weight:600;">${p.title}</div><div class="vl-item-price">${p.price} лв. × <span class="vl-qty">${qty}</span></div>`;
+      left.appendChild(img);
+      left.appendChild(info);
+      // right block - qty controls + remove
+      const right = document.createElement('div');
+      right.className = 'flex items-center gap-2';
+      const minus = document.createElement('button');
+      minus.className = 'vl-qty-minus px-2 py-1 border rounded';
+      minus.innerText = '−';
+      minus.dataset.key = key;
+      const plus = document.createElement('button');
+      plus.className = 'vl-qty-plus px-2 py-1 border rounded';
+      plus.innerText = '+';
+      plus.dataset.key = key;
+      const remove = document.createElement('button');
+      remove.className = 'vl-remove bg-red-600 text-white px-2 py-1 rounded';
+      remove.innerText = 'Премахни';
+      remove.dataset.key = key;
+      right.appendChild(minus);
+      right.appendChild(plus);
+      right.appendChild(remove);
+
+      item.appendChild(left);
+      item.appendChild(right);
+      itemsDiv.appendChild(item);
+
+      // handlers
+      minus.addEventListener('click', ()=> {
+        // remove one instance
+        const cart = loadCart();
+        const idx = cart.indexOf(key);
+        if(idx > -1) cart.splice(idx,1);
+        saveCart(cart);
+        renderCartPanel();
+        updateHeaderCount();
+      });
+      plus.addEventListener('click', ()=>{
+        const cart = loadCart();
+        cart.push(key);
+        saveCart(cart);
+        renderCartPanel();
+        updateHeaderCount();
+      });
+      remove.addEventListener('click', ()=>{
+        // remove all instances of this key
+        let cart = loadCart();
+        cart = cart.filter(k => k !== key);
+        saveCart(cart);
+        renderCartPanel();
+        updateHeaderCount();
       });
     });
 
+    totalEl.innerText = `Обща сума: ${total} лв.`;
+  }
+
+  // wire UI interactions (open/close/clear/checkout/refresh)
+  function wireCartUI(){
+    // header cart open - prefer #cartBtn (if you have) else .cart-btn
+    const headerCart = document.getElementById('cartBtn') || document.querySelector('.cart-btn');
+    const panel = document.getElementById('vl-cart-panel');
+    if(headerCart && panel){
+      headerCart.addEventListener('click', function(e){
+        e.preventDefault();
+        renderCartPanel();
+        panel.classList.remove('hidden');
+      });
+    }
+    const close = document.getElementById('vl-close-cart');
+    if(close) close.addEventListener('click', ()=> panel.classList.add('hidden'));
+    const clearBtn = document.getElementById('vl-clear-cart');
+    if(clearBtn) clearBtn.addEventListener('click', ()=>{
+      saveCart([]);
+      updateHeaderCount();
+      renderCartPanel();
+    });
+    const checkoutBtn = document.getElementById('vl-checkout');
+    if(checkoutBtn) checkoutBtn.addEventListener('click', ()=>{
+      const cart = loadCart();
+      if(!cart.length){ alert('Нямате добавени продукти в кошницата.'); return; }
+      alert('Благодарим за поръчката!');
+      saveCart([]);
+      updateHeaderCount();
+      renderCartPanel();
+      panel.classList.add('hidden');
+    });
     const refreshBtn = document.getElementById('vl-refresh-cart');
-    if(refreshBtn) refreshBtn.innerHTML = '🔄';
+    if(refreshBtn) refreshBtn.addEventListener('click', ()=> renderCartPanel());
+    // ESC closes
+    document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') panel.classList.add('hidden'); });
   }
 
-  document.addEventListener('DOMContentLoaded', applyWoodTexture);
-
-  const main = document.getElementById('mainPage');
-  if(main && window.MutationObserver){
-    const mo = new MutationObserver(applyWoodTexture);
-    mo.observe(main, { childList:true, subtree:true });
+  // small CSS additions (inject only once)
+  function ensureStyles(){
+    if(document.getElementById('vl-cart-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'vl-cart-styles';
+    s.textContent = `
+      .vl-buy-btn { transition: transform .12s ease, box-shadow .12s ease; }
+      .vl-buy-anim { animation: btn-bump .28s cubic-bezier(.2,.8,.2,1); }
+      @keyframes btn-bump {0%{transform:scale(1);}40%{transform:scale(1.08);}100%{transform:scale(1);}}
+      #vl-cart-toast { opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease; }
+      #vl-cart-toast:not(.hidden) { opacity: 1; transform: translateY(0); animation: toast-pop .35s ease; }
+      @keyframes toast-pop {0%{opacity:0; transform:translateY(12px) scale(.98);}60%{transform:translateY(0) scale(1.02);}100%{transform:translateY(0) scale(1);}}
+      .vl-count-pulse { animation: vl-count-pulse .42s ease; }
+      @keyframes vl-count-pulse {0%{transform:scale(1);}30%{transform:scale(1.25);}60%{transform:scale(.95);}100%{transform:scale(1);} }
+    `;
+    document.head.appendChild(s);
   }
-})();
+
+  // init sequence
+  function init(){
+    ensureStyles();
+    ensureCartDOM();
+    injectBuyButtonsToCards();
+    injectBuyOnProductPage();
+    wireCartUI();
+    updateHeaderCount();
+
+    // observe mainPage for future card adds and inject buy buttons
+    const main = document.getElementById('mainPage');
+    if(main && window.MutationObserver){
+      const mo = new MutationObserver(()=> { injectBuyButtonsToCards(); });
+      mo.observe(main, { childList:true, subtree:true });
+    }
+  }
+
+  // run on DOM ready
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else { init(); }
+
+})(); /* end IIFE */
 </script>
-<!-- ======= END: Enhanced Wood Texture for Buy Buttons ======= -->
+<!-- ====================== END: Cart UI + Buy Buttons ====================== -->
 
 </body>
 </html>
