@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- SEO Meta -->
+<meta name="description" content="Vintage Lumber Bulgaria - автентични български дървени дъски и греди с уникална патина за интериор и декорация">
+<meta name="keywords" content="дървени дъски, реставрация, рустик дърво, интериор, български дървен материал">
+<meta name="robots" content="index, follow">
+
+<!-- Preload ключови изображения -->
+<link rel="preload" as="image" href="images/dd1.jpg">
+<link rel="preload" as="image" href="images/dd2.jpg">
+<link rel="preload" as="image" href="images/dg1.jpg">
+
 <style>
 body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
 #hero-bg { background-image: url('bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 100vh; }
@@ -30,6 +40,33 @@ nav a:hover{color:#A66B3C;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
 </style>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Стара дървена дъска",
+  "image": [
+    "https://example.com/images/dd1.jpg",
+    "https://example.com/images/dd2.jpg",
+    "https://example.com/images/dg1.jpg"
+  ],
+  "description": "Автентична стара дървена дъска, подходяща за интериор и декорация.",
+  "brand": {
+    "@type": "Brand",
+    "name": "Vintage Lumber Bulgaria"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://example.com/index.html?product=dd1",
+    "priceCurrency": "BGN",
+    "price": "0",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+
 </head>
 <body>
 
@@ -124,7 +161,7 @@ if(productKey && products[productKey]){
  const p=products[productKey];
  document.getElementById("mainPage").style.display="none";
  document.getElementById("productPage").style.display="block";
- document.getElementById("hero-bg").style.display="none"; // премахваме bg
+ document.getElementById("hero-bg").style.display="none"; 
 
  document.getElementById("title").innerText=p.title;
  document.getElementById("description").innerText=p.description;
@@ -165,7 +202,6 @@ if(productKey && products[productKey]){
  p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
 }
 
-// Go home
 const goHome=()=>{
  window.scrollTo({top:0, behavior:'smooth'});
  document.getElementById('mainPage').style.display='block';
@@ -175,7 +211,7 @@ const goHome=()=>{
 document.getElementById('homeBtn').addEventListener('click',goHome);
 document.getElementById('navHome').addEventListener('click',goHome);
 document.getElementById('navAbout').addEventListener('click',()=> document.getElementById('about').scrollIntoView({behavior:'smooth'}));
-document.getElementById('navProducts').addEventListener('click',goHome); // връща в началната страница при продуктите
+document.getElementById('navProducts').addEventListener('click',goHome);
 </script>
 
 </body>
