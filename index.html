@@ -1,27 +1,48 @@
-<!-- ===================== START: Cart Enhancements (Icons, +/-, Wood Theme) ===================== -->
+<!-- ===================== START: Cart Vintage Style Enhancements ===================== -->
 <style>
-/* Бутон Купи - стара потъмняла дъска */
+/* ===== Винтидж дървена стилистика за бутоните ===== */
+
+/* Бутон Купи и подобни */
 .vl-buy-btn, .vl-buy-btn-card, .vl-buy-btn-product {
     background: url('images/old-wood-bg.jpg') no-repeat center/cover !important;
     color: #fff !important;
     border: 1px solid #6B4226;
     font-weight: bold;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-shadow: 1px 1px 2px #000;
 }
 .vl-buy-btn:hover, .vl-buy-btn-card:hover, .vl-buy-btn-product:hover {
     transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* Refresh бутон - с икона двe огънати стрелки */
+/* Refresh бутон с икона */
+#vl-refresh-cart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    background: url('images/old-wood-bg.jpg') no-repeat center/cover;
+    color: white;
+    border-radius: 0.5rem;
+    border: 1px solid #6B4226;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 #vl-refresh-cart::before {
     content: "🔄";
     margin-right: 0.5rem;
     font-size: 1.2rem;
 }
+#vl-refresh-cart:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
 
-/* + / - бутони в кошницата */
+/* + / - бутони в кошницата с дървен фон */
 .vl-qty-minus, .vl-qty-plus {
-    background: #6B4226;
+    background: url('images/old-wood-bg.jpg') no-repeat center/cover;
     color: #fff;
     font-weight: bold;
     border-radius: 4px;
@@ -31,12 +52,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #6B4226;
+    text-shadow: 1px 1px 2px #000;
+    transition: transform 0.15s ease;
 }
-.vl-qty-minus:hover, .vl-qty-plus:hover { background: #A66B3C; }
+.vl-qty-minus:hover, .vl-qty-plus:hover {
+    transform: scale(1.1);
+}
 </style>
 
 <script>
-// ====== Добавка на функционалността на + / - бутоните ======
+// ===== JS за функционалност на + / - бутоните с визуализация =====
 (function(){
   function updateHeaderAndTotal(){
     const el = document.querySelector('.cart-count');
@@ -90,7 +116,7 @@
     });
   }
 
-  // Patch renderCartPanel to mark items with data-key
+  // Patch renderCartPanel за да маркира item с data-key
   const originalRender = window.renderCartPanel;
   window.renderCartPanel = function(){
     if(originalRender) originalRender();
@@ -107,4 +133,4 @@
   };
 })();
 </script>
-<!-- ===================== END: Cart Enhancements ===================== -->
+<!-- ===================== END: Cart Vintage Style Enhancements ===================== -->
