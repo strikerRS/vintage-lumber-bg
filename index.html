@@ -141,6 +141,7 @@ nav a:hover{color:#A66B3C;}
 </div>
 
 <script>
+/* === ORIGINAL PRODUCT SCRIPT === */
 const products={ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
 
 const params=new URLSearchParams(window.location.search);
@@ -197,478 +198,81 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
 </script>
 
-<!-- ========== START: Cart UI + Logic (paste this BEFORE </body>) ========== -->
-<!-- Cart panel (modal) -->
-<div id="cartPanel" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-xl w-full max-w-3xl p-6 relative">
-    <button id="closeCartPanel" class="absolute top-4 right-4 text-[#6B4226] font-bold">✕</button>
-    <h2 class="text-2xl font-bold mb-4">Вашата кошница</h2>
+<!-- ========== START: Cart enhancements — ripple, qty controls and Refresh button (paste BEFORE </body>) ========== -->
+<style>
+/* Ripple effect for buy buttons */
+.vl-ripple { position: relative; overflow: hidden; }
+.vl-ripple .vl-ripple-circle {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: vl-ripple-anim .6s linear;
+  background: rgba(255,255,255,0.45);
+  pointer-events: none;
+}
+@keyframes vl-ripple-anim {
+  to { transform: scale(8); opacity: 0; }
+}
 
-    <div id="cartItems" class="space-y-4"></div>
+/* Qty controls style */
+.vl-qty { display:inline-flex; align-items:center; gap:8px; }
+.vl-qty button { width:30px; height:30px; border-radius:6px; border:none; cursor:pointer; font-weight:700; }
+.vl-qty .vl-minus { background:#ef4444; color:#fff; }
+.vl-qty .vl-plus { background:#10b981; color:#fff; }
+.vl-qty .vl-qty-num { min-width:28px; text-align:center; font-weight:600; }
 
-    <div id="cartSummary" class="mt-4 flex justify-between items-center">
-      <div id="cartTotal" class="text-xl font-bold">Обща сума: 0 лв.</div>
-      <div>
-        <button id="clearCartBtn" class="mr-2 px-4 py-2 rounded border">Изчисти</button>
-        <button id="checkoutPanelBtn" class="bg-[#6B4226] text-white px-4 py-2 rounded">Финализирай поръчката</button>
-      </div>
-    </div>
-  </div>
-</div>
+/* Refresh button near checkout */
+#refreshCartBtn { margin-right:8px; padding:8px 10px; border-radius:6px; border:1px solid #d1d5db; cursor:pointer; background:#fff; }
+#refreshCartBtn:hover { box-shadow:0 6px 18px rgba(0,0,0,0.08); }
 
-<!-- Toast notification when item added -->
-<div id="cartToast" class="fixed bottom-6 right-6 hidden bg-white border-2 border-[#6B4226] rounded p-3 flex items-center gap-3 z-60" style="align-items:center;">
-  <img id="cartToastImg" src="" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:4px;">
-  <div id="cartToastText" style="font-weight:600;">Добавено във вашата кошница</div>
-</div>
+/* Small transition for cart total */
+#cartTotal { transition: transform .18s ease; }
+#cartTotal.vl-flash { transform: scale(1.03); }
+</style>
 
 <script>
 (function(){
-  // map of product keys -> fallback info (only used if your page does not already provide 'products' variable)
-  const _localProductMap = {
-    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
-    dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
-    dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
-  };
+  function getCartArr(){ try{ return JSON.parse(localStorage.getItem('vl_cart_v1') || '[]') || []; } catch(e){ return []; } }
+  function setCartArr(arr){ localStorage.setItem('vl_cart_v1', JSON.stringify(arr)); updateHeaderCount(arr.length); }
+  function updateHeaderCount(n){ const el=document.querySelector('.cart-count'); if(el) el.innerText=n; }
+  const _fallback={ dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120}, dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150}, dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200} };
+  function getProductObj(key){ try{ if(window.products && products[key]){ const p=Object.assign({}, products[key]); if(!p.price && _fallback[key]) p.price=_fallback[key].price; if((!p.images || p.images.length===0) && _fallback[key]) p.images=_fallback[key].images; return p; } }catch(e){} return _fallback[key]? Object.assign({}, _fallback[key]): { title:key, images:[], price:0}; }
 
-  // cart stored as array of product keys
-  let vl_cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-
-  // helper: get product object (prefer existing `products` if present on page)
-  function getProduct(key){
-    if(typeof products !== 'undefined' && products && products[key]) {
-      // if products object has price - great; if not, use fallback price
-      const p = Object.assign({}, products[key]);
-      if(!p.price && _localProductMap[key]) p.price = _localProductMap[key].price;
-      if(!p.images || p.images.length===0) p.images = _localProductMap[key] ? _localProductMap[key].images : [];
-      return p;
-    }
-    return _localProductMap[key] ? Object.assign({}, _localProductMap[key]) : null;
-  }
-
-  // update cart count in header
-  function updateCartCount(){
-    const el = document.querySelector('.cart-count');
-    if(el) el.innerText = vl_cart.length;
-  }
-
-  // show toast with product
-  function showToast(key){
-    const p = getProduct(key) || {};
-    const toast = document.getElementById('cartToast');
-    const img = document.getElementById('cartToastImg');
-    const txt = document.getElementById('cartToastText');
-    img.src = (p.images && p.images[0]) ? p.images[0] : '';
-    txt.innerText = `${p.title || 'Продукт'} — добавено във вашата кошница`;
-    toast.classList.remove('hidden');
-    // auto-hide
-    clearTimeout(window._vl_toast_timeout);
-    window._vl_toast_timeout = setTimeout(()=>{ toast.classList.add('hidden'); }, 2000);
-  }
-
-  // render product Buy buttons into the product cards (does not modify original markup except by adding button elements)
-  function injectBuyButtons(){
-    const mainPage = document.getElementById('mainPage');
-    if(!mainPage) return;
-    // find product anchors/cards in the main page. Handles both static <a href="...product=dd1"> and card layout
-    const anchors = mainPage.querySelectorAll('a[href*="product="]');
-    anchors.forEach(a=>{
-      // if button already added, skip
-      if(a.querySelector('.vl-buy-btn')) return;
-      // try to extract product key from href
-      try{
-        const u = new URL(a.href, location.href);
-        const key = u.searchParams.get('product');
-        if(!key) return;
-        const p = getProduct(key);
-        const priceText = p && p.price? `${p.price} лв.` : '—';
-        // create buy button
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'vl-buy-btn mt-2 bg-[#6B4226] text-white px-4 py-2 rounded';
-        btn.dataset.key = key;
-        btn.innerText = `Купи — ${priceText}`;
-        // append into the card: try to find a sensible container inside the card (p-4 etc). If not, append to anchor
-        const targetContainer = a.querySelector('.p-4') || a.querySelector('.text-center') || a;
-        targetContainer.appendChild(btn);
-
-        // click handler
-        btn.addEventListener('click', function(ev){
-          ev.preventDefault();
-          vl_cart.push(key);
-          localStorage.setItem('vl_cart_v1', JSON.stringify(vl_cart));
-          updateCartCount();
-          showToast(key);
-        });
-      }catch(e){ /* ignore malformed href */ }
-    });
-  }
-
-  // render cart panel contents (aggregated)
-  function renderCartPanel(){
-    const itemsDiv = document.getElementById('cartItems');
-    itemsDiv.innerHTML = '';
-    const counts = {};
-    vl_cart.forEach(k => counts[k] = (counts[k] || 0) + 1);
-    let total = 0;
+  function enhancedRenderCartPanel(){
+    const itemsDiv=document.getElementById('cartItems'); if(!itemsDiv) return;
+    const arr=getCartArr(); const counts={}; arr.forEach(k=>counts[k]=(counts[k]||0)+1);
+    itemsDiv.innerHTML=''; let total=0;
     Object.keys(counts).forEach(key=>{
-      const qty = counts[key];
-      const p = getProduct(key) || { title: key, images: [''], price: 0 };
-      const item = document.createElement('div');
-      item.className = 'flex items-center justify-between p-2 bg-gray-50 rounded';
-      const leftHTML = `<div class="flex items-center gap-3">
-        <img src="${p.images && p.images[0] ? p.images[0] : ''}" alt="" style="width:56px;height:56px;object-fit:cover;border-radius:6px;">
-        <div>
-          <div style="font-weight:600;">${p.title}</div>
-          <div>${p.price} лв. × ${qty}</div>
-        </div>
-      </div>`;
-      const rightHTML = `<div>
-        <button class="vl-remove-item bg-red-600 text-white px-2 py-1 rounded" data-key="${key}">Премахни</button>
-      </div>`;
-      item.innerHTML = leftHTML + rightHTML;
-      itemsDiv.appendChild(item);
-      total += (p.price || 0) * qty;
+      const qty=counts[key]; const p=getProductObj(key);
+      const item=document.createElement('div'); item.className='flex items-center justify-between p-2 bg-gray-50 rounded';
+      const left=document.createElement('div'); left.className='flex items-center gap-3';
+      const img=document.createElement('img'); img.src=(p.images&&p.images[0])?p.images[0]:''; img.style.width='56px'; img.style.height='56px'; img.style.objectFit='cover'; img.style.borderRadius='6px';
+      const meta=document.createElement('div'); const title=document.createElement('div'); title.style.fontWeight='600'; title.innerText=p.title||key; const priceLine=document.createElement('div'); priceLine.innerText=(p.price||0)+' лв. × '+qty; meta.appendChild(title); meta.appendChild(priceLine); left.appendChild(img); left.appendChild(meta);
+      const right=document.createElement('div'); right.className='vl-qty';
+      const minus=document.createElement('button'); minus.className='vl-minus'; minus.type='button'; minus.setAttribute('data-key', key); minus.innerText='−';
+      const qspan=document.createElement('div'); qspan.className='vl-qty-num'; qspan.innerText=qty;
+      const plus=document.createElement('button'); plus.className='vl-plus'; plus.type='button'; plus.setAttribute('data-key', key); plus.innerText='+';
+      right.appendChild(minus); right.appendChild(qspan); right.appendChild(plus); item.appendChild(left); item.appendChild(right); itemsDiv.appendChild(item);
+      total+=(p.price||0)*qty;
     });
-    document.getElementById('cartTotal').innerText = `Обща сума: ${total} лв.`;
-
-    // attach remove handlers
-    itemsDiv.querySelectorAll('.vl-remove-item').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const key = btn.dataset.key;
-        // remove ONE instance (you can change to remove all if desired)
-        const idx = vl_cart.indexOf(key);
-        if(idx > -1) vl_cart.splice(idx,1);
-        localStorage.setItem('vl_cart_v1', JSON.stringify(vl_cart));
-        updateCartCount();
-        renderCartPanel();
-      });
-    });
+    const totalEl=document.getElementById('cartTotal'); if(totalEl){ totalEl.innerText=`Обща сума: ${total} лв.`; totalEl.classList.remove('vl-flash'); void totalEl.offsetWidth; totalEl.classList.add('vl-flash'); setTimeout(()=>totalEl.classList.remove('vl-flash'),400);}
+    itemsDiv.querySelectorAll('.vl-plus').forEach(btn=>{ btn.addEventListener('click',()=>{ const key=btn.dataset.key; const arr=getCartArr(); arr.push(key); setCartArr(arr); enhancedRenderCartPanel(); if(window.showToast) try{ showToast(key);}catch(e){} });});
+    itemsDiv.querySelectorAll('.vl-minus').forEach(btn=>{ btn.addEventListener('click',()=>{ const key=btn.dataset.key; const arr=getCartArr(); const idx=arr.indexOf(key); if(idx>-1) arr.splice(idx,1); setCartArr(arr); enhancedRenderCartPanel(); });});
   }
 
-  // open/close cart panel
-  function openCartPanel(){
-    // ensure panel exists
-    const panel = document.getElementById('cartPanel');
-    if(!panel) return;
-    renderCartPanel();
-    panel.classList.remove('hidden');
-  }
-  function closeCartPanel(){
-    const panel = document.getElementById('cartPanel');
-    if(!panel) return;
-    panel.classList.add('hidden');
-  }
+  function ensureRefreshButton(){ const checkoutBtn=document.getElementById('checkoutPanelBtn'); if(!checkoutBtn) return; if(document.getElementById('refreshCartBtn')) return;
+    const refresh=document.createElement('button'); refresh.id='refreshCartBtn'; refresh.type='button'; refresh.innerText='Обнови'; refresh.addEventListener('click',()=>{ enhancedRenderCartPanel(); }); checkoutBtn.parentElement.insertBefore(refresh,checkoutBtn);}
+  function attachRippleToSelectors(){ document.addEventListener('click', function(e){ const btn=e.target.closest('.vl-buy-btn, .vl-buy-btn-product, .vl-ripple, button.vl-ripple-btn'); if(!btn) return; const rect=btn.getBoundingClientRect(); const circle=document.createElement('span'); circle.className='vl-ripple-circle'; const size=Math.max(rect.width,rect.height); circle.style.width=circle.style.height=(size*1.1)+'px'; const left=e.clientX-rect.left-size/2; const top=e.clientY-rect.top-size/2; circle.style.left=left+'px'; circle.style.top=top+'px'; btn.style.position=btn.style.position||'relative'; btn.appendChild(circle); setTimeout(()=>{ try{ btn.removeChild(circle);}catch(e){} },650); }, true); }
 
-  // clear cart
-  function clearCart(){
-    vl_cart = [];
-    localStorage.setItem('vl_cart_v1', JSON.stringify(vl_cart));
-    updateCartCount();
-    renderCartPanel();
-  }
+  function wirePanelOpenObserver(){ const panel=document.getElementById('cartPanel'); if(!panel){ const bodyMo=new MutationObserver((mut)=>{ const p=document.getElementById('cartPanel'); if(p){ bodyMo.disconnect(); wirePanelOpenObserver(); } }); bodyMo.observe(document.body,{childList:true,subtree:true}); return; } ensureRefreshButton(); const mo=new MutationObserver((mut)=>{ mut.forEach(m=>{ if(m.attributeName==='class'){ if(!panel.classList.contains('hidden')) enhancedRenderCartPanel(); } }); }); mo.observe(panel,{attributes:true}); if(!panel.classList.contains('hidden')) enhancedRenderCartPanel(); }
 
-  // checkout action
-  function checkoutAction(){
-    if(vl_cart.length === 0){
-      alert('Нямате добавени продукти в кошницата.');
-      return;
-    }
-    // Here you can integrate real checkout — for demo we clear and thank user
-    alert('Благодарим за поръчката!');
-    clearCart();
-    closeCartPanel();
-  }
+  function wireExistingPanelButtons(){ const clearBtn=document.getElementById('clearCartBtn'); if(clearBtn){ clearBtn.addEventListener('click',()=>{ setCartArr([]); enhancedRenderCartPanel(); });} const checkoutBtn=document.getElementById('checkoutPanelBtn'); if(checkoutBtn){ checkoutBtn.addEventListener('click',()=>{ const arr=getCartArr(); if(arr.length===0){alert('Нямате добавени продукти в кошницата.'); return;} alert('Благодарим за поръчката!'); setCartArr([]); enhancedRenderCartPanel(); const panel=document.getElementById('cartPanel'); if(panel) panel.classList.add('hidden'); });} }
 
-  // wire up header cart button (the page has a .cart-btn element)
-  function wireHeaderCart(){
-    // prefer element with id cartBtn if present, otherwise first .cart-btn
-    const headerCart = document.getElementById('cartBtn') || document.querySelector('.cart-btn');
-    if(headerCart){
-      headerCart.addEventListener('click', function(e){
-        e.preventDefault();
-        openCartPanel();
-      });
-    }
-  }
-
-  // wire close/clear/checkout buttons in panel
-  function wirePanelButtons(){
-    const closeBtn = document.getElementById('closeCartPanel');
-    if(closeBtn) closeBtn.addEventListener('click', closeCartPanel);
-    const clearBtn = document.getElementById('clearCartBtn');
-    if(clearBtn) clearBtn.addEventListener('click', clearCart);
-    const checkoutBtn = document.getElementById('checkoutPanelBtn');
-    if(checkoutBtn) checkoutBtn.addEventListener('click', checkoutAction);
-  }
-
-  // initialize everything after DOM ready
-  function initCartFeature(){
-    injectBuyButtons();
-    updateCartCount();
-    wireHeaderCart();
-    wirePanelButtons();
-
-    // observe DOM for new product cards (if your site injects them later)
-    const mainPage = document.getElementById('mainPage');
-    if(mainPage && window.MutationObserver){
-      const mo = new MutationObserver((mutations)=>{
-        injectBuyButtons();
-      });
-      mo.observe(mainPage, { childList: true, subtree: true });
-    }
-  }
-
-  // run
-  document.addEventListener('DOMContentLoaded', initCartFeature);
+  document.addEventListener('DOMContentLoaded',()=>{ updateHeaderCount(getCartArr().length); attachRippleToSelectors(); wirePanelOpenObserver(); wireExistingPanelButtons(); ensureRefreshButton(); });
+  window.addEventListener('storage', e=>{ if(e.key==='vl_cart_v1'){ updateHeaderCount(getCartArr().length); const panel=document.getElementById('cartPanel'); if(panel && !panel.classList.contains('hidden')) enhancedRenderCartPanel(); } });
 })();
 </script>
-<!-- ========== END: Cart UI + Logic ========== -->
-
-<!-- ========== START: Inject Buy button on product detail page ========== -->
-<style>
-/* минимален стил за бутона в product page (не променя съществуващите класове) */
-.vl-buy-btn-product { margin-top: 0.5rem; display:inline-block; }
-</style>
-
-<script>
-(function(){
-  // Вземане на ключа на продукта от URL (?product=dd1)
-  function getProductKeyFromURL(){
-    try{ return new URLSearchParams(window.location.search).get('product'); } catch(e){ return null; }
-  }
-
-  // Вземане на продуктен обект от глобалния products, ако липсва - fallback
-  function getProductObj(key){
-    if(!key) return null;
-    if(window.products && products[key]) {
-      return Object.assign({}, products[key]);
-    }
-    // fallback (в случай че нямаш products глобално)
-    const fallback = {
-      dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
-      dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
-      dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
-    };
-    return fallback[key] ? Object.assign({}, fallback[key]) : { title: key, images: [], price: null };
-  }
-
-  // Актуализира count в хедъра
-  function updateCartCount(cnt){
-    const el = document.querySelector('.cart-count');
-    if(el) el.innerText = cnt;
-  }
-
-  // Показва toast: използва съществуващия #cartToast ако има, иначе създава временна нотификация
-  function showToastWithProduct(key){
-    const p = getProductObj(key) || {};
-    const toast = document.getElementById('cartToast');
-    if(toast){
-      const img = document.getElementById('cartToastImg');
-      const txt = document.getElementById('cartToastText');
-      if(img) img.src = (p.images && p.images[0]) ? p.images[0] : '';
-      if(txt) txt.innerText = (p.title ? (p.title + ' — добавено във вашата кошница') : 'Добавено във вашата кошница');
-      toast.classList.remove('hidden');
-      clearTimeout(window._vl_toast_timeout_product);
-      window._vl_toast_timeout_product = setTimeout(()=> { toast.classList.add('hidden'); }, 1800);
-      return;
-    }
-    // fallback simple toast
-    const tmp = document.createElement('div');
-    tmp.style.position='fixed';
-    tmp.style.right='16px';
-    tmp.style.bottom='16px';
-    tmp.style.background='#fff';
-    tmp.style.border='2px solid #6B4226';
-    tmp.style.padding='10px 12px';
-    tmp.style.borderRadius='8px';
-    tmp.style.boxShadow='0 6px 18px rgba(0,0,0,0.12)';
-    tmp.style.zIndex=9999;
-    tmp.innerText = (p.title ? (p.title + ' — добавено във вашата кошница') : 'Добавено във вашата кошница');
-    document.body.appendChild(tmp);
-    setTimeout(()=> tmp.remove(), 1800);
-  }
-
-  // Добавя/инжектира бутон Купи и цена в product page (когато е видим)
-  function addBuyButtonToProductPage(){
-    const key = getProductKeyFromURL();
-    if(!key) return; // няма продукт в URL
-    const titleEl = document.getElementById('title');
-    if(!titleEl) return; // структурaта не е налична
-    const parent = titleEl.parentElement;
-    if(!parent) return;
-
-    // Ако вече има бутон - не добавяме втори
-    if(parent.querySelector('.vl-buy-btn-product')) return;
-
-    const p = getProductObj(key);
-    const priceText = (p && p.price) ? (p.price + ' лв.') : '—';
-
-    // Създаваме елементи
-    const priceEl = document.createElement('p');
-    priceEl.className = 'vl-buy-price text-[#6B4226] font-bold mb-2';
-    priceEl.innerText = priceText;
-
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded';
-    btn.dataset.key = key;
-    btn.innerText = 'Купи — ' + priceText;
-
-    // Клик обработчик: добавяне в localStorage масива vl_cart_v1, обновяване на броя, показване на нотификация
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      // кратка анимация (ако имаш класа vl-buy-anim/влизащи стилове)
-      try{ btn.classList.remove('vl-buy-anim'); void btn.offsetWidth; btn.classList.add('vl-buy-anim'); }catch(e){}
-
-      let cart = [];
-      try{ cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]'); }catch(e){ cart = []; }
-      cart.push(key);
-      localStorage.setItem('vl_cart_v1', JSON.stringify(cart));
-      updateCartCount(cart.length);
-      showToastWithProduct(key);
-    });
-
-    // Добавяме price + бутон в DOM, под #title (не премахваме нищо)
-    parent.appendChild(priceEl);
-    parent.appendChild(btn);
-  }
-
-  // Стартира при зареждане и наблюдава DOM за промени (в случай, че productPage се зарежда динамично)
-  function init(){
-    // initial attempt
-    addBuyButtonToProductPage();
-
-    // observe changes that might add the product detail later
-    if(window.MutationObserver){
-      const mo = new MutationObserver((mut)=>{
-        addBuyButtonToProductPage();
-      });
-      mo.observe(document.body, { childList:true, subtree:true });
-    }
-
-    // също опит при history API промяна (ако сайтът променя URL без презареждане)
-    window.addEventListener('popstate', addBuyButtonToProductPage);
-    window.addEventListener('pushstate', addBuyButtonToProductPage);
-    // note: some frameworks use pushState directly — we listen to popstate; MutationObserver covers most cases
-  }
-
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-</script>
-<!-- ========== END: Inject Buy button on product detail page ========== -->
-
-<!-- ========== START: Small UI animations (paste this BEFORE </body>) ========== -->
-<style>
-/* Buy button subtle bump */
-.vl-buy-btn { transition: transform .12s ease, box-shadow .12s ease; will-change: transform; }
-.vl-buy-anim { animation: btn-bump .28s cubic-bezier(.2,.8,.2,1); }
-@keyframes btn-bump {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.08); }
-  100% { transform: scale(1); }
-}
-
-/* Toast pop animation */
-#cartToast { opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease; }
-#cartToast:not(.hidden) { opacity: 1; transform: translateY(0); animation: toast-pop .35s ease; }
-@keyframes toast-pop {
-  0% { opacity: 0; transform: translateY(12px) scale(.98); }
-  60% { transform: translateY(0) scale(1.02); }
-  100% { transform: translateY(0) scale(1); }
-}
-
-/* Cart panel entrance */
-#cartPanel > div { transform: translateY(-8px); opacity: 0; transition: transform .25s ease, opacity .25s ease; }
-#cartPanel:not(.hidden) > div { transform: translateY(0); opacity: 1; }
-
-/* Cart count pulse */
-.cart-count { display: inline-flex; align-items: center; justify-content: center; transition: transform .18s ease; }
-.cart-count.pulse { animation: count-pulse .42s ease; }
-@keyframes count-pulse {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.25); }
-  60% { transform: scale(.95); }
-  100% { transform: scale(1); }
-}
-
-/* Small accessible focus/hover hint for buy buttons */
-.vl-buy-btn:focus, .vl-buy-btn:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.12); outline: none; }
-</style>
-
-<script>
-(function(){
-  // animate a buy button briefly (adds class then removes)
-  function animateButtonOnce(btn){
-    if(!btn) return;
-    btn.classList.remove('vl-buy-anim');
-    // force reflow to restart animation
-    void btn.offsetWidth;
-    btn.classList.add('vl-buy-anim');
-    setTimeout(()=> btn.classList.remove('vl-buy-anim'), 340);
-  }
-
-  // Delegate click on any buy button (including those added later)
-  document.addEventListener('click', function(e){
-    const btn = e.target.closest && e.target.closest('.vl-buy-btn');
-    if(btn){
-      animateButtonOnce(btn);
-      // small ripple-like effect handled by animation class only; do NOT interfere with existing click handlers
-    }
-  }, true);
-
-  // Pulse cart-count when it changes (mutation observer)
-  const cartCountEl = document.querySelector('.cart-count');
-  if(cartCountEl){
-    const mo = new MutationObserver(() => {
-      cartCountEl.classList.remove('pulse');
-      // force reflow then add
-      void cartCountEl.offsetWidth;
-      cartCountEl.classList.add('pulse');
-      // remove after animation to keep DOM clean
-      clearTimeout(window._vl_count_timeout);
-      window._vl_count_timeout = setTimeout(()=> cartCountEl.classList.remove('pulse'), 600);
-    });
-    mo.observe(cartCountEl, { childList: true, characterData: true, subtree: true });
-  }
-
-  // Ensure toast shows with animation even if existing script toggles 'hidden'
-  // No changes to existing showToast required; CSS will animate when class is removed.
-  // But add keyboard-closable support: ESC closes cart panel and hides toast
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){
-      const panel = document.getElementById('cartPanel');
-      if(panel && !panel.classList.contains('hidden')) panel.classList.add('hidden');
-      const toast = document.getElementById('cartToast');
-      if(toast && !toast.classList.contains('hidden')) toast.classList.add('hidden');
-    }
-  });
-
-  // Minor safety: when cart panel becomes visible via class toggle, focus first button for accessibility
-  const cartPanel = document.getElementById('cartPanel');
-  if(cartPanel && window.MutationObserver){
-    const moPanel = new MutationObserver((mutations)=>{
-      for(const m of mutations){
-        if(m.attributeName === 'class'){
-          if(!cartPanel.classList.contains('hidden')){
-            // focus close button for quick escape
-            const closeBtn = document.getElementById('closeCartPanel');
-            if(closeBtn) closeBtn.focus({preventScroll:true});
-          }
-        }
-      }
-    });
-    moPanel.observe(cartPanel, { attributes: true });
-  }
-
-  // If new buy buttons are injected later, we already handle click via event delegation (no need to rebind)
-})();
-</script>
-<!-- ========== END: Small UI animations (paste this BEFORE </body>) ========== -->
+<!-- ========== END: Cart enhancements block ========== -->
 
 </body>
 </html>
