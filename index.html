@@ -5,16 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- SEO Meta -->
-<meta name="description" content="Vintage Lumber Bulgaria - автентични български дървени дъски и греди с уникална патина за интериор и декорация">
-<meta name="keywords" content="дървени дъски, реставрация, рустик дърво, интериор, български дървен материал">
-<meta name="robots" content="index, follow">
-
-<!-- Preload ключови изображения -->
-<link rel="preload" as="image" href="images/dd1.jpg">
-<link rel="preload" as="image" href="images/dd2.jpg">
-<link rel="preload" as="image" href="images/dg1.jpg">
-
 <style>
 body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
 #hero-bg { background-image: url('bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 100vh; }
@@ -40,33 +30,6 @@ nav a:hover{color:#A66B3C;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
 </style>
-
-<!-- Schema.org JSON-LD -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": "Стара дървена дъска",
-  "image": [
-    "https://example.com/images/dd1.jpg",
-    "https://example.com/images/dd2.jpg",
-    "https://example.com/images/dg1.jpg"
-  ],
-  "description": "Автентична стара дървена дъска, подходяща за интериор и декорация.",
-  "brand": {
-    "@type": "Brand",
-    "name": "Vintage Lumber Bulgaria"
-  },
-  "offers": {
-    "@type": "Offer",
-    "url": "https://example.com/index.html?product=dd1",
-    "priceCurrency": "BGN",
-    "price": "0",
-    "availability": "https://schema.org/InStock"
-  }
-}
-</script>
-
 </head>
 <body>
 
@@ -75,7 +38,7 @@ nav a:hover{color:#A66B3C;}
 <nav class="flex items-center">
 <a id="navHome">Начало</a>
 <a id="navProducts">Продукти</a>
-<a href="#contact">Свържете се с нас</a>
+<a id="navContact">Контакти</a>
 <a id="navAbout">За нас</a>
 <div class="cart-btn ml-4">🛒<span class="cart-count">0</span></div>
 </nav>
@@ -211,7 +174,8 @@ const goHome=()=>{
 document.getElementById('homeBtn').addEventListener('click',goHome);
 document.getElementById('navHome').addEventListener('click',goHome);
 document.getElementById('navAbout').addEventListener('click',()=> document.getElementById('about').scrollIntoView({behavior:'smooth'}));
-document.getElementById('navProducts').addEventListener('click',goHome);
+document.getElementById('navProducts').addEventListener('click',()=>{ window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
+document.getElementById('navContact').addEventListener('click',()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
 </script>
 
 </body>
