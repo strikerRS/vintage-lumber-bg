@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-</style>
-</head>
-
-<body class="bg-[#f4eadf] text-gray-800">
-<!-- ===== ПАРАЛАКС ФОН ===== -->
 <style>
 #hero-bg {
   background-image: url('bg-old-bulgarian-farm.jpg');
@@ -25,57 +19,16 @@
   text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
 </style>
+</head>
 
-<!-- Добави това ПОД <body> и ПРЕДИ <div id="mainPage"> -->
+<body class="bg-[#f4eadf] text-gray-800">
+
+<!-- ===== HERO ПАРАЛАКС СЕКЦИЯ С ЕДИН НАДПИС ===== -->
 <section id="hero-bg">
   <div class="text-center">
-    <p class="mt-4 text-xl md:text-2xl">Автентични стари български материали</p>
+    <h1 class="text-5xl md:text-6xl font-bold">Vintage Lumber Bulgaria</h1>
   </div>
 </section>
-
-<!-- ===== HERO ПАРАЛАКС СЕКЦИЯ ===== -->
-<section id="hero-bg">
-  <div class="text-center">
-    <h1 class="text-4xl md:text-6xl font-bold">Vintage Lumber Bulgaria</h1>
-    <p class="mt-4 text-xl md:text-2xl">Автентични стари български материали</p>
-  </div>
-</section>
-
-<script>
-const products = {
-  dd1: {
-    title: "Стара дървена дъска",
-    images: ["dd1.jpg", "dd2.jpg", "dg1.jpg"],
-    description: "Автентична стара дървена дъска, демонтирана от български селски постройки. Запазена естествена патина, следи от времето и уникален характер.",
-    specs: ["Естествено старо дърво", "Ръчна селекция", "Подходящо за интериор и декорация"],
-    delivery: "Доставка в цялата страна с куриер. Възможно лично предаване след предварителна уговорка."
-  }
-};
-
-const params = new URLSearchParams(window.location.search);
-const productKey = params.get("product");
-</script>
-
-<!-- ================= PRODUCT PAGE ================= -->
-<div id="productPage" class="hidden max-w-6xl mx-auto p-8">
-  <a href="index.html" class="text-[#6B4226] font-bold">← Назад</a>
-
-  <div class="grid md:grid-cols-2 gap-10 mt-6">
-    <div id="gallery" class="grid grid-cols-2 gap-4"></div>
-
-    <div>
-      <h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
-
-      <p id="description" class="mb-6"></p>
-
-      <h2 class="text-xl font-bold mb-2">Характеристики</h2>
-      <ul id="specs" class="list-disc ml-5 mb-6"></ul>
-
-      <h2 class="text-xl font-bold mb-2">Доставка</h2>
-      <p id="delivery"></p>
-    </div>
-  </div>
-</div>
 
 <!-- ================= MAIN PAGE ================= -->
 <div id="mainPage">
@@ -117,32 +70,27 @@ const productKey = params.get("product");
 </div>
 
 <script>
+const products = {
+  dd1: {
+    title: "Стара дървена дъска",
+    images: ["dd1.jpg", "dd2.jpg", "dg1.jpg"],
+    description: "Автентична стара дървена дъска, демонтирана от български селски постройки. Запазена естествена патина, следи от времето и уникален характер.",
+    specs: ["Естествено старо дърво", "Ръчна селекция", "Подходящо за интериор и декорация"],
+    delivery: "Доставка в цялата страна с куриер. Възможно лично предаване след предварителна уговорка."
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const productKey = params.get("product");
+
 if (productKey && products[productKey]) {
   document.getElementById("mainPage").style.display = "none";
-  document.getElementById("productPage").style.display = "block";
-
   const p = products[productKey];
-  document.getElementById("title").innerText = p.title;
-  document.getElementById("description").innerText = p.description;
-  document.getElementById("delivery").innerText = p.delivery;
-
-  p.images.forEach(img => {
-    const i = document.createElement("img");
-    i.src = img;
-    i.className = "rounded-xl shadow";
-    document.getElementById("gallery").appendChild(i);
-  });
-
-  p.specs.forEach(s => {
-    const li = document.createElement("li");
-    li.innerText = s;
-    document.getElementById("specs").appendChild(li);
-  });
+  document.body.innerHTML += `<div class='max-w-6xl mx-auto p-8'>
+    <h1 class='text-4xl font-bold text-[#6B4226] text-center mb-4'>${p.title}</h1>
+  </div>`;
 }
 </script>
 
 </body>
 </html>
-
-
-
