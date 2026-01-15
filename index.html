@@ -6,36 +6,105 @@
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
+/* ===== HERO ПАРАЛАКС ===== */
 #hero-bg {
   background-image: url('bg-old-bulgarian-farm.jpg');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  height: 60vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  position: relative;
+}
+
+/* ===== НАВИГАЦИЯ ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+header h1 {
+  font-size: 1.75rem;
+  color: #6B4226;
+  font-weight: bold;
+}
+nav a {
+  margin-left: 1rem;
+  font-weight: 500;
+  color: #6B4226;
+  transition: 0.3s;
+}
+nav a:hover {
+  color: #A66B3C;
+}
+.cart-btn {
+  background: #6B4226;
+  color: white;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  position: relative;
+  cursor: pointer;
+}
+.cart-count {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background: red;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 </head>
 
 <body class="bg-[#f4eadf] text-gray-800">
 
-<!-- ===== HERO ПАРАЛАКС СЕКЦИЯ С ЕДИН НАДПИС ===== -->
+<!-- ===== HEADER / НАВИГАЦИЯ ===== -->
+<header>
+  <h1>Vintage Lumber</h1>
+  <nav class="flex items-center">
+    <a href="#hero-bg">Начало</a>
+    <a href="#mainPage">Продукти</a>
+    <a href="#contact">Свържете се с нас</a>
+    <a href="#about" class="ml-4 px-4 py-2 bg-[#6B4226] text-white rounded-md hover:bg-[#A66B3C]">За нас</a>
+    <div class="cart-btn ml-4">
+      🛒
+      <span class="cart-count">0</span>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== HERO ПАРАЛАКС СЕКЦИЯ ===== -->
 <section id="hero-bg">
-  <div class="text-center">
-    <h1 class="text-5xl md:text-6xl font-bold">Vintage Lumber Bulgaria</h1>
-  </div>
+  <h1 class="text-5xl md:text-6xl font-bold">Vintage Lumber Bulgaria</h1>
+  <p class="mt-4 text-xl md:text-2xl text-center max-w-2xl">
+    Автентични стари български материали за интериор и декорация, вдъхновени от селската традиция.
+  </p>
 </section>
 
 <!-- ================= MAIN PAGE ================= -->
-<div id="mainPage">
-
-<header class="bg-white shadow p-6 text-center text-3xl font-bold text-[#6B4226]">
-  Vintage Lumber Bulgaria
-</header>
+<div id="mainPage" class="mt-24">
 
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
 
@@ -69,6 +138,7 @@
 </main>
 </div>
 
+<!-- ================= SCRIPT ================= -->
 <script>
 const products = {
   dd1: {
@@ -86,7 +156,7 @@ const productKey = params.get("product");
 if (productKey && products[productKey]) {
   document.getElementById("mainPage").style.display = "none";
   const p = products[productKey];
-  document.body.innerHTML += `<div class='max-w-6xl mx-auto p-8'>
+  document.body.innerHTML += `<div class='max-w-6xl mx-auto p-8 mt-24'>
     <h1 class='text-4xl font-bold text-[#6B4226] text-center mb-4'>${p.title}</h1>
   </div>`;
 }
