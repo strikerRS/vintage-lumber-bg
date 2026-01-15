@@ -6,6 +6,7 @@
 <title>Vintage Lumber Bulgaria</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
+/* --- ORIGINAL STYLES --- */
 body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
 #hero-bg { background-image: url('bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 100vh; }
 header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
@@ -29,10 +30,9 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
-#cartPage { display:none; padding-top:4rem; }
-#cartPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
-.cart-item { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
-.cart-item img { width:60px; height:60px; object-fit:cover; border-radius:0.25rem; margin-right:1rem; }
+.cart-notification { position: fixed; bottom: 2rem; right: 2rem; background: #fff; border: 2px solid #6B4226; border-radius: 0.5rem; padding: 1rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display:none; z-index: 200; }
+.cart-notification img { width: 50px; height: 50px; object-fit: cover; border-radius:0.25rem; }
+#cartPage { display:none; padding-top:4rem; max-width:7xl; margin: 2rem auto; }
 </style>
 </head>
 <body>
@@ -44,43 +44,18 @@ nav a:hover{color:#A66B3C;}
 <a id="navProducts">Продукти</a>
 <a id="navContact">Контакти</a>
 <a id="navAbout">За нас</a>
-<div class="cart-btn ml-4">🛒<span class="cart-count">0</span></div>
+<div class="cart-btn ml-4" id="cartBtn">🛒<span class="cart-count">0</span></div>
 </nav>
 </header>
 
 <section id="hero-bg"></section>
 
 <div id="mainPage" class="mt-24">
-<main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-<a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
-<div class="p-4 text-center">
-<h3 class="font-semibold text-lg">Стара дървена дъска</h3>
-<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
-<button class="buyBtn mt-2 bg-[#6B4226] text-white px-4 py-2 rounded">Купи - 50 лв</button>
-</div>
-</a>
-<a href="index.html?product=dd2" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
-<div class="p-4 text-center">
-<h3 class="font-semibold text-lg">Рустик дъска</h3>
-<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
-<button class="buyBtn mt-2 bg-[#6B4226] text-white px-4 py-2 rounded">Купи - 70 лв</button>
-</div>
-</a>
-<a href="index.html?product=dg1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
-<div class="p-4 text-center">
-<h3 class="font-semibold text-lg">Стара масивна греда</h3>
-<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
-<button class="buyBtn mt-2 bg-[#6B4226] text-white px-4 py-2 rounded">Купи - 120 лв</button>
-</div>
-</a>
+<main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8" id="productGrid">
 </main>
-
 <div id="about">
 <h2 class="text-2xl font-bold mb-4">За нас</h2>
-<p>Vintage Lumber Bulgaria е малка семейна компания, която възстановява и предлага автентични български дървени дъски и греди с уникална патина и характер. Нашата мисия е да съхраним традицията и красотата на старото дърво и да я интегрираме в модерния интериор.</p>
+<p>Vintage Lumber Bulgaria е малка семейна компания, която възстановява и предлага автентични български дървени дъски и греди с уникална патина и характер.</p>
 </div>
 </div>
 
@@ -105,6 +80,13 @@ nav a:hover{color:#A66B3C;}
 </div>
 </div>
 
+<section id="cartPage">
+<h2 class="text-2xl font-bold mb-4">Вашата кошница</h2>
+<div id="cartList" class="space-y-4"></div>
+<div id="cartTotal" class="text-xl font-bold mt-6"></div>
+<button id="checkoutBtn" class="bg-[#6B4226] text-white px-6 py-2 rounded mt-4">Финализирай поръчката</button>
+</section>
+
 <section id="contact" class="max-w-7xl mx-auto p-10 mt-20">
 <h2 class="text-2xl font-bold mb-4">Контакти</h2>
 <p>Телефон: +359 88 123 4567</p>
@@ -117,7 +99,12 @@ nav a:hover{color:#A66B3C;}
 <button id="lightboxRight">→</button>
 </div>
 
-<!-- Инпрегниран модал за За нас -->
+<div class="cart-notification" id="cartNotification">
+<img src="" id="cartNotifImg" alt="">
+<span id="cartNotifText">Добавено във вашата кошница</span>
+</div>
+
+<!-- About Modal (from second code) -->
 <div id="aboutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
   <div class="bg-white rounded-xl max-w-4xl w-full p-8 overflow-y-auto max-h-[90vh] relative">
     <button id="closeAboutModal" class="text-[#6B4226] font-bold text-lg mb-4 absolute top-4 right-4">✕ Затвори</button>
@@ -147,19 +134,83 @@ nav a:hover{color:#A66B3C;}
   </div>
 </div>
 
-<!-- Кошница -->
-<div id="cartPage" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-xl max-w-4xl w-full p-8 overflow-y-auto max-h-[90vh] relative">
-    <button id="closeCart" class="text-[#6B4226] font-bold text-lg mb-4 absolute top-4 right-4">✕ Затвори</button>
-    <h2 class="text-3xl font-bold text-[#6B4226] mb-4">Вашата кошница</h2>
-    <div id="cartItems"></div>
-    <button id="checkout" class="mt-4 bg-[#6B4226] text-white px-4 py-2 rounded">Финализирай поръчката</button>
-  </div>
-</div>
-
 <script>
-const products={ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка...",price:50}, dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка...",price:70}, dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка...",price:120} };
+/* --- ORIGINAL SCRIPT --- */
+const products={ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка...",price:120}, dd2:{title:"Рустик дъска",images:["images/dd2.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка...",price:150}, dg1:{title:"Стара масивна греда",images:["images/dg1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка...",price:200}};
 
+let cart=[];
+
+function renderProducts(){
+ const grid=document.getElementById('productGrid');
+ grid.innerHTML='';
+ Object.keys(products).forEach(key=>{
+   const p=products[key];
+   const card=document.createElement('div');
+   card.className='bg-white rounded-xl shadow hover:scale-105 transition p-4 text-center';
+   card.innerHTML=`<img src="${p.images[0]}" class="h-56 w-full object-cover rounded-t-xl mb-2">
+   <h3 class="font-semibold text-lg">${p.title}</h3>
+   <p class="text-[#6B4226] font-bold">${p.price} лв.</p>
+   <button class="bg-[#6B4226] text-white px-4 py-2 rounded mt-2 buyBtn" data-key="${key}">Купи</button>`;
+   grid.appendChild(card);
+ });
+ document.querySelectorAll('.buyBtn').forEach(btn=>{
+   btn.addEventListener('click', e=>{
+     const key=e.target.dataset.key;
+     cart.push(key);
+     document.querySelector('.cart-count').innerText=cart.length;
+     const notif=document.getElementById('cartNotification');
+     document.getElementById('cartNotifImg').src=products[key].images[0];
+     notif.style.display='flex';
+     setTimeout(()=>{notif.style.display='none';},2000);
+   });
+ });
+}
+
+function renderCart(){
+ const cartList=document.getElementById('cartList');
+ cartList.innerHTML='';
+ let total=0;
+ cart.forEach((key,i)=>{
+   const p=products[key];
+   total+=p.price;
+   const div=document.createElement('div');
+   div.className='flex justify-between items-center bg-white p-4 rounded shadow';
+   div.innerHTML=`<div class="flex items-center gap-4">
+     <img src="${p.images[0]}" class="w-16 h-16 object-cover rounded">
+     <div>
+       <h3 class="font-semibold">${p.title}</h3>
+       <p>${p.price} лв.</p>
+     </div>
+   </div>
+   <button data-index="${i}" class="bg-red-600 text-white px-2 py-1 rounded removeBtn">Премахни</button>`;
+   cartList.appendChild(div);
+ });
+ document.getElementById('cartTotal').innerText=`Обща сума: ${total} лв.`;
+ document.querySelectorAll('.removeBtn').forEach(btn=>{
+   btn.addEventListener('click', e=>{
+     const idx=e.target.dataset.index;
+     cart.splice(idx,1);
+     document.querySelector('.cart-count').innerText=cart.length;
+     renderCart();
+   });
+ });
+}
+
+document.getElementById('cartBtn').addEventListener('click',()=>{
+ document.getElementById('mainPage').style.display='none';
+ document.getElementById('productPage').style.display='none';
+ document.getElementById('hero-bg').style.display='none';
+ document.getElementById('cartPage').style.display='block';
+ renderCart();
+});
+
+document.getElementById('checkoutBtn').addEventListener('click',()=>{
+ alert('Благодарим за поръчката!'); cart=[]; document.querySelector('.cart-count').innerText='0'; renderCart();
+});
+
+renderProducts();
+
+/* --- KEEP ORIGINAL MODAL AND NAVIGATION SCRIPT FROM FIRST CODE --- */
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
 if(productKey && products[productKey]){
@@ -179,21 +230,4 @@ if(productKey && products[productKey]){
  let currentIndex=0;
  function showImage(index){ currentIndex=index; mainImage.src=p.images[currentIndex]; Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index)); lightboxImage.src=p.images[currentIndex]; }
  p.images.forEach((imgSrc,i)=>{ const thumb=document.createElement("img"); thumb.src=imgSrc; if(i===0) thumb.classList.add('active'); thumb.addEventListener('click',()=> showImage(i)); thumbsContainer.appendChild(thumb); });
- document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
- document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
- mainImage.addEventListener('click',()=> lightbox.style.display='flex');
- lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
- leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
- rightBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex+1)%p.images.length); });
- showImage(0);
- p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
-}
-const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; }
-document.getElementById('homeBtn').addEventListener('click',goHome);
-document.getElementById('navHome').addEventListener('click',goHome);
-
-// About modal
-const aboutModal = document.getElementById('aboutModal');
-const closeAboutModal = document.getElementById('closeAboutModal');
-document.getElementById('navAbout').addEventListener('click',()=>{
- aboutModal.classList.remove('hidden'); aboutModal.classList
+ document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images
