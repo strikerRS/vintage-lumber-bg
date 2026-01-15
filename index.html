@@ -1,140 +1,86 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vintage Lumber Bulgaria</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-:root {
-  --brown: #6B4226;
-  --light-brown: #A37B58;
-}
-
-#hero {
-  background-image: url('bg-old-bulgarian-farm.jpg');
-  background-size: cover;
-  background-position: center;
-  height: 90vh;
-  position: relative;
-}
-#hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-}
-#hero * {
-  position: relative;
-  z-index: 1;
-}
-
-.product-card {
-  background: #fff7f0;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform .3s;
-}
-.product-card:hover {
-  transform: translateY(-6px);
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vintage Harvest Lumber</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-[#f4eadf] text-gray-800">
 
-<body class="bg-gray-50">
-
-<!-- HEADER -->
-<header class="fixed top-0 w-full bg-white shadow z-50">
-  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    <h1 class="text-xl font-bold text-[var(--brown)]">Vintage Lumber</h1>
-    <nav class="space-x-6">
-      <a href="#hero">Начало</a>
-      <a href="#products">Продукти</a>
-      <a href="#about">За нас</a>
-      <a href="#contact">Контакт</a>
-    </nav>
-  </div>
+<header class="bg-white shadow p-4 text-center text-2xl font-bold text-[#6B4226]">
+  Vintage Harvest Lumber Bulgaria
 </header>
 
-<!-- HERO -->
-<section id="hero" class="flex flex-col justify-center items-center text-white text-center">
-  <h2 class="text-5xl font-bold mt-24">Дърво с история</h2>
-  <p class="mt-4 text-xl">Автентично старо дърво от България</p>
-  <a href="#products" class="mt-6 px-6 py-3 bg-[var(--brown)] rounded">
-    Виж продуктите
+<main class="max-w-7xl mx-auto p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+  <!-- Съществуващи продукти -->
+  <a href="https://products.vintageharvestlumber.bg/dd1.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dd1.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена дъска – модел DD1</h3>
+      <p class="text-[#6B4226] font-bold">80 лв</p>
+    </div>
   </a>
-</section>
 
-<!-- PRODUCTS -->
-<section id="products" class="max-w-7xl mx-auto py-20 px-4">
-  <h3 class="text-3xl font-bold text-center text-[var(--brown)] mb-12">
-    Нашите продукти
-  </h3>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-
-    <a href="products/dg1.html">
-      <div class="product-card">
-        <img src="dg1.jpg" class="h-48 w-full object-cover">
-        <div class="p-4 text-center">
-          <h4 class="font-bold">Стара дървена греда</h4>
-          <p class="font-bold text-[var(--brown)] mt-2">120 лв.</p>
-        </div>
-      </div>
-    </a>
-
-    <a href="products/dd1.html">
-      <div class="product-card">
-        <img src="dd1.jpg" class="h-48 w-full object-cover">
-        <div class="p-4 text-center">
-          <h4 class="font-bold">Стара дървена дъска</h4>
-          <p class="font-bold text-[var(--brown)] mt-2">80 лв.</p>
-        </div>
-      </div>
-    </a>
-
-    <a href="products/dd2.html">
-      <div class="product-card">
-        <img src="dd2.jpg" class="h-48 w-full object-cover">
-        <div class="p-4 text-center">
-          <h4 class="font-bold">Декоративна дъска</h4>
-          <p class="font-bold text-[var(--brown)] mt-2">250 лв.</p>
-        </div>
-      </div>
-    </a>
-
-    <div class="product-card flex items-center justify-center h-64 text-gray-400">
-      Скоро
+  <a href="https://products.vintageharvestlumber.bg/dd2.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dd2.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена дъска – модел DD2</h3>
+      <p class="text-[#6B4226] font-bold">65 лв</p>
     </div>
+  </a>
 
-    <div class="product-card flex items-center justify-center h-64 text-gray-400">
-      Скоро
+  <a href="https://products.vintageharvestlumber.bg/dg1.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dg1.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена греда – модел DG1</h3>
+      <p class="text-[#6B4226] font-bold">120 лв</p>
     </div>
+  </a>
 
-  </div>
-</section>
+  <!-- НОВИ ПРОДУКТИ -->
+  <a href="https://products.vintageharvestlumber.bg/productsdd.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dd3.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена дъска – модел DD3</h3>
+      <p class="text-[#6B4226] font-bold">75 лв</p>
+    </div>
+  </a>
 
-<!-- ABOUT -->
-<section id="about" class="bg-white py-16 px-4">
-  <div class="max-w-4xl mx-auto text-center">
-    <h3 class="text-3xl font-bold text-[var(--brown)] mb-6">За нас</h3>
-    <p>
-      Vintage Lumber Bulgaria се занимава с подбор, реставрация и доставка
-      на автентично старо дърво от български ферми и къщи.
-    </p>
-  </div>
-</section>
+  <a href="https://products.vintageharvestlumber.bg/productsdd1.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dd4.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена дъска – модел DD4</h3>
+      <p class="text-[#6B4226] font-bold">70 лв</p>
+    </div>
+  </a>
 
-<!-- CONTACT -->
-<section id="contact" class="py-16 px-4">
-  <div class="max-w-4xl mx-auto text-center">
-    <h3 class="text-3xl font-bold text-[var(--brown)] mb-6">Контакти</h3>
-    <p>📞 +359 88 123 4567</p>
-    <p>✉️ info@vintagelumber.bg</p>
-  </div>
-</section>
+  <a href="https://products.vintageharvestlumber.bg/productsdd2.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dd5.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена греда – модел DD5</h3>
+      <p class="text-[#6B4226] font-bold">110 лв</p>
+    </div>
+  </a>
+
+  <a href="https://products.vintageharvestlumber.bg/productsdd3.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dg2.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена греда – модел DG2</h3>
+      <p class="text-[#6B4226] font-bold">125 лв</p>
+    </div>
+  </a>
+
+  <a href="https://products.vintageharvestlumber.bg/productsdd5.html" target="_blank" class="bg-white rounded-lg shadow hover:scale-105 transition">
+    <img src="dg3.jpg" class="w-full h-48 object-cover rounded-t-lg" />
+    <div class="p-4 text-center">
+      <h3 class="font-semibold">Стара дървена греда – модел DG3</h3>
+      <p class="text-[#6B4226] font-bold">130 лв</p>
+    </div>
+  </a>
+
+</main>
 
 </body>
 </html>
