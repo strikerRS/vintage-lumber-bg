@@ -109,62 +109,69 @@ nav a:hover{color:#A66B3C;}
 
 <script>
 const products={
-dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."},
-dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."},
-dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."}
+ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."},
+ dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."},
+ dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."}
 };
 
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
 
 if(productKey && products[productKey]){
-document.getElementById("mainPage").style.display="none";
-document.getElementById("productPage").style.display="block";
-document.getElementById("hero-bg").style.display="none";
+ const p=products[productKey];
+ document.getElementById("mainPage").style.display="none";
+ document.getElementById("productPage").style.display="block";
+ document.getElementById("hero-bg").style.display="none";
 
-const p=products[productKey];
-document.getElementById("title").innerText=p.title;
-document.getElementById("description").innerText=p.description;
-document.getElementById("delivery").innerText=p.delivery;
+ document.getElementById("title").innerText=p.title;
+ document.getElementById("description").innerText=p.description;
+ document.getElementById("delivery").innerText=p.delivery;
 
-const mainImage=document.getElementById("mainImage");
-const thumbsContainer=document.getElementById("galleryThumbs");
-const lightbox=document.getElementById("lightboxOverlay");
-const lightboxImage=document.getElementById("lightboxImage");
-const leftBtn=document.getElementById("lightboxLeft");
-const rightBtn=document.getElementById("lightboxRight");
-let currentIndex=0;
+ const mainImage=document.getElementById("mainImage");
+ const thumbsContainer=document.getElementById("galleryThumbs");
+ const lightbox=document.getElementById("lightboxOverlay");
+ const lightboxImage=document.getElementById("lightboxImage");
+ const leftBtn=document.getElementById("lightboxLeft");
+ const rightBtn=document.getElementById("lightboxRight");
+ let currentIndex=0;
 
-function showImage(index){
-currentIndex=index;
-mainImage.src=p.images[currentIndex];
-Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index));
-lightboxImage.src=p.images[currentIndex];
+ function showImage(index){
+   currentIndex=index;
+   mainImage.src=p.images[currentIndex];
+   Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index));
+   lightboxImage.src=p.images[currentIndex];
+ }
+
+ p.images.forEach((imgSrc,i)=>{
+   const thumb=document.createElement("img");
+   thumb.src=imgSrc;
+   if(i===0) thumb.classList.add('active');
+   thumb.addEventListener('click',()=> showImage(i));
+   thumbsContainer.appendChild(thumb);
+ });
+
+ // arrows for gallery navigation
+ document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
+ document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
+
+ // lightbox open/close
+ mainImage.addEventListener('click',()=> lightbox.style.display='flex');
+ // close lightbox by clicking on overlay (but not the image itself)
+ lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
+ leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
+ rightBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex+1)%p.images.length); });
+
+ showImage(0);
+ p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
 }
 
-p.images.forEach((imgSrc,i)=>{
-const thumb=document.createElement("img");
-thumb.src=imgSrc;
-if(i===0) thumb.classList.add('active');
-thumb.addEventListener('click',()=> showImage(i));
-thumbsContainer.appendChild(thumb);
-});
-
-// gallery arrows
-document.querySelector('.arrow-left').addEventListener('click',()=> lightbox.style.display='none');
-document.querySelector('.arrow-right').addEventListener('click',()=> lightbox.style.display='none');
-
-// lightbox
-mainImage.addEventListener('click',()=> lightbox.style.display='flex');
-leftBtn.addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
-rightBtn.addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
-
-showImage(0);
-p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
+// Go home
+const goHome=()=>{
+ window.scrollTo({top:0, behavior:'smooth'});
+ document.getElementById('mainPage').style.display='block';
+ document.getElementById('productPage').style.display='none';
+ document.getElementById('hero-bg').style.display='block';
 }
-
-// Scroll to top
-const goHome=()=>{window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block';}
 document.getElementById('homeBtn').addEventListener('click',goHome);
 document.getElementById('navHome').addEventListener('click',goHome);
 document.getElementById('navAbout').addEventListener('click',()=> document.getElementById('about').scrollIntoView({behavior:'smooth'}));
