@@ -24,6 +24,29 @@
 </head>
 
 <body class="bg-[#f4eadf] text-gray-800">
+<!-- ===== ПАРАЛАКС ФОН ===== -->
+<style>
+#hero-bg {
+  background-image: url('bg-old-bulgarian-farm.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+}
+</style>
+
+<!-- Добави това ПОД <body> и ПРЕДИ <div id="mainPage"> -->
+<section id="hero-bg">
+  <div class="text-center">
+    <h1 class="text-4xl md:text-6xl font-bold">Vintage Lumber Bulgaria</h1>
+    <p class="mt-4 text-xl md:text-2xl">Автентични стари български материали</p>
+  </div>
+</section>
 
 <!-- ===== HERO ПАРАЛАКС СЕКЦИЯ ===== -->
 <section id="hero-bg">
@@ -135,3 +158,4 @@ if (productKey && products[productKey]) {
 
 </body>
 </html>
+
