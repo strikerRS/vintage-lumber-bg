@@ -4,122 +4,168 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage Lumber Bulgaria</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
-#hero-bg { background-image: url('bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 100vh; }
-header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
-header h1 { font-size:1.75rem; color:#6B4226; font-weight:bold; cursor:pointer; }
-nav a { margin-left:1rem; font-weight:500; color:#6B4226; transition:0.3s; cursor:pointer; }
-nav a:hover{color:#A66B3C;}
-.cart-btn{background:#6B4226;color:white;border-radius:50%;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
-.cart-count{position:absolute;top:-0.5rem;right:-0.5rem;background:red;width:1.25rem;height:1.25rem;font-size:0.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;}
-#about { max-width:7xl; margin: 2rem auto; padding:2rem; background:#fff; border-radius:0.5rem; }
-.gallery-container { position: relative; display: flex; flex-direction: column; }
-.gallery-main { width: 100%; height: 300px; object-fit: cover; border-radius:0.5rem; margin-bottom:1rem; cursor:pointer; }
-.gallery-thumbs { display: flex; gap:0.5rem; }
-.gallery-thumbs img { width:70px;height:70px;object-fit:cover;border-radius:0.25rem;cursor:pointer;border:2px solid transparent; }
-.gallery-thumbs img.active{border-color:#6B4226;}
-.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.25rem 0.5rem;cursor:pointer;border-radius:0.25rem;}
-.arrow-left{left:0;}
-.arrow-right{right:0;}
-#lightboxOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px);}
-#lightboxOverlay img{max-width:90%;max-height:90%;}
-#lightboxOverlay button{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.5rem;cursor:pointer;border-radius:0.25rem;}
-#lightboxLeft{left:10px;} #lightboxRight{right:10px;}
-#productPage { display:none; padding-top:4rem; }
-#productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
 
-/* ===================== НОВО: фон на бутоните Купи с дъска ===================== */
-.vl-buy-btn, .vl-buy-btn-product {
-    background: url('images/board_5.png') no-repeat center center;
-    background-size: cover;
-    color: white !important;
-    border: none;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body { scroll-behavior:smooth; background:#f4eadf; color:#333; }
+#hero-bg{background-image:url('bg-old-bulgarian-farm.jpg');background-attachment:fixed;background-size:cover;background-position:center;height:100vh;}
+header{position:fixed;top:0;left:0;width:100%;background:rgba(255,255,255,.95);z-index:50;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+header h1{font-size:1.75rem;color:#6B4226;font-weight:bold;cursor:pointer;}
+nav a{margin-left:1rem;font-weight:500;color:#6B4226;cursor:pointer}
+nav a:hover{color:#A66B3C}
+.cart-btn{background:#6B4226;color:#fff;border-radius:50%;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
+.cart-count{position:absolute;top:-.5rem;right:-.5rem;background:red;width:1.25rem;height:1.25rem;font-size:.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+
+.gallery-main{width:100%;height:300px;object-fit:cover;border-radius:.5rem;cursor:pointer}
+.gallery-thumbs img{width:70px;height:70px;object-fit:cover;border-radius:.25rem;cursor:pointer;border:2px solid transparent}
+.gallery-thumbs img.active{border-color:#6B4226}
+.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,.8);color:#fff;font-size:2rem;padding:.25rem .5rem;border-radius:.25rem}
+
+#productPage{display:none;padding-top:4rem}
+
+/* ===== КУПИ БУТОНИ – СТАРА ДЪСКА ===== */
+.vl-buy-btn,
+.vl-buy-btn-card,
+.vl-buy-btn-product{
+  background-image:url("images/board_5.png")!important;
+  background-size:cover!important;
+  background-position:center!important;
+  color:#fff!important;
+  text-shadow:1px 1px 2px #000;
+  border:none!important;
 }
+.vl-buy-btn:hover{filter:brightness(1.1)}
+
+/* ===== REFRESH ⟳ ===== */
+#vl-refresh-cart{
+  background:none;
+  border:1px solid #6B4226;
+  font-size:22px;
+  border-radius:6px;
+}
+#vl-refresh-cart::before{content:"⟳";}
 </style>
 </head>
+
 <body>
 
 <header>
-<h1 id="homeBtn">Vintage Lumber</h1>
-<nav class="flex items-center">
-<a id="navHome">Начало</a>
-<a id="navProducts">Продукти</a>
-<a id="navContact">Контакти</a>
-<a id="navAbout">За нас</a>
-<div class="cart-btn ml-4">🛒<span class="cart-count">0</span></div>
-</nav>
+  <h1 id="homeBtn">Vintage Lumber</h1>
+  <nav class="flex items-center">
+    <a id="navHome">Начало</a>
+    <a id="navProducts">Продукти</a>
+    <a id="navContact">Контакти</a>
+    <a id="navAbout">За нас</a>
+    <div class="cart-btn ml-4">🛒<span class="cart-count">0</span></div>
+  </nav>
 </header>
 
 <section id="hero-bg"></section>
 
 <div id="mainPage" class="mt-24">
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
+
 <a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
 <img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
-<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
 </div>
 </a>
+
 <a href="index.html?product=dd2" class="bg-white rounded-xl shadow hover:scale-105 transition">
 <img src="images/dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Рустик дъска</h3>
-<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
 </div>
 </a>
+
 <a href="index.html?product=dg1" class="bg-white rounded-xl shadow hover:scale-105 transition">
 <img src="images/dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара масивна греда</h3>
-<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
 </div>
 </a>
+
 </main>
-
-<div id="about">
-<h2 class="text-2xl font-bold mb-4">За нас</h2>
-<p>Vintage Lumber Bulgaria е малка семейна компания, която възстановява и предлага автентични български дървени дъски и греди с уникална патина и характер. Нашата мисия е да съхраним традицията и красотата на старото дърво и да я интегрираме в модерния интериор.</p>
-</div>
 </div>
 
-<div id="productPage">
-<div class="content">
-<div class="grid md:grid-cols-2 gap-10 mt-6">
-<div class="gallery-container">
-<button class="arrow-btn arrow-left">&#8592;</button>
-<img id="mainImage" class="gallery-main" src="" alt="Продукт">
-<button class="arrow-btn arrow-right">&#8594;</button>
-<div id="galleryThumbs" class="gallery-thumbs"></div>
-</div>
-<div>
-<h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
-<p id="description" class="mb-6"></p>
-<h2 class="text-xl font-bold mb-2">Характеристики</h2>
-<ul id="specs" class="list-disc ml-5 mb-6"></ul>
-<h2 class="text-xl font-bold mb-2">Доставка</h2>
-<p id="delivery"></p>
+<!-- ================= CART PANEL ================= -->
+<div id="vl-cart-panel" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+<div class="bg-white rounded-xl w-full max-w-3xl p-6 relative">
+<button id="vl-close-cart" class="absolute top-4 right-4">✕</button>
+<h2 class="text-2xl font-bold mb-4">Кошница</h2>
+<div id="vl-cart-items" class="space-y-3"></div>
+
+<div class="mt-4 flex justify-between items-center">
+<div id="vl-cart-total" class="font-bold">0 лв.</div>
+<div class="flex gap-2">
+<button id="vl-refresh-cart"></button>
+<button id="vl-checkout" class="vl-buy-btn px-4 py-2 rounded">Финализирай</button>
 </div>
 </div>
 </div>
 </div>
 
-<section id="contact" class="max-w-7xl mx-auto p-10 mt-20">
-<h2 class="text-2xl font-bold mb-4">Контакти</h2>
-<p>Телефон: +359 88 123 4567</p>
-<p>Имейл: info@vintagelumber.bg</p>
-</section>
+<script>
+const products={
+ dd1:{title:"Стара дървена дъска",price:120,images:["images/dd1.jpg"]},
+ dd2:{title:"Рустик дъска",price:150,images:["images/dd2.jpg"]},
+ dg1:{title:"Стара масивна греда",price:200,images:["images/dg1.jpg"]}
+};
 
-<div id="lightboxOverlay" class="flex">
-<button id="lightboxLeft">←</button>
-<img id="lightboxImage" src="" alt="Продукт">
-<button id="lightboxRight">→</button>
-</div>
+const cartBtn=document.querySelector(".cart-btn");
+const panel=document.getElementById("vl-cart-panel");
+const itemsDiv=document.getElementById("vl-cart-items");
+const totalEl=document.getElementById("vl-cart-total");
 
-<!-- Остатъкът от твоя код (cart UI, скриптове и т.н.) остава непроменен -->
+function load(){return JSON.parse(localStorage.getItem("cart")||"[]")}
+function save(c){localStorage.setItem("cart",JSON.stringify(c))}
+function updateCount(){document.querySelector(".cart-count").innerText=load().length}
+
+function render(){
+ itemsDiv.innerHTML="";
+ let cart=load(), total=0;
+ let map={};
+ cart.forEach(k=>map[k]=(map[k]||0)+1);
+ for(let k in map){
+  let p=products[k], q=map[k];
+  total+=p.price*q;
+  itemsDiv.innerHTML+=`
+  <div class="flex justify-between items-center">
+   <div>${p.title} × ${q}</div>
+   <div class="flex gap-1">
+    <button onclick="qty('${k}',-1)">−</button>
+    <button onclick="qty('${k}',1)">+</button>
+   </div>
+  </div>`;
+ }
+ totalEl.innerText=total+" лв.";
+ updateCount();
+}
+
+function qty(k,d){
+ let c=load();
+ if(d>0)c.push(k);
+ else{let i=c.indexOf(k);if(i>-1)c.splice(i,1);}
+ save(c);render();
+}
+
+document.querySelectorAll('a[href*="product="]').forEach(a=>{
+ let key=new URL(a.href).searchParams.get("product");
+ let btn=document.createElement("button");
+ btn.className="vl-buy-btn mt-2 px-4 py-2 rounded";
+ btn.innerText="Купи";
+ btn.onclick=e=>{e.preventDefault();let c=load();c.push(key);save(c);render();}
+ a.querySelector(".p-4").appendChild(btn);
+});
+
+cartBtn.onclick=()=>{panel.classList.remove("hidden");render();}
+document.getElementById("vl-close-cart").onclick=()=>panel.classList.add("hidden");
+document.getElementById("vl-refresh-cart").onclick=render;
+
+updateCount();
+</script>
 
 </body>
 </html>
