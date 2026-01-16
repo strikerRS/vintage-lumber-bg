@@ -544,78 +544,55 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 })(); /* end IIFE */
 </script>
- <!-- ===== PRODUCT BUTTONS WITH WOOD BACKGROUND & CLICK ANIMATION ===== -->
-<div class="products-buttons-wrapper flex gap-6 mt-4 justify-center">
-  <!-- Product 1 -->
-  <button class="buy-btn" style="
-      background-image: url('images/board_5.png');
-      background-size: cover;
-      background-position: center;
-      width: clamp(280px, 60vw, 320px);
-      height: 70px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-  ">Купи — 120 лв.</button>
+<!-- ===== ДЪРВЕНИ БУТОНИ ЗА ПРОДУКТИ ===== -->
+<div class="vl-buy-buttons" style="display:flex; gap:20px; flex-wrap: wrap; justify-content: center; margin-top:20px;">
 
-  <!-- Product 2 -->
-  <button class="buy-btn" style="
-      background-image: url('images/board_6.png');
-      background-size: cover;
-      background-position: center;
-      width: clamp(280px, 60vw, 320px);
-      height: 70px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-  ">Купи — 150 лв.</button>
+  <button class="vl-buy-btn" style="background-image: url('images/board_5.png');">
+    Купи — 120 лв.
+  </button>
 
-  <!-- Product 3 -->
-  <button class="buy-btn" style="
-      background-image: url('images/board_7.png');
-      background-size: cover;
-      background-position: center;
-      width: clamp(280px, 60vw, 320px);
-      height: 70px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-  ">Купи — 200 лв.</button>
+  <button class="vl-buy-btn" style="background-image: url('images/board_6.png');">
+    Купи — 150 лв.
+  </button>
+
+  <button class="vl-buy-btn" style="background-image: url('images/board_7.png');">
+    Купи — 200 лв.
+  </button>
+
 </div>
 
-<!-- ===== HOVER & CLICK EFFECTS ===== -->
+<!-- ===== CSS ЗА ДЪРВЕНИТЕ БУТОНИ ===== -->
 <style>
-.products-buttons-wrapper .buy-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.4);
+.vl-buy-btn {
+    width: clamp(220px, 50vw, 320px);     /* дълги и тесни */
+    height: clamp(50px, 6vh, 60px);
+
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    color: #fff;
+    font-weight: bold;
+    border: 2px solid #6B4226;
+    border-radius: 8px;
+    box-shadow: 0 5px 0 #4b2e1b, 0 5px 10px rgba(0,0,0,0.3);
+    text-align: center;
+    line-height: clamp(50px, 6vh, 60px);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
-/* При клик: леко „дърпане“ надолу */
-.products-buttons-wrapper .buy-btn:active {
-    transform: translateY(3px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: transform 0.1s, box-shadow 0.1s;
+/* Hover ефект за 3D усещане */
+.vl-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #4b2e1b, 0 7px 12px rgba(0,0,0,0.3);
 }
 </style>
-<!-- ===== END PRODUCT BUTTONS ===== -->
+<!-- ===== КРАЙ НА ДЪРВЕНИТЕ БУТОНИ ===== -->
 
 </body>
 </html>
+
 
 
 
