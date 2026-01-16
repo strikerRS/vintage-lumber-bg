@@ -973,41 +973,126 @@ if(navContactBtn && contactModal && closeContactModal){
   transform: scale(1);
 }
 </style>
+<!-- ===== START: Custom Buy Button Backgrounds for All Products ===== -->
 <style>
-/* Фон за бутона Купи на страничката на продукта */
-.vl-buy-btn-product {
-    background-image: url('images/board_5.png') !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    color: white !important; /* текстът да се чете добре */
-    position: relative;
-    overflow: hidden;
+/* Основен стил за buy бутоните на главната страница */
+.vl-buy-btn-card {
+    width: clamp(200px, 50vw, 280px) !important;  /* по-къс и тесен */
+    height: clamp(40px, 5vh, 50px) !important;    /* по-нисък */
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 0.5rem !important;
+    color: white !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25) !important;
 }
 
-/* Полупрозрачен overlay за четливост на текста */
-.vl-buy-btn-product::before {
-    content: "";
+/* Overlay за блясък и четливост на текста */
+.vl-buy-bg-overlay {
     position: absolute;
     inset: 0;
     background: rgba(0,0,0,0.2);
+    pointer-events: none;
     z-index: 0;
 }
-.vl-buy-btn-product span {
+
+.vl-buy-text {
     position: relative;
     z-index: 1;
+}
+
+/* Малко вътрешен блясък върху бутона */
+.vl-buy-btn-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 4px rgba(255,255,255,0.15);
+    z-index: 2;
+    pointer-events: none;
 }
 </style>
 
 <script>
-// ...JavaScript за универсалния модал (всичко, което ти изпратих по-горе) ...
+(function(){
+    const BTN_IMAGES = [
+        'images/board_5.png',  // Първи продукт
+        'images/board_6.png',  // Втори продукт
+        'images/board_7.png'   // Трети продукт
+    ];
+
+    function enhanceButton(btn, src) {
+        if(!btn) return;
+        if(btn.dataset.vlBgApplied === '1') return;
+
+        // Поставяме фона
+        btn.style.backgroundImage = src ? `url("${src}")` : '';
+        btn.style.backgroundSize = 'cover';
+        btn.style.backgroundPosition = 'center';
+        btn.style.backgroundRepeat = 'no-repeat';
+
+        // Overlay за блясък
+        if(!btn.querySelector('.vl-buy-bg-overlay')) {
+            const overlay = document.createElement('span');
+            overlay.className = 'vl-buy-bg-overlay';
+            btn.insertAdjacentElement('afterbegin', overlay);
+        }
+
+        // Wrap на текста
+        if(!btn.querySelector('.vl-buy-text')) {
+            const raw = btn.innerHTML;
+            btn.innerHTML = '';
+            const overlay = btn.querySelector('.vl-buy-bg-overlay');
+            if(overlay) btn.appendChild(overlay);
+            const txt = document.createElement('span');
+            txt.className = 'vl-buy-text';
+            txt.innerHTML = raw;
+            btn.appendChild(txt);
+        }
+
+        btn.dataset.vlBgApplied = '1';
+    }
+
+    function applyToAll() {
+        const buttons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
+        if(!buttons.length) return;
+
+        buttons.forEach((btn, i) => {
+            const src = BTN_IMAGES[i % BTN_IMAGES.length] || BTN_IMAGES[0];
+            enhanceButton(btn, src);
+        });
+
+        // За бутона на страницата на продукта (vl-buy-btn-product) поставяме board_5.png
+        const productBtn = document.querySelector('.vl-buy-btn-product');
+        if(productBtn) enhanceButton(productBtn, BTN_IMAGES[0]);
+    }
+
+    // Стартираме при готов DOM и наблюдаваме за нови бутони
+    function init(){
+        applyToAll();
+        const main = document.getElementById('mainPage') || document.body;
+        if(window.MutationObserver && main){
+            const mo = new MutationObserver(()=> applyToAll());
+            mo.observe(main, { childList: true, subtree: true });
+        }
+        window.addEventListener('resize', applyToAll, { passive: true });
+    }
+
+    if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
 </script>
+<!-- ===== END: Custom Buy Button Backgrounds ===== -->
 
 </body>
 </html>
 
-</body>
-</html>
 
 
 
