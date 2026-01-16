@@ -71,6 +71,23 @@ nav a:hover{color:#A66B3C;}
   background-color: transparent !important;
   background: transparent !important;
 }
+/* FIX: показва текста над дъската */
+.vl-buy-btn-card,
+.vl-buy-btn-product {
+  position: relative !important;
+}
+
+.vl-buy-btn-card *,
+.vl-buy-btn-product * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* overlay остава под текста */
+.vl-buy-bg-overlay {
+  z-index: 1 !important;
+}
+
 </style>
 </head>
 <body>
@@ -314,3 +331,4 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 </body>
 </html>
+
