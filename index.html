@@ -643,9 +643,59 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 })();
 </script>
 <!-- ===== END HERO BG FULL IMAGE PARALLAX ===== -->
+<!-- ===== BOTTOM HERO REVEAL SECTION ===== -->
+<section id="hero-bottom"></section>
+
+<style>
+  /* долната част на фоновото изображение */
+  #hero-bottom {
+    width: 100%;
+    height: 50vh; /* височина на долната част, можеш да увеличиш */
+    background-image: url("images/bg-old-bulgarian-farm.jpg");
+    background-position: bottom center; /* показва долния край на изображението */
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* ефект на плавно разкриване */
+    transform: translateY(20%);
+    opacity: 0;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+  }
+
+  /* когато секцията стане видима */
+  #hero-bottom.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+</style>
+
+<script>
+(function(){
+  const bottom = document.getElementById('hero-bottom');
+  if(!bottom) return;
+
+  function revealBottom(){
+    const rect = bottom.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    // ако долната част влезе във видимата зона
+    if(rect.top < windowHeight){ 
+      bottom.classList.add('visible');
+    }
+  }
+
+  window.addEventListener('scroll', revealBottom, {passive: true});
+  window.addEventListener('resize', revealBottom);
+
+  // инициализация при зареждане
+  revealBottom();
+})();
+</script>
+<!-- ===== END BOTTOM HERO REVEAL SECTION ===== -->
 
 </body>
 </html>
+
 
 
 
