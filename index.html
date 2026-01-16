@@ -545,23 +545,21 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 })(); /* end IIFE */
 </script>
 <!-- ====================== END: Cart UI + Buy Buttons ====================== -->
-
-</body>
-</html>
-<!-- ===== START: Improved board-look backgrounds for Buy buttons (REPLACE previous block) ===== -->
+<!-- ===== START: Longer & narrower board-look backgrounds for Buy buttons ===== -->
 <style>
-  /* базови стилове (по-дълго/тънко платно за по-реалистична дъска) */
+  /* основни стилове за по-дълга и тънка дъска */
   .vl-buy-btn-card {
     background-color: transparent !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;
-    background-size: cover !important;        /* fallback, ще се override-не от JS ако е нужно */
+    background-size: cover !important;
     position: relative !important;
     overflow: hidden !important;
     color: #fff !important;
     border: none !important;
     padding: 0 1.25rem !important;
-    height: 76px !important;                   /* по-високи бутони — визуално приличат на дъска */
+    height: 60px !important;           /* по-нисък и тънък бутон */
+    width: 220px !important;           /* по-дълъг бутон */
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -569,11 +567,10 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
     box-shadow: 0 6px 14px rgba(0,0,0,0.08);
   }
 
-  /* по-лека полупрозрачна тъмна полица за контраст (намалена плътност) */
   .vl-buy-bg-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.22);   /* по-малко тъмна — да се вижда дървото */
+    background: rgba(0,0,0,0.22);
     pointer-events: none;
     z-index: 0;
   }
@@ -588,14 +585,13 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
     font-size: 0.95rem;
   }
 
-  /* когато искаш по-гладък ръб на "дъската" */
   .vl-buy-btn-card::before{
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-    z-index: 2; /* над overlay, но под текста */
+    z-index: 2;
     pointer-events: none;
   }
 </style>
@@ -608,14 +604,10 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
     'images/board_7.png'
   ];
 
-  /* per-image tuning: size and vertical/horizontal position
-     size examples: '140% 100%' (широко и пълна височина),
-                    'auto 110%' (адаптира по височина),
-                    'cover' или 'contain' */
   const IMG_STYLE = [
-    { size: '160% 110%', position: 'center 50%' }, // board_5 - по-широка
-    { size: '180% 110%', position: 'center 45%' }, // board_6 - още по-широко, леко по-горе
-    { size: '150% 110%', position: 'center 50%' }  // board_7
+    { size: '220% 100%', position: 'center 50%' }, // board_5 - дълъг и тесен
+    { size: '220% 100%', position: 'center 50%' }, // board_6
+    { size: '220% 100%', position: 'center 50%' }  // board_7
   ];
 
   function applyBackgroundsToBuyButtons(){
@@ -624,23 +616,18 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
     buttons.slice(0, 3).forEach((btn, idx) => {
       try {
         if(btn.dataset.vlBgApplied === '1') return;
-
-        // сетваме фонова картинка
         if(IMG[idx]) btn.style.backgroundImage = `url("${IMG[idx]}")`;
 
-        // ако сме задали специални стойности, приложи ги
         const s = IMG_STYLE[idx] || {};
         if(s.size) btn.style.backgroundSize = s.size;
         if(s.position) btn.style.backgroundPosition = s.position;
 
-        // overlay
         if(!btn.querySelector('.vl-buy-bg-overlay')){
           const overlay = document.createElement('span');
           overlay.className = 'vl-buy-bg-overlay';
           btn.insertAdjacentElement('afterbegin', overlay);
         }
 
-        // текст wrapper
         if(!btn.querySelector('.vl-buy-text')){
           const current = btn.innerHTML;
           btn.innerHTML = '';
@@ -650,12 +637,8 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
           textWrap.className = 'vl-buy-text';
           textWrap.innerHTML = current;
           btn.appendChild(textWrap);
-        } else {
-          const textWrap = btn.querySelector('.vl-buy-text');
-          btn.appendChild(textWrap);
         }
 
-        // маркираме, че е обработен
         btn.dataset.vlBgApplied = '1';
       } catch(e) {
         console.error('vl-buy-bg apply error:', e);
@@ -665,8 +648,6 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
   function initWhenReady(){
     applyBackgroundsToBuyButtons();
-
-    // наблюдател за динамично добавяне
     const main = document.getElementById('mainPage') || document.body;
     if(window.MutationObserver && main){
       const mo = new MutationObserver((mutations)=>{
@@ -688,5 +669,8 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
   }
 })();
 </script>
-<!-- ===== END: Improved board-look backgrounds for Buy buttons ===== -->
+<!-- ===== END: Longer & narrower board-look backgrounds for Buy buttons ===== -->
+
+</body>
+</html>
 
