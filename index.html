@@ -545,6 +545,49 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 })(); /* end IIFE */
 </script>
 <!-- ====================== END: Cart UI + Buy Buttons ====================== -->
+<!-- ===================== LOGO INJECTION (SAFE, NON-DESTRUCTIVE) ===================== -->
+<style>
+#vl-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+#vl-logo img {
+  height: 42px;
+  width: auto;
+}
+</style>
+
+<script>
+(function(){
+  const h1 = document.getElementById('homeBtn');
+  if(!h1) return;
+
+  const img = document.createElement('img');
+  img.src = 'images/logo.png';
+  img.alt = 'Vintage Lumber Bulgaria';
+  img.onerror = () => img.remove(); // ако липсва файлът – нищо не се чупи
+
+  const wrap = document.createElement('div');
+  wrap.id = 'vl-logo';
+  wrap.style.cursor = 'pointer';
+
+  wrap.appendChild(img);
+
+  // ако искаш да запазиш текста до логото – оставям го
+  const text = document.createElement('span');
+  text.innerText = h1.innerText;
+  text.style.color = '#6B4226';
+  text.style.fontWeight = 'bold';
+  text.style.fontSize = '1.25rem';
+  wrap.appendChild(text);
+
+  h1.innerHTML = '';
+  h1.appendChild(wrap);
+})();
+</script>
+<!-- =================== END LOGO INJECTION =================== -->
 
 </body>
 </html>
+
