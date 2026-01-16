@@ -91,6 +91,76 @@ nav a:hover{color:#A66B3C;}
     height: clamp(40px, 7vh, 56px) !important;
   }
 }
+
+/* =================== OVERRIDES (ONLY FOR BUY BUTTONS) ===================
+   - Премахваме кафяв фон (надписите/класовете на Tailwind остават, но тук
+     имат приоритет чрез !important).
+   - Оставяме само background-image (board_*.png) да се вижда (cover).
+   - Текстът (цената) да е черен и без shadow.
+   - Премахваме/скриваме тъмния overlay.
+   - Подравняваме бутоните вляво (display:block -> позиция в началото на съдържанието).
+   ======================================================================= */
+.vl-buy-btn-card {
+  background-color: transparent !important;
+  color: #000 !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  display: block !important;               /* блоково - за да се подреди в ляво */
+  margin-left: 0 !important;               /* начало на контейнера */
+  text-align: left !important;
+  justify-content: flex-start !important;  /* съдържанието започва отляво */
+  padding-left: 0.9rem !important;
+  padding-right: 0.9rem !important;
+  width: auto !important;                  /* позволява ширината да се адаптира */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06) !important;
+  background-color: transparent !important;
+}
+
+/* Ако има специален продуктен бутон (vl-buy-btn-product) - същото поведение */
+.vl-buy-btn-product {
+  background-color: transparent !important;
+  color: #000 !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  display: block !important;
+  margin-left: 0 !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  padding-left: 0.9rem !important;
+  padding-right: 0.9rem !important;
+  width: auto !important;
+}
+
+/* Скриваме или обезвредяваме тъмния overlay (трябва изображението да е чисто видимо) */
+.vl-buy-bg-overlay {
+  display: none !important;
+  background: transparent !important;
+}
+
+/* Текстът върху бутона (цената) - черен, без текстова сянка, по-дебел */
+.vl-buy-text {
+  color: #000 !important;
+  text-shadow: none !important;
+  font-weight: 800 !important;
+  white-space: nowrap;
+  font-size: 0.98rem !important;
+}
+
+/* Премахваме потенциални класове, които правят текста бял (Tailwind) */
+.vl-buy-btn-card.text-white, .vl-buy-btn-card.bg-\[\#6B4226\] {
+  color: #000 !important;
+  background-color: transparent !important;
+}
+
+/* Ако има ::before който добавя inset светлина — оставяме го, но без да променя четимостта */
+.vl-buy-btn-card::before { opacity: 0.06 !important; }
+
+/* Малко по-тесен padding в картите за по-близко позициониране */
+a .vl-buy-btn-card { margin-top: 0.5rem; }
+
+/* ======================================================================= */
 </style>
 </head>
 <body>
@@ -820,7 +890,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if(btn.dataset.vlBgApplied === '1') return;
     if(src) {
       btn.style.backgroundImage = `url("${src}")`;
-      btn.style.backgroundSize = 'auto 100%';
+      btn.style.backgroundSize = 'cover';
       btn.style.backgroundPosition = 'center';
       btn.style.backgroundRepeat = 'no-repeat';
     }
