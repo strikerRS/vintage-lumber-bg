@@ -1076,10 +1076,68 @@ if(navContactBtn && contactModal && closeContactModal){
   }
 })();
 </script>
-</body>
+<script>
+(function(){
+  const IMG = [
+    'images/board_5.png',
+    'images/board_6.png',
+    'images/board_7.png'
+  ];
+
+  function enhanceButton(btn, src) {
+    if(!btn) return;
+    if(btn.dataset.vlBgApplied === '1') return;
+
+    btn.style.backgroundImage = src ? `url("${src}")` : '';
+    btn.style.backgroundSize = 'auto 100%';
+    btn.style.backgroundPosition = 'center';
+
+    if(!btn.querySelector('.vl-buy-bg-overlay')) {
+      const overlay = document.createElement('span');
+      overlay.className = 'vl-buy-bg-overlay';
+      btn.insertAdjacentElement('afterbegin', overlay);
+    }
+
+    if(!btn.querySelector('.vl-buy-text')) {
+      const raw = btn.innerHTML;
+      btn.innerHTML = '';
+      const overlay = btn.querySelector('.vl-buy-bg-overlay');
+      if(overlay) btn.appendChild(overlay);
+      const txt = document.createElement('span');
+      txt.className = 'vl-buy-text';
+      txt.innerHTML = raw;
+      btn.appendChild(txt);
+    }
+
+    btn.dataset.vlBgApplied = '1';
+  }
+
+  function applyBackgrounds() {
+    const buttons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
+    buttons.slice(0, 3).forEach((btn, i)=>{
+      enhanceButton(btn, IMG[i]);
+    });
+  }
+
+  // initial
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', applyBackgrounds);
+  } else {
+    applyBackgrounds();
+  }
+
+  // наблюдение за динамично добавени бутони
+  const main = document.getElementById('mainPage') || document.body;
+  if(window.MutationObserver && main){
+    const mo = new MutationObserver(()=> applyBackgrounds());
+    mo.observe(main, { childList: true, subtree: true });
+  }
+})();
+</script>
 
 </body>
 </html>
+
 
 
 
