@@ -586,53 +586,28 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
   h1.appendChild(wrap);
 })();
 </script>
-<!-- =================== END LOGO INJECTION =================== -->
-<!-- ===== LOGO IMPROVEMENT OVERRIDE ===== -->
-<style>
-  #vl-logo img {
-    height: 64px;      /* увеличено лого */
-  }
-
-  #vl-logo span {
-    display: none;     /* премахва текста напълно */
-  }
-</style>
-<!-- ===== END LOGO IMPROVEMENT ===== -->
-<!-- ===== HERO BG FULL IMAGE OVERRIDE ===== -->
-<style>
-  #hero-bg {
-    background-image: url("images/bg-old-bulgarian-farm.jpg");
-    background-size: contain;        /* показва цялото изображение */
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    min-height: 100vh;               /* от най-горе до най-долу */
-  }
-</style>
-<!-- ===== END HERO BG OVERRIDE ===== -->
-<!-- ===== HERO BG FINAL FIX (DO NOT TOUCH ABOVE CODE) ===== -->
+<!-- ===== HERO BG FULL IMAGE FIX ===== -->
 <style>
   #hero-bg {
     width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    min-height: 100vh;          /* цял екран височина */
+    height: 100vh;              /* за да се вижда винаги */
+    
     background-image: url("images/bg-old-bulgarian-farm.jpg");
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: contain;
-
-    /* ако някъде е бил "смачкан" */
-    height: auto !important;
-    overflow: visible !important;
+    background-size: cover;     /* покрива целия херо блок, без да се изрязва значително */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
-<!-- ===== END HERO BG FINAL FIX ===== -->
+<!-- ===== END HERO BG FULL IMAGE FIX ===== -->
 
 </body>
 </html>
+
 
 
 
