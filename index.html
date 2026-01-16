@@ -586,55 +586,30 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
   h1.appendChild(wrap);
 })();
 </script>
-<!-- ===== HERO BG FULL IMAGE FIX ===== -->
-<style>
-<section id="hero-bg">
-  <img src="images/bg-old-bulgarian-farm.jpg" alt="Фон" style="
-      width: 100%;
-      height: 100vh;
-      object-fit: contain;
-      object-position: top center;
-      display: block;
-  ">
-</section>
+<!-- ===== HERO BG FULL IMAGE ===== -->
+<section id="hero-bg"></section>
 
-    width: 100%;
-    min-height: 100vh;          /* цял екран височина */
-    height: 100vh;              /* за да се вижда винаги */
-    
-    background-image: url("bg-old-bulgarian-farm.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;     /* покрива целия херо блок, без да се изрязва значително */
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-</style>
-  <!-- ===== HERO BG FULL IMAGE FIX ===== -->
 <style>
 #hero-bg {
     width: 100%;
-    height: 100vh;                /* цял екран височина */
+    height: 100vh;                /* пълна височина на екрана */
     min-height: 100vh;
 
     background-image: url("images/bg-old-bulgarian-farm.jpg");
     background-repeat: no-repeat;
-    background-position: top center;   /* започва от горната част */
-    background-size: contain;          /* показва цялото изображение, не изрязва */
+    background-position: top center;   /* започва от горната част на изображението */
+    background-size: contain;          /* показва цялото изображение, без да го изрязва */
 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 </style>
-<!-- ===== END HERO BG FULL IMAGE FIX ===== -->
-
-<!-- ===== END HERO BG FULL IMAGE FIX ===== -->
+<!-- ===== END HERO BG FULL IMAGE ===== -->
 
 </body>
 </html>
+
 
 
 
