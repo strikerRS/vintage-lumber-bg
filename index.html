@@ -591,14 +591,14 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 <style>
 #hero-bg {
-    width: 100%;
-    height: 100vh;                /* цял екран височина */
+    width: 100%;                /* пълна ширина */
+    height: 100vh;              /* височина на целия екран */
     min-height: 100vh;
 
-    background-image: url("bg-old-bulgarian-farm.jpg");
+    background-image: url("images/bg-old-bulgarian-farm.jpg");
     background-repeat: no-repeat;
-    background-position: top center;   /* започва от горната част на изображението */
-    background-size: contain;          /* показва цялото изображение, без да го изрязва */
+    background-position: top center;   /* винаги показва горния край */
+    background-size: cover;            /* покрива цялата ширина, без да смачква изображението */
 
     display: flex;
     align-items: center;
@@ -609,6 +609,7 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 </body>
 </html>
+
 
 
 
