@@ -548,4 +548,125 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 </body>
 </html>
+<!-- ===== START: Apply board images as backgrounds to first 3 Buy buttons ===== -->
+<style>
+  /* стилове за по-добра четимост на текста върху фон */
+  .vl-buy-btn-card {
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+    color: #fff !important;            /* текст в бял цвят за контраст */
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    height: 48px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 0.5rem !important;
+  }
+
+  /* тъмна полица над изображението за контраст (overlay) */
+  .vl-buy-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* текстът на бутона с по-висок z-index за да остане над overlay */
+  .vl-buy-text {
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+(function(){
+  // пътища до изображенята (в твоят repo: папка images)
+  const IMG = [
+    'images/board_5.png',
+    'images/board_6.png',
+    'images/board_7.png'
+  ];
+
+  // прилагаме стила на първите 3 бутона (ако има такива)
+  function applyBackgroundsToBuyButtons(){
+    const buttons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
+    if(!buttons.length) return;
+    buttons.slice(0, 3).forEach((btn, idx) => {
+      try {
+        // ако вече сме обработили бутона, прескочи
+        if(btn.dataset.vlBgApplied === '1') return;
+
+        // сетваме фон (fallback безопасно)
+        if(IMG[idx]) btn.style.backgroundImage = `url("${IMG[idx]}")`;
+
+        // ако няма overlay - добавяме (за контраст)
+        if(!btn.querySelector('.vl-buy-bg-overlay')){
+          const overlay = document.createElement('span');
+          overlay.className = 'vl-buy-bg-overlay';
+          btn.insertAdjacentElement('afterbegin', overlay);
+        }
+
+        // ако няма обвиващ span за текста - направи го (за z-index)
+        if(!btn.querySelector('.vl-buy-text')){
+          // взимаме текущото съдържание (текст/HTML)
+          const current = btn.innerHTML;
+          // направи чисто съдържание: премахни всичко и добави overlay + text
+          btn.innerHTML = '';
+          const overlay = btn.querySelector('.vl-buy-bg-overlay');
+          if(overlay) btn.appendChild(overlay); // вече има overlay, премести го на първо място
+          const textWrap = document.createElement('span');
+          textWrap.className = 'vl-buy-text';
+          textWrap.innerHTML = current;
+          btn.appendChild(textWrap);
+        } else {
+          // ако има text wrap, увери се че е последен елемент (над overlay)
+          const textWrap = btn.querySelector('.vl-buy-text');
+          btn.appendChild(textWrap);
+        }
+
+        // маркираме, че е обработен
+        btn.dataset.vlBgApplied = '1';
+      } catch(e) {
+        // silent
+        console.error('vl-buy-bg apply error:', e);
+      }
+    });
+  }
+
+  // опит при зареждане на DOM
+  function initWhenReady(){
+    applyBackgroundsToBuyButtons();
+
+    // наблюдател: ако бутоните се добавят динамично по-късно
+    const main = document.getElementById('mainPage') || document.body;
+    if(window.MutationObserver && main){
+      const mo = new MutationObserver((mutations)=>{
+        for(const m of mutations){
+          if(m.addedNodes && m.addedNodes.length){
+            applyBackgroundsToBuyButtons();
+            break;
+          }
+        }
+      });
+      mo.observe(main, { childList: true, subtree: true });
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initWhenReady);
+  } else {
+    initWhenReady();
+  }
+})();
+</script>
+<!-- ===== END: Apply board images as backgrounds to first 3 Buy buttons ===== -->
+
 
