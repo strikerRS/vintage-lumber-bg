@@ -586,184 +586,133 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
   h1.appendChild(wrap);
 })();
 </script>
-<!-- ===== HERO BG FULL IMAGE PARALLAX ===== -->
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintage Lumber Bulgaria</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#F5F5F5]">
+
+<!-- ===== HEADER ===== -->
+<header class="fixed top-0 left-0 w-full bg-white shadow-md z-50 flex items-center justify-between p-4">
+    <div id="vl-logo">
+        <img src="images/logo.png" alt="Лого" style="height: 80px;">
+        <span style="display:none;">Vintage Lumber</span>
+    </div>
+    <nav class="space-x-6">
+        <a href="#home" class="font-bold text-[#6B4226]">Начало</a>
+        <a href="#products" class="font-bold text-[#6B4226]">Продукти</a>
+        <a href="#contact" class="font-bold text-[#6B4226]">Контакти</a>
+        <a href="#about" class="font-bold text-[#6B4226]">За нас</a>
+    </nav>
+</header>
+
+<!-- ===== HERO BG FULL IMAGE ===== -->
 <section id="hero-bg"></section>
 
 <style>
-  #hero-bg {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
+#hero-bg {
+    width: 100%;                
+    height: 100vh;              
+    min-height: 100vh;
 
-  #hero-bg img {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%) translateY(0);
-    min-width: 100%;
-    width: auto;
-    height: auto;
-    display: block;
-    user-select: none;
-    -webkit-user-drag: none;
-    will-change: transform;
-  }
-</style>
-
-<script>
-(function(){
-  const section = document.getElementById('hero-bg');
-  const img = document.createElement('img');
-  img.src = 'images/bg-old-bulgarian-farm.jpg';
-  img.alt = 'Фон';
-  section.appendChild(img);
-
-  function updateHero(){
-    const secH = section.offsetHeight;
-    const scroll = window.scrollY || document.documentElement.scrollTop || 0;
-
-    // Вземаме реалната височина на изображението с мащаб
-    const imgH = img.naturalHeight * (window.innerWidth / img.naturalWidth);
-
-    // Позиция: от горе към долу
-    const maxMove = Math.max(0, imgH - secH);
-    const progress = Math.min(Math.max(scroll / secH, 0), 1);
-    const move = -progress * maxMove;
-
-    img.style.transform = 'translateX(-50%) translateY(' + move + 'px)';
-  }
-
-  window.addEventListener('scroll', () => requestAnimationFrame(updateHero), {passive:true});
-  window.addEventListener('resize', () => requestAnimationFrame(updateHero), {passive:true});
-
-  if(img.complete) updateHero();
-  else img.addEventListener('load', updateHero);
-})();
-</script>
-<!-- ===== END HERO BG FULL IMAGE PARALLAX ===== -->
-<!-- ===== BOTTOM HERO REVEAL SECTION ===== -->
-<section id="hero-bottom"></section>
-
-<style>
-  /* долната част на фоновото изображение */
-  #hero-bottom {
-    width: 100%;
-    height: 50vh; /* височина на долната част, можеш да увеличиш */
-    background-image: url("images/bg-old-bulgarian-farm.jpg");
-    background-position: bottom center; /* показва долния край на изображението */
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    /* ефект на плавно разкриване */
-    transform: translateY(20%);
-    opacity: 0;
-    transition: transform 1s ease-out, opacity 1s ease-out;
-  }
-
-  /* когато секцията стане видима */
-  #hero-bottom.visible {
-    transform: translateY(0);
-    opacity: 1;
-  }
-</style>
-
-<script>
-(function(){
-  const bottom = document.getElementById('hero-bottom');
-  if(!bottom) return;
-
-  function revealBottom(){
-    const rect = bottom.getBoundingClientRect();
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
-    // ако долната част влезе във видимата зона
-    if(rect.top < windowHeight){ 
-      bottom.classList.add('visible');
-    }
-  }
-
-  window.addEventListener('scroll', revealBottom, {passive: true});
-  window.addEventListener('resize', revealBottom);
-
-  // инициализация при зареждане
-  revealBottom();
-})();
-</script>
-<!-- ===== END BOTTOM HERO REVEAL SECTION ===== -->
-<!-- ===== HERO BOTTOM: move directly after #contact and reveal ===== -->
-<section id="hero-bottom" aria-hidden="true"></section>
-
-<style>
-  #hero-bottom{
-    width: 100%;
-    height: 40vh; /* коригирай ако искаш по-голяма/малка височина */
     background-image: url("images/bg-old-bulgarian-farm.jpg");
     background-repeat: no-repeat;
-    background-position: bottom center; /* показва долната част на изображението */
-    background-size: cover;
-    box-sizing: border-box;
+    background-position: top center;   
+    background-size: cover;            
 
-    /* стартови стойности (за плавно появяване) */
-    transform: translateY(10%);
-    opacity: 0;
-    transition: transform 800ms cubic-bezier(.2,.8,.2,1), opacity 700ms ease;
-  }
-
-  /* когато е видим */
-  #hero-bottom.visible{
-    transform: translateY(0);
-    opacity: 1;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 </style>
 
 <script>
 (function(){
-  // намери елементи
-  const bottom = document.getElementById('hero-bottom');
-  const contact = document.getElementById('contact');
+    const hero = document.getElementById('hero-bg');
+    if(!hero) return;
 
-  if(!bottom) return;
+    let heroH = Math.max(hero.offsetHeight, window.innerHeight);
+    let ticking = false;
 
-  // Преместваме долния блок веднага след "#contact" (ако има такъв)
-  if(contact){
-    // поставя го точно под контакт секцията
-    contact.insertAdjacentElement('afterend', bottom);
-    // малък gap
-    bottom.style.marginTop = '1rem';
-  } else {
-    // ако няма contact, оставяме го в края (но с малък negative offset)
-    bottom.style.marginTop = '2rem';
-  }
-
-  // Reveal логика: когато блокът влезе във видимата част, показваме го
-  function revealWhenVisible(){
-    const rect = bottom.getBoundingClientRect();
-    const wh = window.innerHeight || document.documentElement.clientHeight;
-    // когато горната част на блока е по-малко от 85% от височината -> покажи
-    if(rect.top < wh * 0.85){
-      bottom.classList.add('visible');
-    } else {
-      // ако искаш да остава видим след първото показване, премахни else блока
-      // bottom.classList.remove('visible');
+    function updateBackground(){
+        const scroll = window.scrollY || document.documentElement.scrollTop || 0;
+        const progress = Math.min(Math.max(scroll / heroH, 0), 1);
+        const posPercent = (progress * 100).toFixed(2) + '%';
+        hero.style.backgroundPosition = 'center ' + posPercent;
+        ticking = false;
     }
-  }
 
-  // стартова проверка (ако вече е в изгледа)
-  revealWhenVisible();
+    function onScroll(){
+        if(!ticking){
+            ticking = true;
+            window.requestAnimationFrame(updateBackground);
+        }
+    }
 
-  // слушатели
-  window.addEventListener('scroll', revealWhenVisible, {passive:true});
-  window.addEventListener('resize', revealWhenVisible);
-  // ако DOM е все още в процес на зареждане, стартираме и при DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', revealWhenVisible);
+    function onResize(){
+        heroH = Math.max(hero.offsetHeight, window.innerHeight);
+        updateBackground();
+    }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onResize);
+
+    updateBackground();
 })();
 </script>
-<!-- ===== END HERO BOTTOM ===== -->
+<!-- ================= END HERO BG ================= -->
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="mainPage" class="mt-24 max-w-7xl mx-auto px-4">
+
+    <!-- ===== PRODUCTS SECTION ===== -->
+    <section id="products" class="grid grid-cols-1 md:grid-cols-3 gap-8 my-12">
+        <div class="border rounded p-4">
+            <h2 class="font-bold text-lg mb-2">Стара дървена дъска</h2>
+            <img src="images/board_1.png" alt="Стара дъска" class="w-full h-48 object-cover mb-2">
+            <p class="font-semibold">Купи — 120 лв.</p>
+        </div>
+        <div class="border rounded p-4">
+            <h2 class="font-bold text-lg mb-2">Рустик дъска</h2>
+            <img src="images/board_2.png" alt="Рустик дъска" class="w-full h-48 object-cover mb-2">
+            <p class="font-semibold">Купи — 150 лв.</p>
+        </div>
+        <div class="border rounded p-4">
+            <h2 class="font-bold text-lg mb-2">Стара масивна греда</h2>
+            <img src="images/board_3.png" alt="Масивна греда" class="w-full h-48 object-cover mb-2">
+            <p class="font-semibold">Купи — 200 лв.</p>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT US ===== -->
+    <section id="about" class="my-12">
+        <h2 class="text-2xl font-bold mb-4">За нас</h2>
+        <p>
+            Vintage Lumber Bulgaria е малка семейна компания, която възстановява и предлага автентични български дървени дъски и греди с уникална патина и характер. 
+            Нашата мисия е да съхраним традицията и красотата на старото дърво и да я интегрираме в модерния интериор.
+        </p>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="my-12 p-4 bg-white rounded shadow">
+        <h2 class="text-2xl font-bold mb-4">Контакти</h2>
+        <p>Телефон: +359 88 123 4567</p>
+        <p>Имейл: info@vintagelumber.bg</p>
+    </section>
+
+</main>
+<!-- ================= END MAIN CONTENT ================= -->
 
 </body>
 </html>
+
+</body>
+</html>
+
 
 
 
