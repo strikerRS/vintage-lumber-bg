@@ -79,7 +79,9 @@ nav a:hover{color:#A66B3C;}
   border-radius: 0.5rem !important;
   box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }
-.vl-buy-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.22); pointer-events: none; z-index: 0; }
+/* НАМАЛИХ КАФЯВИЯ/ТЪМЕН СЛОЙ ПОД БУТОН: направен прозрачeн (потребителска заявка) */
+.vl-buy-bg-overlay { position: absolute; inset: 0; background: transparent !important; pointer-events: none; z-index: 0; }
+
 .vl-buy-text { position: relative; z-index: 1; font-weight: 700; letter-spacing: 0.2px; white-space: nowrap; text-shadow: 0 1px 0 rgba(0,0,0,0.25); font-size: 0.95rem; }
 .vl-buy-btn-card::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); z-index: 2; pointer-events: none; }
 
@@ -159,6 +161,37 @@ nav a:hover{color:#A66B3C;}
 </div>
 </a>
 </main>
+
+<!-- START: Testimonials section (INTEGRATED) -->
+<section id="testimonials" class="max-w-7xl mx-auto p-10 bg-white rounded-xl my-8">
+  <h2 class="text-3xl font-bold text-[#6B4226] mb-6">
+    <span class="lang-bg">Отзиви</span>
+    <span class="lang-en hidden">Testimonials</span>
+  </h2>
+  <div class="space-y-6">
+    <div>
+      <blockquote class="italic text-lg">
+        &ldquo;<span class="lang-bg">Изключителна грижа и внимание към всеки детайл. Дървените елементи придават уникален чар на дома ни.</span>
+        <span class="lang-en hidden">Exceptional care and attention to detail. The wooden elements truly add a unique charm to our home.</span>&rdquo;
+      </blockquote>
+      <p class="mt-2 font-semibold text-[#6B4226]">
+        — <span class="lang-bg">Мария, майстор-дърводелец от Пловдив</span>
+        <span class="lang-en hidden">Maria, Master Carpenter from Plovdiv</span>
+      </p>
+    </div>
+    <div>
+      <blockquote class="italic text-lg">
+        &ldquo;<span class="lang-bg">Страхотни продукти с автентична патина! Нашият ресторант в София никога не е изглеждал по-добре.</span>
+        <span class="lang-en hidden">Amazing products with authentic patina! Our restaurant in Sofia has never looked better.</span>&rdquo;
+      </blockquote>
+      <p class="mt-2 font-semibold text-[#6B4226]">
+        — <span class="lang-bg">Димитър, собственик на ресторант в София</span>
+        <span class="lang-en hidden">Dimitar, Owner of a restaurant in Sofia</span>
+      </p>
+    </div>
+  </div>
+</section>
+<!-- END: Testimonials section -->
 
 <div id="about">
 </div>
@@ -664,7 +697,8 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     text-shadow: 0 1px 0 rgba(0,0,0,0.25) !important;
     white-space: nowrap !important;
   }
-  .vl-buy-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.22); pointer-events: none; z-index: 0; }
+  /* overlay kept transparent per request */
+  .vl-buy-bg-overlay { position: absolute; inset: 0; background: transparent !important; pointer-events: none; z-index: 0; }
   .vl-buy-text { position: relative; z-index: 1; font-size: 0.95rem; }
   .vl-buy-btn-card::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); z-index: 2; pointer-events: none; }
   @media (max-width: 520px) {
