@@ -692,9 +692,79 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 })();
 </script>
 <!-- ===== END BOTTOM HERO REVEAL SECTION ===== -->
+<!-- ===== HERO BOTTOM: move directly after #contact and reveal ===== -->
+<section id="hero-bottom" aria-hidden="true"></section>
+
+<style>
+  #hero-bottom{
+    width: 100%;
+    height: 40vh; /* коригирай ако искаш по-голяма/малка височина */
+    background-image: url("images/bg-old-bulgarian-farm.jpg");
+    background-repeat: no-repeat;
+    background-position: bottom center; /* показва долната част на изображението */
+    background-size: cover;
+    box-sizing: border-box;
+
+    /* стартови стойности (за плавно появяване) */
+    transform: translateY(10%);
+    opacity: 0;
+    transition: transform 800ms cubic-bezier(.2,.8,.2,1), opacity 700ms ease;
+  }
+
+  /* когато е видим */
+  #hero-bottom.visible{
+    transform: translateY(0);
+    opacity: 1;
+  }
+</style>
+
+<script>
+(function(){
+  // намери елементи
+  const bottom = document.getElementById('hero-bottom');
+  const contact = document.getElementById('contact');
+
+  if(!bottom) return;
+
+  // Преместваме долния блок веднага след "#contact" (ако има такъв)
+  if(contact){
+    // поставя го точно под контакт секцията
+    contact.insertAdjacentElement('afterend', bottom);
+    // малък gap
+    bottom.style.marginTop = '1rem';
+  } else {
+    // ако няма contact, оставяме го в края (но с малък negative offset)
+    bottom.style.marginTop = '2rem';
+  }
+
+  // Reveal логика: когато блокът влезе във видимата част, показваме го
+  function revealWhenVisible(){
+    const rect = bottom.getBoundingClientRect();
+    const wh = window.innerHeight || document.documentElement.clientHeight;
+    // когато горната част на блока е по-малко от 85% от височината -> покажи
+    if(rect.top < wh * 0.85){
+      bottom.classList.add('visible');
+    } else {
+      // ако искаш да остава видим след първото показване, премахни else блока
+      // bottom.classList.remove('visible');
+    }
+  }
+
+  // стартова проверка (ако вече е в изгледа)
+  revealWhenVisible();
+
+  // слушатели
+  window.addEventListener('scroll', revealWhenVisible, {passive:true});
+  window.addEventListener('resize', revealWhenVisible);
+  // ако DOM е все още в процес на зареждане, стартираме и при DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', revealWhenVisible);
+})();
+</script>
+<!-- ===== END HERO BOTTOM ===== -->
 
 </body>
 </html>
+
 
 
 
