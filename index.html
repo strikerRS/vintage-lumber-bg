@@ -953,9 +953,37 @@ if(navContactBtn && contactModal && closeContactModal){
 }
 </script>
 <!-- ===== END: Contact Modal ===== -->
+<!-- ...твоя съществуващ код ... -->
+
+<!-- ===== Универсален модален прозорец ===== -->
+<div id="universalModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4 transition-opacity duration-300 opacity-0">
+  <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center relative transform scale-90 transition-transform duration-300">
+    <button id="closeUniversalModal" class="absolute top-3 right-3 text-[#6B4226] font-bold text-lg">✕</button>
+    <h2 id="universalModalTitle" class="text-2xl font-bold mb-4 text-[#6B4226]"></h2>
+    <div id="universalModalContent" class="text-left"></div>
+  </div>
+</div>
+
+<style>
+#universalModal.show {
+  display: flex;
+  opacity: 1 !important;
+}
+#universalModal.show div {
+  transform: scale(1);
+}
+</style>
+
+<script>
+// ...JavaScript за универсалния модал (всичко, което ти изпратих по-горе) ...
+</script>
 
 </body>
 </html>
+
+</body>
+</html>
+
 
 
 
