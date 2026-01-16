@@ -973,6 +973,31 @@ if(navContactBtn && contactModal && closeContactModal){
   transform: scale(1);
 }
 </style>
+<style>
+/* Фон за бутона Купи на страничката на продукта */
+.vl-buy-btn-product {
+    background-image: url('images/board_5.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    color: white !important; /* текстът да се чете добре */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Полупрозрачен overlay за четливост на текста */
+.vl-buy-btn-product::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 0;
+}
+.vl-buy-btn-product span {
+    position: relative;
+    z-index: 1;
+}
+</style>
 
 <script>
 // ...JavaScript за универсалния модал (всичко, което ти изпратих по-горе) ...
@@ -983,6 +1008,7 @@ if(navContactBtn && contactModal && closeContactModal){
 
 </body>
 </html>
+
 
 
 
