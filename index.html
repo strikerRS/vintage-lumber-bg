@@ -586,25 +586,24 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
   h1.appendChild(wrap);
 })();
 </script>
-<!-- ===== HERO BG FULL IMAGE WITH SMOOTH SCROLL REVEAL ===== -->
+<!-- ===== HERO BG FULL IMAGE PARALLAX ===== -->
 <section id="hero-bg"></section>
 
 <style>
   #hero-bg {
     width: 100%;
-    height: 100vh;         /* височина на целия екран */
-    min-height: 100vh;
+    height: 100vh;
     overflow: hidden;
     position: relative;
   }
 
   #hero-bg img {
     position: absolute;
-    left: 50%;
     top: 0;
+    left: 50%;
     transform: translateX(-50%) translateY(0);
+    min-width: 100%;
     width: auto;
-    min-width: 100%;      /* покрива ширината */
     height: auto;
     display: block;
     user-select: none;
@@ -616,8 +615,6 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 <script>
 (function(){
   const section = document.getElementById('hero-bg');
-  if(!section) return;
-
   const img = document.createElement('img');
   img.src = 'images/bg-old-bulgarian-farm.jpg';
   img.alt = 'Фон';
@@ -625,30 +622,31 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
   function updateHero(){
     const secH = section.offsetHeight;
-    const imgH = img.naturalHeight * (window.innerWidth / img.naturalWidth);
-    const maxMove = Math.max(0, imgH - secH);
     const scroll = window.scrollY || document.documentElement.scrollTop || 0;
+
+    // Вземаме реалната височина на изображението с мащаб
+    const imgH = img.naturalHeight * (window.innerWidth / img.naturalWidth);
+
+    // Позиция: от горе към долу
+    const maxMove = Math.max(0, imgH - secH);
     const progress = Math.min(Math.max(scroll / secH, 0), 1);
     const move = -progress * maxMove;
+
     img.style.transform = 'translateX(-50%) translateY(' + move + 'px)';
   }
 
-  window.addEventListener('scroll', () => {
-    window.requestAnimationFrame(updateHero);
-  }, {passive:true});
-
-  window.addEventListener('resize', () => {
-    window.requestAnimationFrame(updateHero);
-  }, {passive:true});
+  window.addEventListener('scroll', () => requestAnimationFrame(updateHero), {passive:true});
+  window.addEventListener('resize', () => requestAnimationFrame(updateHero), {passive:true});
 
   if(img.complete) updateHero();
   else img.addEventListener('load', updateHero);
 })();
 </script>
-<!-- ===== END HERO BG FULL IMAGE WITH SMOOTH SCROLL REVEAL ===== -->
+<!-- ===== END HERO BG FULL IMAGE PARALLAX ===== -->
 
 </body>
 </html>
+
 
 
 
