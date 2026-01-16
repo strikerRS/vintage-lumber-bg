@@ -80,6 +80,74 @@ nav a:hover{color:#A66B3C;}
   </svg>
   <span class="cart-count">0</span>
 </div>
+<!-- START: Contact modal (paste BEFORE </body>) -->
+<style id="contact-modal-styles">
+  #contactModal { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
+  #contactModal.open { display: flex; }
+  #contactModal .overlay { position:absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
+  #contactModal .box {
+    position: relative;
+    z-index: 2201;
+    width: 360px;
+    max-width: 92%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 18px 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    font-family: inherit;
+  }
+  #contactModal .box h3 { margin:0 0 8px; color:#6B4226; font-size:1.15rem; }
+  #contactModal .box p { margin:6px 0; color:#333; font-size:0.95rem; }
+  #contactModal .box a { color:#6B4226; text-decoration:none; font-weight:600; }
+  #contactModal .close-btn {
+    position:absolute; right:10px; top:8px; border:none; background:transparent; color:#6B4226;
+    font-size:18px; cursor:pointer;
+  }
+</style>
+
+<div id="contactModal" aria-hidden="true" role="dialog" aria-labelledby="contactModalTitle">
+  <div class="overlay" data-close="true"></div>
+  <div class="box" role="document">
+    <button class="close-btn" aria-label="Затвори" data-close="true">✕</button>
+    <h3 id="contactModalTitle">Контакти</h3>
+    <p><strong>Телефон:</strong> <a href="tel:+359881234567">+359 88 123 4567</a></p>
+    <p><strong>Имейл:</strong> <a href="mailto:info@vintagelumber.bg">info@vintagelumber.bg</a></p>
+    <p><strong>Офис адрес:</strong> ул. Ретро 12, София</p>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const navContact = document.getElementById('navContact');
+  const modal = document.getElementById('contactModal');
+  if(!navContact || !modal) return;
+
+  function openModal(e){
+    if(e) e.preventDefault();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  navContact.addEventListener('click', openModal);
+
+  // close on overlay or close button (elements marked data-close="true")
+  modal.addEventListener('click', function(e){
+    if(e.target && e.target.dataset && e.target.dataset.close === 'true') closeModal();
+  });
+
+  // close on ESC
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+});
+</script>
+<!-- END: Contact modal -->
 
 
 </nav>
@@ -848,5 +916,6 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 <!-- ===== END: Responsive long & narrow board-look for Buy buttons ===== -->
 </body>
 </html>
+
 
 
