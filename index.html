@@ -5,41 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-/* ==== Премахване на нежелана кафява линия в долния край ==== */
-html, body { height: 100%; margin: 0; }
-#hero-bg { background-size: cover !important; background-repeat: no-repeat !important; background-position: center !important; box-shadow: none !important; border-bottom: none !important; -webkit-backface-visibility: hidden; -webkit-transform: translateZ(0); }
-#mainPage, main, #about, .bg-card, .rounded-xl { box-shadow: none !important; border: none !important; background-clip: padding-box !important; }
-@media (max-width: 900px) { #hero-bg { background-attachment: scroll !important; } }
-hr, .divider, .line { border: 0 !important; height: 0 !important; box-shadow: none !important; }
-body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
-#hero-bg { background-image: url('images/bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 110vh; }
+/* ====== Общи стилове ====== */
+html, body { height:100%; margin:0; scroll-behavior:smooth; background:#f4eadf; color:#333; font-family: sans-serif; }
+#hero-bg { background-image:url('images/bg-old-bulgarian-farm.jpg'); background-size:cover; background-position:center; height:110vh; background-attachment:fixed; }
 header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.2rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 header h1 { font-size:1.75rem; color:#6B4226; font-weight:bold; cursor:pointer; }
 nav a { margin-left:1rem; font-weight:500; color:#6B4226; transition:0.3s; cursor:pointer; }
 nav a:hover{color:#A66B3C;}
-.cart-btn{background:#6B4226;color:white;border-radius:50%;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
+.cart-btn{background:#6B4226;color:white;border-radius:50%;width:2.4rem;height:2.4rem;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
 .cart-count{position:absolute;top:-0.5rem;right:-0.5rem;background:red;width:1.25rem;height:1.25rem;font-size:0.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;}
 #about { max-width:7xl; margin: 2rem auto; padding:2rem; background:#fff; border-radius:0.5rem; }
-.gallery-container { position: relative; display: flex; flex-direction: column; }
-.gallery-main { width: 100%; height: 300px; object-fit: cover; border-radius:0.5rem; margin-bottom:1rem; cursor:pointer; }
-.gallery-thumbs { display: flex; gap:0.5rem; }
-.gallery-thumbs img { width:70px;height:70px;object-fit:cover;border-radius:0.25rem;cursor:pointer;border:2px solid transparent; }
-.gallery-thumbs img.active{border-color:#6B4226;}
-.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.25rem 0.5rem;cursor:pointer;border-radius:0.25rem;}
-.arrow-left{left:0;}
-.arrow-right{right:0;}
-#lightboxOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px);}
-#lightboxOverlay img{max-width:90%;max-height:90%;}
-#lightboxOverlay button{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.5rem;cursor:pointer;border-radius:0.25rem;}
-#lightboxLeft{left:10px;} #lightboxRight{right:10px;}
-#productPage { display:none; padding-top:4rem; }
-#productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
+.gallery-container, #productPage, .gallery-main, .gallery-thumbs { /* Твоите стилове за продукти */ }
 
 /* ====== ORDER FORM MODAL ====== */
 #orderSection { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
 #orderSection.open { display: flex; }
 #orderSection .overlay { position: absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
-#orderSection .box { position: relative; z-index: 2201; width: 360px; max-width: 92%; background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); font-family: inherit; }
+#orderSection .box { position: relative; z-index: 2201; width: 360px; max-width: 92%; background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
 #orderSection .box h3 { margin:0 0 8px; color:#6B4226; font-size:1.15rem; }
 #orderSection .close-btn { position:absolute; right:10px; top:8px; border:none; background:transparent; color:#6B4226; font-size:18px; cursor:pointer; }
 #orderSection label { display:block; margin:8px 0 4px; color:#333; }
@@ -51,47 +33,49 @@ nav a:hover{color:#A66B3C;}
 <body>
 
 <header>
-<div id="homeBtn" class="flex items-center gap-3 cursor-pointer">
-  <img src="images/logo.png" style="height:59px;width:auto;">
-</div>
-<nav class="flex items-center">
+<h1>Vintage Lumber</h1>
+<nav>
 <a id="navHome">Начало</a>
 <a id="navProducts">Продукти</a>
 <a id="navContact">Контакти</a>
 <a id="navAbout">За нас</a>
-<div class="cart-btn ml-4 flex items-center justify-center" style="width:2.4rem;height:2.4rem;background:#6B4226;border-radius:50%;box-shadow:inset 0 1px 2px rgba(255,255,255,0.15),0 2px 6px rgba(0,0,0,0.25);">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="9" cy="21" r="1"/>
-    <circle cx="20" cy="21" r="1"/>
-    <path d="M1 1h4l2.6 13.2a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
-  </svg>
-  <span class="cart-count">0</span>
+<div class="cart-btn">
+  🛒<span class="cart-count">0</span>
 </div>
 </nav>
 </header>
 
 <section id="hero-bg"></section>
 
-<div id="mainPage" class="mt-24">
-<main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-<!-- Product cards go here -->
+<main id="mainPage" class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
+  <!-- Твоите продукти тук -->
+  <div class="product-card bg-white p-4 rounded shadow">
+    <img src="images/product1.jpg" alt="Продукт 1" class="w-full h-48 object-cover mb-2">
+    <h3 class="font-bold text-lg">Продукт 1</h3>
+    <p>Описание на продукт 1</p>
+    <button class="vl-buy-btn">Купи</button>
+  </div>
+  <div class="product-card bg-white p-4 rounded shadow">
+    <img src="images/product2.jpg" alt="Продукт 2" class="w-full h-48 object-cover mb-2">
+    <h3 class="font-bold text-lg">Продукт 2</h3>
+    <p>Описание на продукт 2</p>
+    <button class="vl-buy-btn">Купи</button>
+  </div>
+  <!-- добави колкото продукти имаш -->
 </main>
-<div id="about"></div>
+
+<div id="about">
+  <h2>За нас</h2>
+  <p>Тук можеш да сложиш текст за компанията...</p>
 </div>
 
-<div id="productPage">
-<div class="content">
-<!-- Product detail content goes here -->
-</div>
-</div>
-
-<div id="lightboxOverlay" class="flex">
-<button id="lightboxLeft">←</button>
-<img id="lightboxImage" src="" alt="Продукт">
-<button id="lightboxRight">→</button>
+<div id="productPage" class="hidden">
+  <div class="content">
+    <!-- Детайлите на продукта -->
+  </div>
 </div>
 
-<!-- ===================== START: Cart UI + Buy Buttons ===================== -->
+<!-- Cart UI + Buy Buttons placeholder -->
 <div id="vl-cart-wrapper-placeholder"></div>
 <div id="vl-cart-toast-placeholder"></div>
 
@@ -105,63 +89,48 @@ nav a:hover{color:#A66B3C;}
       <span class="lang-en hidden">Order Form</span>
     </h3>
     <form action="https://formspree.io/f/mjggggpl" method="POST">
-      <label>
-        <span class="lang-bg">Име:</span>
-        <span class="lang-en hidden">Name:</span>
-      </label>
+      <label><span class="lang-bg">Име:</span><span class="lang-en hidden">Name:</span></label>
       <input type="text" name="name" required>
-      <label>
-        <span class="lang-bg">Телефон:</span>
-        <span class="lang-en hidden">Phone:</span>
-      </label>
+      <label><span class="lang-bg">Телефон:</span><span class="lang-en hidden">Phone:</span></label>
       <input type="tel" name="phone" required>
-      <label>
-        <span class="lang-bg">Имейл:</span>
-        <span class="lang-en hidden">Email:</span>
-      </label>
+      <label><span class="lang-bg">Имейл:</span><span class="lang-en hidden">Email:</span></label>
       <input type="email" name="_replyto" required>
-      <label>
-        <span class="lang-bg">Адрес:</span>
-        <span class="lang-en hidden">Address:</span>
-      </label>
+      <label><span class="lang-bg">Адрес:</span><span class="lang-en hidden">Address:</span></label>
       <input type="text" name="address">
-      <button type="submit">
-        <span class="lang-bg">Изпрати поръчката</span>
-        <span class="lang-en hidden">Submit Order</span>
-      </button>
+      <button type="submit"><span class="lang-bg">Изпрати поръчката</span><span class="lang-en hidden">Submit Order</span></button>
     </form>
   </div>
 </div>
 
 <script>
-// Order Form modal JS
-const orderModal = document.getElementById('orderSection');
-const closeOrder = orderModal.querySelector('[data-close="true"]');
-const checkoutBtn = document.getElementById('vl-checkout');
+document.addEventListener('DOMContentLoaded', function(){
+  const orderModal = document.getElementById('orderSection');
+  const closeOrder = orderModal.querySelector('[data-close="true"]');
+  const checkoutBtn = document.getElementById('vl-checkout');
 
-if(checkoutBtn){
-  checkoutBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
-    if (cart.length === 0) { alert('Нямате добавени продукти в кошницата.'); return; }
-    orderModal.classList.add('open');
-    orderModal.setAttribute('aria-hidden','false');
-  });
-}
+  if(checkoutBtn){
+    checkoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
+      if(cart.length===0){ alert('Нямате добавени продукти в кошницата.'); return; }
+      orderModal.classList.add('open');
+      orderModal.setAttribute('aria-hidden','false');
+    });
+  }
 
-closeOrder.addEventListener('click', () => {
-  orderModal.classList.remove('open');
-  orderModal.setAttribute('aria-hidden','true');
-});
-
-orderModal.addEventListener('click', (e) => {
-  if (e.target === orderModal) {
+  closeOrder.addEventListener('click', () => {
     orderModal.classList.remove('open');
     orderModal.setAttribute('aria-hidden','true');
-  }
+  });
+
+  orderModal.addEventListener('click', (e) => {
+    if(e.target===orderModal){
+      orderModal.classList.remove('open');
+      orderModal.setAttribute('aria-hidden','true');
+    }
+  });
 });
 </script>
 
-<!-- Your existing scripts for cart, product page, lightbox, etc. go below -->
 </body>
 </html>
