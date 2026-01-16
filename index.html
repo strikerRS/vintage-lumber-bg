@@ -98,7 +98,7 @@ nav a:hover{color:#A66B3C;}
    - Оставяме само background-image (board_*.png) да се вижда (cover).
    - Текстът (цената) да е черен и без shadow.
    - Премахваме/скриваме тъмния overlay.
-   - Подравняваме бутоните вляво (display:block -> позиция в началото на съдържанието).
+   - Подравняваме бутоните вляво (display:block -> позиция в началото на текста).
    ======================================================================= */
 .vl-buy-btn-card {
   background-color: transparent !important;
@@ -161,6 +161,27 @@ nav a:hover{color:#A66B3C;}
 a .vl-buy-btn-card { margin-top: 0.5rem; }
 
 /* ======================================================================= */
+
+/* PRODUCT-PAGE: elongated & slimmer button
+   Само стилове за бутона, който се показва в продуктовата страница.
+   - по-широк (продълговат)
+   - по-нисък (тесен височинно)
+   - оставаме с background-image cover и черен текст
+*/
+#productPage .vl-buy-btn-product {
+  width: 340px !important;          /* по-продълговат */
+  height: 38px !important;          /* по-тесен (по-нисък) */
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  background-size: auto 100% !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06) !important;
+}
 </style>
 </head>
 <body>
