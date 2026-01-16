@@ -59,12 +59,6 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
-
-/* --- Допълнителни стилове за Buy бутони (override/фиксиране) --- */
-.vl-buy-btn-card { width: clamp(200px, 45vw, 260px) !important; height: 46px !important; border-radius: 8px !important; padding: 0 1rem !important; font-weight:700 !important; }
-.vl-buy-btn-product { height: 50px !important; border-radius:8px !important; }
-.vl-buy-bg-overlay { position:absolute; inset:0; background: rgba(0,0,0,0.22); pointer-events:none; z-index:0; border-radius:inherit; }
-.vl-buy-text { position:relative; z-index:1; color:white; }
 </style>
 </head>
 <body>
@@ -1045,6 +1039,17 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <!-- ========== END FIX ========== -->
+
+<!-- ====== NEW: small CSS fix to remove brown background color behind buttons (keeps board image) ====== -->
+<style>
+/* Премахва само background-color, запазва background-image */
+.vl-buy-btn-card,
+.vl-buy-btn-product,
+button.vl-buy-btn-card[style*="background"] {
+  background-color: transparent !important;
+}
+</style>
+<!-- ====== END small CSS fix ====== -->
 
 </body>
 </html>
