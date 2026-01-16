@@ -586,84 +586,100 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
   h1.appendChild(wrap);
 })();
 </script>
-<!-- ===== HERO BG FULL IMAGE ===== -->
-<section id="hero-bg"></section>
+<!-- ===== HERO SECTION: fixed image + scroll-reveal (replace your old #hero-bg with this) ===== -->
+<section id="hero-bg" aria-hidden="true">
+  <img id="hero-img" src="images/bg-old-bulgarian-farm.jpg" alt="Фоново изображение">
+</section>
 
 <style>
-#hero-bg {
-    width: 100%;                /* пълна ширина */
-    height: 100vh;              /* височина на целия екран */
+  /* hero container */
+  #hero-bg{
+    position: relative;
+    width: 100%;
+    height: 100vh;
     min-height: 100vh;
+    overflow: hidden;
+    display: block;
+  }
 
-    background-image: url("images/bg-old-bulgarian-farm.jpg");
-    background-repeat: no-repeat;
-    background-position: top center;   /* винаги показва горния край */
-    background-size: cover;            /* покрива цялата ширина, без да смачква изображението */
+  /* the img is centered horizontally; its height is computed from width so aspect ratio is kept */
+  #hero-bg img{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) translateY(0);
+    transform-origin: center top;
+    width: 100%;        /* fill width */
+    height: auto;       /* keep aspect ratio */
+    will-change: transform;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    display: block;
+  }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-</style>
-<!-- ===== END HERO BG FULL IMAGE ===== -->
-<!-- ===== SCROLL → REVEAL HERO BACKGROUND (paste BEFORE </body>) ===== -->
-<style>
-/* гарантираме начални стойности (не променят оригиналните ти стилове) */
-#hero-bg {
-  background-position: center 0%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
+  /* safety: if image is very short on mobile, ensure cover look */
+  @media (max-aspect-ratio: 3/4) {
+    #hero-bg img { min-height: 100vh; width: auto; height: 100vh; left: 50%; transform: translateX(-50%) translateY(0); }
+  }
 </style>
 
 <script>
 (function(){
   const hero = document.getElementById('hero-bg');
-  if(!hero) return;
+  const img = document.getElementById('hero-img');
+  if(!hero || !img) return;
 
-  // височината на геро секцията (използваме offsetHeight; ще се обновява при resize)
-  let heroH = Math.max(hero.offsetHeight, window.innerHeight);
+  // helper to compute/animate image translate so top shows first, then on scroll image moves up to reveal bottom
+  function update(){
+    const heroRect = hero.getBoundingClientRect();
+    const heroTop = window.scrollY + heroRect.top;
+    const heroH = Math.max(heroRect.height, window.innerHeight);
+    const scroll = window.scrollY;
+    // progress 0..1 while scrolling the hero height
+    let progress = (scroll - heroTop) / heroH;
+    progress = Math.min(Math.max(progress, 0), 1);
 
-  // флаг за requestAnimationFrame throttling
-  let ticking = false;
+    // compute the actual displayed img height when width = hero.offsetWidth
+    let imgDisplayedH = hero.offsetWidth * ( (img.naturalHeight || heroH) / (img.naturalWidth || hero.offsetWidth) );
+    if (!isFinite(imgDisplayedH) || imgDisplayedH <= 0) imgDisplayedH = heroH; // fallback
 
-  function updateBackground(){
-    // колко сме скролнали (px)
-    const scroll = window.scrollY || document.documentElement.scrollTop || 0;
-    // прогрес 0..1 (0 = върхът видим, 1 = скролирали сме височината на hero или повече)
-    const progress = Math.min(Math.max(scroll / heroH, 0), 1);
-    // позиция в проценти от 0% до 100%
-    const posPercent = (progress * 100).toFixed(2) + '%';
-    // задаваме позицията — центрираме хоризонтално, вертикалната част е posPercent
-    hero.style.backgroundPosition = 'center ' + posPercent;
-    ticking = false;
+    const maxShift = Math.max(0, imgDisplayedH - heroH);
+
+    // move image up by up to maxShift (so bottom becomes visible)
+    const translateY = - (maxShift * progress);
+
+    img.style.transform = 'translateX(-50%) translateY(' + translateY + 'px)';
   }
 
+  // throttle with requestAnimationFrame
+  let ticking = false;
   function onScroll(){
     if(!ticking){
       ticking = true;
-      window.requestAnimationFrame(updateBackground);
+      window.requestAnimationFrame(function(){
+        update();
+        ticking = false;
+      });
     }
   }
 
-  function onResize(){
-    heroH = Math.max(hero.offsetHeight, window.innerHeight);
-    // при resize обновяваме веднага
-    updateBackground();
-  }
-
-  // слушатели
   window.addEventListener('scroll', onScroll, {passive: true});
-  window.addEventListener('resize', onResize);
+  window.addEventListener('resize', function(){ update(); }, {passive: true});
 
-  // иницилизиране (за случаите когато сме не в началото)
-  updateBackground();
+  // when image loads first time, update
+  if(img.complete) update();
+  else img.onload = update;
+
+  // initial run (if page already scrolled)
+  update();
 })();
 </script>
-<!-- ================= END SCROLL → REVEAL HERO BACKGROUND ================= -->
+<!-- ===== END HERO SECTION ===== -->
 
 </body>
 </html>
+
 
 
 
