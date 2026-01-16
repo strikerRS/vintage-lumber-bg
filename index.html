@@ -668,8 +668,154 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 })();
 </script>
 <!-- ===== END: Extra long & narrow board-look backgrounds for Buy buttons ===== -->
+<!-- ===== START: Responsive long & narrow board-look for Buy buttons (paste BEFORE </body>) ===== -->
+<style>
+  /* Отговаря за пропорционалното поведение на бутоните (дълги + тесни) */
+  .vl-buy-btn-card {
+    /* ширина: адаптивна между 220px и 420px, относително на екрана */
+    width: clamp(220px, 40vw, 420px) !important;
+    /* височина: малка и пропорционална */
+    height: clamp(40px, 6vh, 56px) !important;
+
+    /* фон - запазваме пропорцията на изображението (не го "смачкваме") */
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    /* важно: auto 100% -> запазва оригиналното съотношение (дъската изглежда дълга и тясна) */
+    background-size: auto 100% !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    position: relative !important;
+
+    padding: 0 1rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25) !important;
+    white-space: nowrap !important;
+  }
+
+  /* тъмен полупрозрачен слой върху фона (четливост на текста) */
+  .vl-buy-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.22);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* текстът вътре в бутона */
+  .vl-buy-text {
+    position: relative;
+    z-index: 1;
+    font-size: 0.95rem;
+  }
+
+  /* допълнителен вътрешен блясък (subtle) */
+  .vl-buy-btn-card::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* мобилно: ако бутоните заемат ред един под друг (stack), им даваме 90% ширина */
+  @media (max-width: 520px) {
+    .vl-buy-btn-card {
+      width: 90vw !important;
+      max-width: 420px !important;
+      height: clamp(40px, 7vh, 56px) !important;
+    }
+  }
+</style>
+
+<script>
+(function(){
+  const IMG = [
+    'images/board_5.png',
+    'images/board_6.png',
+    'images/board_7.png'
+  ];
+
+  function enhanceButton(btn, src) {
+    if(!btn) return;
+    if(btn.dataset.vlBgApplied === '1') return;
+
+    // Поставяме фона (запазваме пропорциите с background-size:auto 100%)
+    btn.style.backgroundImage = src ? `url("${src}")` : '';
+
+    // Добавяме overlay ако липсва
+    if(!btn.querySelector('.vl-buy-bg-overlay')) {
+      const overlay = document.createElement('span');
+      overlay.className = 'vl-buy-bg-overlay';
+      btn.insertAdjacentElement('afterbegin', overlay);
+    }
+
+    // Поставяме текста относително (за да не бъде заменен background span-овете)
+    if(!btn.querySelector('.vl-buy-text')) {
+      const raw = btn.innerHTML;
+      // някои бутони вече имат html вътре — опаковаме го в span
+      btn.innerHTML = '';
+      const overlay = btn.querySelector('.vl-buy-bg-overlay');
+      if(overlay) btn.appendChild(overlay);
+      const txt = document.createElement('span');
+      txt.className = 'vl-buy-text';
+      txt.innerHTML = raw;
+      btn.appendChild(txt);
+    }
+
+    btn.dataset.vlBgApplied = '1';
+  }
+
+  function applyToAll() {
+    const buttons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
+    if(!buttons.length) return;
+
+    // Ако има поне 3 бутона -> прикачваме board_5..7 към първите 3
+    buttons.forEach((btn, i) => {
+      const src = IMG[i % IMG.length] || IMG[0];
+      enhanceButton(btn, src);
+    });
+  }
+
+  // Стартираме веднага или след load
+  function init(){
+    applyToAll();
+
+    // Наблюдаваме за промени в DOM (ако бутоните се инжектират динамично)
+    const main = document.getElementById('mainPage') || document.body;
+    if(window.MutationObserver && main) {
+      const mo = new MutationObserver((mut) => {
+        applyToAll();
+      });
+      mo.observe(main, { childList: true, subtree: true });
+    }
+
+    // На resize — може да пренастроим (не е задължително, но оставяме за safety)
+    window.addEventListener('resize', () => {
+      // nothing heavy here: просто re-apply backgrounds if needed
+      applyToAll();
+    }, { passive: true });
+  }
+
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+<!-- ===== END: Responsive long & narrow board-look for Buy buttons ===== -->
 
 </body>
 </html>
+
 
 
