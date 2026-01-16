@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
+<style>/* ===== Променен фон на празните полета / карета ===== */
+#about,
+#productPage .content,
+.main-card,
+#mainPage .bg-card {
+  background: #f1e2d0; /* леко кафяво, слива се с бекграунда */
+  border-radius: 0.5rem; /* ако искаш да запазиш закръглените ъгли */
+  padding: 2rem; /* запазваме същата подредба */
+}
+
 body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
 #hero-bg { background-image: url('images/bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 110vh; }
 header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.2rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
@@ -826,5 +835,6 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 </body>
 </html>
+
 
 
