@@ -80,34 +80,8 @@ nav a:hover{color:#A66B3C;}
   </svg>
   <span class="cart-count">0</span>
 </div>
-<!-- START: Contact modal <!-- ====== ORDER FORM MODAL ====== -->
-<style>
-  /* Модален фон и стилове */
-  #orderSection { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
-  #orderSection.open { display: flex; }
-  #orderSection .overlay { position: absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
-  #orderSection .box { 
-    position: relative; z-index: 2201; width: 360px; max-width: 92%; 
-    background: #fff; border-radius: 10px; padding: 18px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25); font-family: inherit; 
-  }
-  #orderSection .box h3 { margin:0 0 8px; color:#6B4226; font-size:1.15rem; }
-  #orderSection .close-btn {
-    position:absolute; right:10px; top:8px; border:none; background:transparent; 
-    color:#6B4226; font-size:18px; cursor:pointer; 
-  }
-  #orderSection label { display:block; margin:8px 0 4px; color:#333; }
-  #orderSection input {
-    width:100%; padding:8px; margin-bottom:12px; 
-    border:1px solid #ccc; border-radius:4px; 
-  }
-  #orderSection button[type="submit"] {
-    background:#6B4226; color:#fff; padding:10px 16px; 
-    border:none; border-radius:4px; cursor:pointer;
-  }
-  #orderSection button[type="submit"]:hover { background:#A66B3C; }
-</style>
 
+<!-- ====== ORDER FORM MODAL ====== -->
 <div id="orderSection" aria-hidden="true" role="dialog">
   <div class="overlay" data-close="true"></div>
   <div class="box" role="document">
@@ -145,38 +119,8 @@ nav a:hover{color:#A66B3C;}
   </div>
 </div>
 
-<script>
-  // Показване и скриване на формата за поръчка
-  const orderModal = document.getElementById('orderSection');
-  const closeOrder = orderModal.querySelector('[data-close="true"]');
-  const checkoutBtn = document.getElementById('vl-checkout');
   
-  checkoutBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
-    if (cart.length === 0) {
-      alert('Нямате добавени продукти в кошницата.');
-      return;
-    }
-    // Покажи модалната форма за поръчка
-    orderModal.classList.add('open');
-    orderModal.setAttribute('aria-hidden','false');
-  });
-  
-  closeOrder.addEventListener('click', () => {
-    orderModal.classList.remove('open');
-    orderModal.setAttribute('aria-hidden','true');
-  });
-  
-  // Затваряне при кликане извън формата
-  orderModal.addEventListener('click', (e) => {
-    if (e.target === orderModal) {
-      orderModal.classList.remove('open');
-      orderModal.setAttribute('aria-hidden','true');
-    }
-  });
-</script>
-(paste BEFORE </body>) -->
+<!-- START: Contact modal (paste BEFORE </body>) -->
 <style id="contact-modal-styles">
   #contactModal { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
   #contactModal.open { display: flex; }
