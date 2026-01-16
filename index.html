@@ -307,7 +307,7 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 <script>
 /* ===================== Cart + Buy buttons injection =====================
-   (the original block you had — left intact, with checkout handler modified)
+   (the original block you had — left intact, checkout handler modified to open modal)
    ======================================================================= */
 
 (function(){
@@ -586,16 +586,15 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
       renderCartPanel();
     });
 
-    // ====== MODIFIED checkout handler: open order modal instead of alert + auto-clear ======
+    // Modified checkout handler: open order modal instead of alert + auto-clear
     const checkoutBtn = document.getElementById('vl-checkout');
     if(checkoutBtn) checkoutBtn.addEventListener('click', (e)=>{
       e.preventDefault();
       const cart = loadCart();
       if(!cart.length){ alert('Нямате добавени продукти в кошницата.'); return; }
-      // отвори order modal (който е вкаран преди </body>)
+      // Open order modal (inserted before </body>)
       const orderModal = document.getElementById('orderSection');
       if(orderModal){
-        // попълни cart информацията във формата
         try {
           const orderCartField = document.getElementById('vl-order-cart-contents');
           if(orderCartField) orderCartField.value = JSON.stringify(cart);
@@ -605,7 +604,7 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
         document.body.style.overflow = 'hidden';
         if(panel) panel.classList.add('hidden');
       } else {
-        // fallback behaviour (предишното) ако по някаква причина модалът липсва
+        // Fallback: previous behavior if modal missing
         alert('Благодарим за поръчката!');
         saveCart([]);
         updateHeaderCount();
@@ -613,7 +612,7 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
         if(panel) panel.classList.add('hidden');
       }
     });
-    // ====== end modified checkout handler ======
+    // end modified checkout handler
 
     const refreshBtn = document.getElementById('vl-refresh-cart');
     if(refreshBtn) refreshBtn.addEventListener('click', ()=> renderCartPanel());
@@ -1162,7 +1161,6 @@ button.vl-buy-btn-card[style*="background"] {
     }
 
     if(checkoutBtn){
-      // Пример: ако някъде другаде още има слушател, този event.preventDefault() + openOrderModal ще се стартира първо.
       checkoutBtn.addEventListener('click', function(e){
         e.preventDefault();
         const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
@@ -1184,9 +1182,9 @@ button.vl-buy-btn-card[style*="background"] {
     });
 
     // При подаване на формата — Formspree ще обработи изпращането.
-    // Ако искаш след успешно изпращане да изчиства кошницата, трябва да използваме AJAX / fetch.
+    // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
     orderForm.addEventListener('submit', function(){
-      // оставям празно — Formspree ще препрати клиента по подразбиране
+      // оставено празно за нормален submit
     });
   })();
 </script>
