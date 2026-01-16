@@ -4,19 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-<style>/* ===== Променен фон на празните полета / карета ===== */
-#about,
-#productPage .content,
-.main-card,
-#mainPage .bg-card {
-  background: #f1e2d0; /* кафяво, слива се с бекграунда */
-  border-radius: 0.5rem; /* ако искаш да запазиш закръглените ъгли */
-  padding: 2rem; /* запазваме същата подредба */
-}
-
+<style>
 body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
 #hero-bg { background-image: url('images/bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 110vh; }
-header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.2rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.4rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 header h1 { font-size:1.75rem; color:#6B4226; font-weight:bold; cursor:pointer; }
 nav a { margin-left:1rem; font-weight:500; color:#6B4226; transition:0.3s; cursor:pointer; }
 nav a:hover{color:#A66B3C;}
@@ -37,17 +28,13 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
-</style>/* ===== Фон за бутоните Купи ===== */
-.vl-buy-btn-card:nth-child(1) { background-image: url('images/board_5.png'); background-size: cover; background-position: center; }
-.vl-buy-btn-card:nth-child(2) { background-image: url('images/board_6.png'); background-size: cover; background-position: center; }
-.vl-buy-btn-card:nth-child(3) { background-image: url('images/board_7.png'); background-size: cover; background-position: center; }
-
+</style>
 </head>
 <body>
 
 <header>
 <div id="homeBtn" class="flex items-center gap-3 cursor-pointer">
-  <img src="images/logo.png" style="height:58px;width:auto;">
+  <img src="images/logo.png" style="height:48px;width:auto;">
 </div>
 <nav class="flex items-center">
 <a id="navHome">Начало</a>
@@ -834,30 +821,8 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
     init();
   }
 })();
-</script>(function(){
-  const IMG = ['images/board_5.png','images/board_6.png','images/board_7.png'];
-  function applyBackgrounds(){
-    const buttons = document.querySelectorAll('.vl-buy-btn-card');
-    buttons.forEach((btn,i)=>{
-      if(btn.dataset.vlBgApplied==='1') return;
-      btn.style.backgroundImage = `url("${IMG[i%IMG.length]}")`;
-      btn.style.backgroundSize = 'cover';
-      btn.style.backgroundPosition = 'center';
-      btn.dataset.vlBgApplied='1';
-    });
-  }
-  document.addEventListener('DOMContentLoaded', applyBackgrounds);
-})();
-
+</script>
 <!-- ===== END: Responsive long & narrow board-look for Buy buttons ===== -->
 
 </body>
 </html>
-
-
-
-
-
-
-
-
