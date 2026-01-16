@@ -37,7 +37,11 @@ nav a:hover{color:#A66B3C;}
 #lightboxLeft{left:10px;} #lightboxRight{right:10px;}
 #productPage { display:none; padding-top:4rem; }
 #productPage .content { background: rgba(255,255,255,0.95); border-radius:0.5rem; padding:2rem; max-width:6xl; margin:2rem auto; }
-</style>
+</style>/* ===== Фон за бутоните Купи ===== */
+.vl-buy-btn-card:nth-child(1) { background-image: url('images/board_5.png'); background-size: cover; background-position: center; }
+.vl-buy-btn-card:nth-child(2) { background-image: url('images/board_6.png'); background-size: cover; background-position: center; }
+.vl-buy-btn-card:nth-child(3) { background-image: url('images/board_7.png'); background-size: cover; background-position: center; }
+
 </head>
 <body>
 
@@ -830,11 +834,26 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
     init();
   }
 })();
-</script>
+</script>(function(){
+  const IMG = ['images/board_5.png','images/board_6.png','images/board_7.png'];
+  function applyBackgrounds(){
+    const buttons = document.querySelectorAll('.vl-buy-btn-card');
+    buttons.forEach((btn,i)=>{
+      if(btn.dataset.vlBgApplied==='1') return;
+      btn.style.backgroundImage = `url("${IMG[i%IMG.length]}")`;
+      btn.style.backgroundSize = 'cover';
+      btn.style.backgroundPosition = 'center';
+      btn.dataset.vlBgApplied='1';
+    });
+  }
+  document.addEventListener('DOMContentLoaded', applyBackgrounds);
+})();
+
 <!-- ===== END: Responsive long & narrow board-look for Buy buttons ===== -->
 
 </body>
 </html>
+
 
 
 
