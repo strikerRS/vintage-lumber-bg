@@ -4,7 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
+<style>.flying-board {
+  position: fixed;
+  width: 80px;           /* ширина на летящата дъска */
+  height: 22px;          /* височина */
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.9s cubic-bezier(.25,.8,.25,1),
+              top 0.9s cubic-bezier(.25,.8,.25,1),
+              left 0.9s cubic-bezier(.25,.8,.25,1),
+              opacity 0.2s ease;
+}
+<script>
+let cartCount = 0; // брой артикули в количката
+
+function addToCart(imageSrc, buttonEl) {
+  // Увеличава числото в червеното кръгче
+  cartCount++;
+  document.querySelector('.cart-count').textContent = cartCount;
+
+  // Стартира анимацията на летящата дъска
+  flyBoardToCart(imageSrc, buttonEl);
+}
+
+function flyBoardToCart(imgSrc, startEl) {
+  const cart = document.querySelector('.cart-btn'); // намираме количката
+  if (!cart) return;
+
+  const startRect = startEl.getBoundingClientRect();
+  const cartRect = cart.getBoundingClientRect();
+
+  // Създаваме нова дъска
+  const board = document.createElement('img');
+  board.src = imgSrc;
+  board.className = 'flying-board';
+
+  // Поставяме дъската на позицията на бутона
+  board.style.top = startRect.top + 'px';
+  board.style.left = startRect.left + 'px';
+
+  document.body.appendChild(board);
+
+  // Анимираме дъската към количката
+  requestAnimationFrame(() => {
+    board.style.top = cartRect.top + 10 + 'px';
+    board.style.left = cartRect.left + 10 + 'px';
+    board.style.transform = 'rotate(-15deg) scale(0.4)';
+    board.style.opacity = '0.2';
+  });
+
+  // Премахваме дъската след анимацията
+  setTimeout(() => board.remove(), 900);
+}
+</script>
+
 body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
 #hero-bg { background-image: url('images/bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 110vh; }
 header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.4rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
@@ -58,12 +114,52 @@ nav a:hover{color:#A66B3C;}
 
 <div id="mainPage" class="mt-24">
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-<a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
-<div class="p-4 text-center">
-<h3 class="font-semibold text-lg">Стара дървена дъска</h3>
-<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+
+  <!-- Продукт 1 -->
+  <div class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Стара дървена дъска 1</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+      <button 
+        class="mt-2 px-4 py-2 bg-[#6B4226] text-white rounded hover:bg-[#A66B3C]" 
+        onclick="addToCart('images/dd1.jpg', this)">
+        Добави
+      </button>
+    </div>
+  </div>
+
+  <!-- Продукт 2 -->
+  <div class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="images/dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Стара дървена дъска 2</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+      <button 
+        class="mt-2 px-4 py-2 bg-[#6B4226] text-white rounded hover:bg-[#A66B3C]" 
+        onclick="addToCart('images/dd2.jpg', this)">
+        Добави
+      </button>
+    </div>
+  </div>
+
+  <!-- Продукт 3 -->
+  <div class="bg-white rounded-xl shadow hover:scale-105 transition">
+    <img src="images/dd3.jpg" class="h-56 w-full object-cover rounded-t-xl">
+    <div class="p-4 text-center">
+      <h3 class="font-semibold text-lg">Стара дървена дъска 3</h3>
+      <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+      <button 
+        class="mt-2 px-4 py-2 bg-[#6B4226] text-white rounded hover:bg-[#A66B3C]" 
+        onclick="addToCart('images/dd3.jpg', this)">
+        Добави
+      </button>
+    </div>
+  </div>
+
+</main>
 </div>
+
 </a>
 <a href="index.html?product=dd2" class="bg-white rounded-xl shadow hover:scale-105 transition">
 <img src="images/dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
@@ -826,3 +922,4 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 
 </body>
 </html>
+
