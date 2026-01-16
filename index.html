@@ -587,44 +587,40 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 })();
 </script>
 <!-- ===== HERO BG FULL IMAGE SCROLL ===== -->
-<section id="hero-bg">
-  <div id="hero-img-wrapper">
-    <img src="images/bg-old-bulgarian-farm.jpg" alt="Фон" id="hero-img">
-  </div>
-</section>
+<section id="hero-bg"></section>
 
 <style>
 #hero-bg {
   width: 100%;
-  height: 100vh;        /* височина на целия екран */
-  overflow: hidden;     /* скриваме всичко извън viewport */
+  height: 100vh;       /* височина на целия екран */
+  overflow: hidden;    /* скрива всичко извън viewport */
   position: relative;
 }
 
-#hero-img-wrapper {
+#hero-bg img {
   width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-#hero-img {
-  width: 100%;
-  height: auto;         /* запазваме пропорциите */
-  position: sticky;     /* закрепваме към горния край */
-  top: 0;               /* винаги започва от горния край */
+  height: auto;        /* запазва пропорциите */
+  position: sticky;    /* закрепено към горния край */
+  top: 0;              /* винаги започва от горния край */
+  display: block;
 }
 </style>
 
 <script>
 (function(){
-  const img = document.getElementById('hero-img');
   const section = document.getElementById('hero-bg');
+
+  // създаваме img елемента динамично
+  const img = document.createElement('img');
+  img.src = "images/bg-old-bulgarian-farm.jpg";
+  img.alt = "Фон";
+  section.appendChild(img);
 
   function update() {
     const scroll = window.scrollY;
     const sectionHeight = section.offsetHeight;
     const imgHeight = img.offsetHeight;
-    
+
     if(imgHeight <= sectionHeight) return; // ако изображението е по-малко от viewport, няма скрол
 
     // колко да се премести изображението нагоре
@@ -637,13 +633,14 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
   window.addEventListener('scroll', () => requestAnimationFrame(update), {passive:true});
   window.addEventListener('resize', () => requestAnimationFrame(update));
 
-  update();
+  update(); // иницилизиране
 })();
 </script>
 <!-- ===== END HERO BG FULL IMAGE SCROLL ===== -->
 
 </body>
 </html>
+
 
 
 
