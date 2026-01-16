@@ -987,12 +987,30 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <!-- ====== LANGUAGE TOGGLE: applies to all elements with .lang-bg / .lang-en ====== -->
 <script>
-  const toggleLang = document.getElementById('toggleLang');
-  toggleLang.addEventListener('click', () => {
-    document.querySelectorAll('.lang-bg').forEach(el => el.classList.toggle('hidden'));
-    document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden'));
-    toggleLang.innerText = (toggleLang.innerText === 'EN') ? 'BG' : 'EN';
-  });
+document.addEventListener('DOMContentLoaded', function(){
+  const toggle = document.getElementById('toggleLang');
+  function applyLang(lang){
+    document.querySelectorAll('.lang-bg').forEach(el => {
+      if(lang === 'en') el.classList.add('hidden'); else el.classList.remove('hidden');
+    });
+    document.querySelectorAll('.lang-en').forEach(el => {
+      if(lang === 'en') el.classList.remove('hidden'); else el.classList.add('hidden');
+    });
+    if(toggle) toggle.innerText = (lang === 'bg') ? 'EN' : 'BG';
+    try { localStorage.setItem('vl_lang', lang); } catch(e){}
+  }
+
+  const saved = (function(){ try{ return localStorage.getItem('vl_lang'); } catch(e){ return null; } })() || 'bg';
+  applyLang(saved);
+
+  if(toggle){
+    toggle.addEventListener('click', function(e){
+      e.preventDefault();
+      const current = (function(){ try{ return localStorage.getItem('vl_lang'); } catch(e){ return 'bg'; } })() || 'bg';
+      applyLang(current === 'bg' ? 'en' : 'bg');
+    });
+  }
+});
 </script>
 
 </body>
