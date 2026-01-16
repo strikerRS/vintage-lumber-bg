@@ -914,8 +914,49 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 })();
 </script>
 <!-- ===== END: Responsive long & narrow board-look for Buy buttons ===== -->
+  <!-- ===== START: Contact Modal ===== -->
+<div id="contactModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl w-full max-w-sm p-6 relative">
+    <button id="closeContactModal" class="absolute top-3 right-3 text-[#6B4226] font-bold text-lg">✕</button>
+    <h2 class="text-2xl font-bold text-[#6B4226] mb-4">Контакти</h2>
+    <ul class="space-y-2 text-[#6B4226] font-medium">
+      <li>📞 Телефон: 0888 123 456</li>
+      <li>✉️ Имейл: info@vintagelumber.bg</li>
+      <li>🏢 Адрес: ул. Ретро №5, София, България</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const contactModal = document.getElementById('contactModal');
+const closeContactModal = document.getElementById('closeContactModal');
+const navContactBtn = document.getElementById('navContact');
+
+if(navContactBtn && contactModal && closeContactModal){
+  navContactBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    contactModal.classList.remove('hidden');
+    contactModal.classList.add('flex');
+  });
+
+  closeContactModal.addEventListener('click', () => {
+    contactModal.classList.add('hidden');
+    contactModal.classList.remove('flex');
+  });
+
+  contactModal.addEventListener('click', (e) => {
+    if(e.target === contactModal){
+      contactModal.classList.add('hidden');
+      contactModal.classList.remove('flex');
+    }
+  });
+}
+</script>
+<!-- ===== END: Contact Modal ===== -->
+
 </body>
 </html>
+
 
 
 
