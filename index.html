@@ -606,9 +606,65 @@ document.getElementById('navContact').addEventListener('click',()=> document.get
 }
 </style>
 <!-- ===== END HERO BG FULL IMAGE ===== -->
+<!-- ===== SCROLL → REVEAL HERO BACKGROUND (paste BEFORE </body>) ===== -->
+<style>
+/* гарантираме начални стойности (не променят оригиналните ти стилове) */
+#hero-bg {
+  background-position: center 0%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+</style>
+
+<script>
+(function(){
+  const hero = document.getElementById('hero-bg');
+  if(!hero) return;
+
+  // височината на геро секцията (използваме offsetHeight; ще се обновява при resize)
+  let heroH = Math.max(hero.offsetHeight, window.innerHeight);
+
+  // флаг за requestAnimationFrame throttling
+  let ticking = false;
+
+  function updateBackground(){
+    // колко сме скролнали (px)
+    const scroll = window.scrollY || document.documentElement.scrollTop || 0;
+    // прогрес 0..1 (0 = върхът видим, 1 = скролирали сме височината на hero или повече)
+    const progress = Math.min(Math.max(scroll / heroH, 0), 1);
+    // позиция в проценти от 0% до 100%
+    const posPercent = (progress * 100).toFixed(2) + '%';
+    // задаваме позицията — центрираме хоризонтално, вертикалната част е posPercent
+    hero.style.backgroundPosition = 'center ' + posPercent;
+    ticking = false;
+  }
+
+  function onScroll(){
+    if(!ticking){
+      ticking = true;
+      window.requestAnimationFrame(updateBackground);
+    }
+  }
+
+  function onResize(){
+    heroH = Math.max(hero.offsetHeight, window.innerHeight);
+    // при resize обновяваме веднага
+    updateBackground();
+  }
+
+  // слушатели
+  window.addEventListener('scroll', onScroll, {passive: true});
+  window.addEventListener('resize', onResize);
+
+  // иницилизиране (за случаите когато сме не в началото)
+  updateBackground();
+})();
+</script>
+<!-- ================= END SCROLL → REVEAL HERO BACKGROUND ================= -->
 
 </body>
 </html>
+
 
 
 
