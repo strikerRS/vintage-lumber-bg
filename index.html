@@ -1,198 +1,9 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- ========== META / SEO / Social (Meta optimization) ========== -->
-<title>Vintage Lumber Bulgaria — автентични дървени дъски & греди</title>
-<meta name="description" content="Vintage Lumber Bulgaria — реставрирани автентични български дъски и греди. Ръчна селекция, естествена патина и уникални интериорни решения." />
-<link rel="canonical" href="https://example.com/" />
-<meta property="og:title" content="Vintage Lumber Bulgaria" />
-<meta property="og:description" content="Реставрирани автентични български дъски и греди — ръчна селекция и естествена патина." />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary_large_image" />
-
-<!-- Performance hints -->
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-
-<!-- Preload likely LCP hero background to help LCP (keeps image fetch early) -->
-<link rel="preload" as="image" href="images/bg-old-bulgarian-farm.jpg">
-
-<!-- Preload a local variable woff2 if you have it (replace path if needed) -->
-<link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
-
-<!-- Tailwind CDN (kept as in original). Keep critical CSS inline (below) to avoid large FOUC. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- ===== Inline critical CSS (small) - keep only the smallest critical styles to improve FCP ===== -->
-<style>
-  /* критични минимални стилове за бърз FCP */
-  :root{--brand:#6B4226}
-  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;}
-  header{position:fixed;top:0;left:0;width:100%;background:rgba(255,255,255,0.95);z-index:50;display:flex;justify-content:space-between;align-items:center;padding:0.2rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
-  main{padding-top:4.5rem;}
-  /* минимално за hero placeholder, ще се зареди фоново изображение лениво */
-  #hero-bg{min-height:60vh;display:block;background-size:cover;background-position:center;background-repeat:no-repeat}
-</style>
-
-<!-- ========== Your large stylesheet is still present in <style> below (keeps original overrides) ========== -->
-<!-- (we keep your original long style later in the file to preserve order) -->
-
-</head>
-<body>
-
-<header>
-  <div id="homeBtn" class="flex items-center gap-3 cursor-pointer">
-    <!-- logo: high priority image (loading eager) -->
-    <img src="images/logo.png" style="height:59px;width:auto;" alt="Vintage Lumber Bulgaria logo" width="180" height="59" loading="eager" fetchpriority="high">
-  </div>
-
-  <nav class="flex items-center">
-    <a id="navHome" class="ml-2">
-      <span class="lang-bg">Начало</span>
-      <span class="lang-en hidden">Home</span>
-    </a>
-    <a id="navProducts" class="ml-2">
-      <span class="lang-bg">Продукти</span>
-      <span class="lang-en hidden">Products</span>
-    </a>
-    <a id="navContact" class="ml-2">
-      <span class="lang-bg">Контакти</span>
-      <span class="lang-en hidden">Contact</span>
-    </a>
-    <a id="navAbout" class="ml-2">
-      <span class="lang-bg">За нас</span>
-      <span class="lang-en hidden">About Us</span>
-    </a>
-
-    <a id="toggleLang" class="ml-4 cursor-pointer">EN</a>
-
-    <div class="cart-btn ml-4 flex items-center justify-center" style="width:2.4rem;height:2.4rem;background:#6B4226;border-radius:50%;box-shadow:inset 0 1px 2px rgba(255,255,255,0.15),0 2px 6px rgba(0,0,0,0.25);">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="9" cy="21" r="1"/>
-        <circle cx="20" cy="21" r="1"/>
-        <path d="M1 1h4l2.6 13.2a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
-      </svg>
-      <span class="cart-count">0</span>
-    </div>
-  </nav>
-</header>
-
-<!-- HERO: lazy background via data-bg + IntersectionObserver (LCP preloaded above) -->
-<section id="hero-bg" data-bg="images/bg-old-bulgarian-farm.jpg" aria-hidden="true"></section>
-
-<!-- MAIN CONTENT -->
-<div id="mainPage" class="mt-24">
-  <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-    <!-- Product card 1: use <picture> + lazy attributes -->
-    <a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-      <picture>
-        <source type="image/avif" srcset="images/dd1-400.avif 400w, images/dd1-800.avif 800w" sizes="(max-width:600px) 100vw, 33vw">
-        <source type="image/webp" srcset="images/dd1-400.webp 400w, images/dd1-800.webp 800w" sizes="(max-width:600px) 100vw, 33vw">
-        <img src="images/dd1.jpg" srcset="images/dd1-400.jpg 400w, images/dd1-800.jpg 800w" sizes="(max-width:600px) 100vw, 33vw"
-             class="h-56 w-full object-cover rounded-t-xl" alt="Стара дървена дъска" loading="lazy" decoding="async" width="800" height="350" fetchpriority="low">
-      </picture>
-      <div class="p-4 text-center">
-        <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
-        <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
-      </div>
-    </a>
-
-    <!-- Product card 2 -->
-    <a href="index.html?product=dd2" class="bg-white rounded-xl shadow hover:scale-105 transition">
-      <picture>
-        <source type="image/avif" srcset="images/dd2-400.avif 400w, images/dd2-800.avif 800w" sizes="(max-width:600px) 100vw, 33vw">
-        <source type="image/webp" srcset="images/dd2-400.webp 400w, images/dd2-800.webp 800w" sizes="(max-width:600px) 100vw, 33vw">
-        <img src="images/dd2.jpg" srcset="images/dd2-400.jpg 400w, images/dd2-800.jpg 800w" sizes="(max-width:600px) 100vw, 33vw"
-             class="h-56 w-full object-cover rounded-t-xl" alt="Рустик дъска" loading="lazy" decoding="async" width="800" height="350" fetchpriority="low">
-      </picture>
-      <div class="p-4 text-center">
-        <h3 class="font-semibold text-lg">Рустик дъска</h3>
-        <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
-      </div>
-    </a>
-
-    <!-- Product card 3 -->
-    <a href="index.html?product=dg1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-      <picture>
-        <source type="image/avif" srcset="images/dg1-400.avif 400w, images/dg1-800.avif 800w" sizes="(max-width:600px) 100vw, 33vw">
-        <source type="image/webp" srcset="images/dg1-400.webp 400w, images/dg1-800.webp 800w" sizes="(max-width:600px) 100vw, 33vw">
-        <img src="images/dg1.jpg" srcset="images/dg1-400.jpg 400w, images/dg1-800.jpg 800w" sizes="(max-width:600px) 100vw, 33vw"
-             class="h-56 w-full object-cover rounded-t-xl" alt="Стара масивна греда" loading="lazy" decoding="async" width="800" height="350" fetchpriority="low">
-      </picture>
-      <div class="p-4 text-center">
-        <h3 class="font-semibold text-lg">Стара масивна греда</h3>
-        <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
-      </div>
-    </a>
-  </main>
-
-  <div id="about"></div>
-</div>
-
-<!-- PRODUCT PAGE (hidden by default, mainImage attributes will be set dynamically) -->
-<div id="productPage" aria-hidden="true">
-  <div class="content">
-    <div class="grid md:grid-cols-2 gap-10 mt-6">
-      <div class="gallery-container">
-        <button class="arrow-btn arrow-left" aria-label="предишно">&#8592;</button>
-        <img id="mainImage" class="gallery-main" src="" alt="Продукт" loading="lazy" decoding="async" width="1200" height="800">
-        <button class="arrow-btn arrow-right" aria-label="следващо">&#8594;</button>
-        <div id="galleryThumbs" class="gallery-thumbs" aria-hidden="false"></div>
-      </div>
-
-      <div>
-        <h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
-        <p id="description" class="mb-6"></p>
-        <h2 class="text-xl font-bold mb-2">Характеристики</h2>
-        <ul id="specs" class="list-disc ml-5 mb-6"></ul>
-        <h2 class="text-xl font-bold mb-2">Доставка</h2>
-        <p id="delivery"></p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div id="lightboxOverlay" class="flex" style="display:none;">
-  <button id="lightboxLeft">←</button>
-  <img id="lightboxImage" src="" alt="Продукт" loading="lazy" decoding="async" width="1400" height="900">
-  <button id="lightboxRight">→</button>
-</div>
-
-<!-- ABOUT MODAL (unchanged) -->
-<div id="aboutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-xl max-w-4xl w-full p-8 overflow-y-auto max-h-[90vh] relative">
-    <button id="closeAboutModal" class="text-[#6B4226] font-bold text-lg mb-4 absolute top-4 right-4">✕ Затвори</button>
-    <h2 class="text-3xl font-bold text-[#6B4226] mb-4">История на Vintage Lumber Bulgaria</h2>
-    <nav class="mb-4 flex gap-4 text-[#6B4226] font-semibold">
-      <a href="#aboutIntro" class="aboutNavLink">Въведение</a>
-      <a href="#aboutGrowth" class="aboutNavLink">Развитие</a>
-      <a href="#aboutMission" class="aboutNavLink">Мисия</a>
-      <a href="#aboutLegacy" class="aboutNavLink">Наследство</a>
-    </nav>
-    <section id="aboutIntro" class="mb-4">
-      <h3 class="text-xl font-bold mb-2">Въведение</h3>
-      <p>Vintage Lumber Bulgaria започва като малка семейна инициатива преди десетилетие, със страст към възстановяването на автентични български дървени дъски и греди. Основателите вярват, че всяко парче дърво носи своя уникална история и характер, и че тези истории заслужават да бъдат предадени на следващите поколения.</p>
-    </section>
-    <section id="aboutGrowth" class="mb-4">
-      <h3 class="text-xl font-bold mb-2">Развитие</h3>
-      <p>През годините компанията се разраства, като съчетава традиционните техники на ръчна обработка на дърво с модерни интериорни тенденции. Всеки продукт преминава през внимателен процес на подбор, реставрация и финално обработване, за да се запази естествената му красота и патина.</p>
-    </section>
-    <section id="aboutMission" class="mb-4">
-      <h3 class="text-xl font-bold mb-2">Мисия</h3>
-      <p>Нашата мисия е да съхраним и популяризираме уникалното наследство на българското дърво, да предложим продукти, които вдъхновяват и създават топлина в домовете и интериорите на клиентите ни. Вярваме, че всеки дом заслужава да има своята история и характер, а нашите продукти са част от тази история.</p>
-    </section>
-    <section id="aboutLegacy" class="mb-4">
-      <h3 class="text-xl font-bold mb-2">Наследство</h3>
-      <p>С течение на времето Vintage Lumber Bulgaria се утвърждава като символ на качество, автентичност и любов към детайла, а клиентите ни са нашата най-голяма гордост и вдъхновение за бъдещи проекти.</p>
-    </section>
-  </div>
-</div>
-
-<!-- ========== YOUR ORIGINAL STYLES (kept unchanged except removed hero-bg background-image) ========== -->
 <style>/* ==== Премахване на нежелана кафява линия в долния край ==== */
 
 /* гаранция, че няма празни margin от браузъра */
@@ -200,7 +11,6 @@ html, body { height: 100%; margin: 0; }
 
 /* настройка на hero-bg да не прави "шев" */
 #hero-bg {
-  /* background-image: removed to enable lazy loading via data-bg */
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
@@ -227,8 +37,7 @@ html, body { height: 100%; margin: 0; }
 hr, .divider, .line { border: 0 !important; height: 0 !important; box-shadow: none !important; }
 
 body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
-/* hero image removed — using data-bg loaded by JS */
-#hero-bg { background-attachment: fixed; background-size: cover; background-position: center; height: 110vh; }
+#hero-bg { background-image: url('images/bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 110vh; }
 header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.2rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 header h1 { font-size:1.75rem; color:#6B4226; font-weight:bold; cursor:pointer; }
 nav a { margin-left:1rem; font-weight:500; color:#6B4226; transition:0.3s; cursor:pointer; }
@@ -283,23 +92,32 @@ nav a:hover{color:#A66B3C;}
   }
 }
 
-/* =================== OVERRIDES (ONLY FOR BUY BUTTONS) =================== */
+/* =================== OVERRIDES (ONLY FOR BUY BUTTONS) ===================
+   - Премахваме кафяв фон (надписите/класовете на Tailwind остават, но тук
+     имат приоритет чрез !important).
+   - Оставяме само background-image (board_*.png) да се вижда (cover).
+   - Текстът (цената) да е черен и без shadow.
+   - Премахваме/скриваме тъмния overlay.
+   - Подравняваме бутоните вляво (display:block -> позиция в началото на текста).
+   ======================================================================= */
 .vl-buy-btn-card {
   background-color: transparent !important;
   color: #000 !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
-  display: block !important;
-  margin-left: 0 !important;
+  display: block !important;               /* блоково - за да се подреди в ляво */
+  margin-left: 0 !important;               /* начало на контейнера */
   text-align: left !important;
-  justify-content: flex-start !important;
+  justify-content: flex-start !important;  /* съдържанието започва отляво */
   padding-left: 0.9rem !important;
   padding-right: 0.9rem !important;
-  width: auto !important;
+  width: auto !important;                  /* позволява ширината да се адаптира */
   box-shadow: 0 6px 12px rgba(0,0,0,0.06) !important;
   background-color: transparent !important;
 }
+
+/* Ако има специален продуктен бутон (vl-buy-btn-product) - същото поведение */
 .vl-buy-btn-product {
   background-color: transparent !important;
   color: #000 !important;
@@ -314,10 +132,14 @@ nav a:hover{color:#A66B3C;}
   padding-right: 0.9rem !important;
   width: auto !important;
 }
+
+/* Скриваме или обезвредяваме тъмния overlay (трябва изображението да е чисто видимо) */
 .vl-buy-bg-overlay {
   display: none !important;
   background: transparent !important;
 }
+
+/* Текстът върху бутона (цената) - черен, без текстова сянка, по-дебел */
 .vl-buy-text {
   color: #000 !important;
   text-shadow: none !important;
@@ -325,17 +147,30 @@ nav a:hover{color:#A66B3C;}
   white-space: nowrap;
   font-size: 0.98rem !important;
 }
+
+/* Премахваме потенциални класове, които правят текста бял (Tailwind) */
 .vl-buy-btn-card.text-white, .vl-buy-btn-card.bg-\[\#6B4226\] {
   color: #000 !important;
   background-color: transparent !important;
 }
+
+/* Ако има ::before който добавя inset светлина — оставяме го, но без да променя четимостта */
 .vl-buy-btn-card::before { opacity: 0.06 !important; }
+
+/* Малко по-тесен padding в картите за по-близко позициониране */
 a .vl-buy-btn-card { margin-top: 0.5rem; }
 
-/* PRODUCT-PAGE: elongated & slimmer button */
+/* ======================================================================= */
+
+/* PRODUCT-PAGE: elongated & slimmer button
+   Само стилове за бутона, който се показва в продуктовата страница.
+   - по-широк (продълговат)
+   - по-нисък (тесен височинно)
+   - оставаме с background-image cover и черен текст
+*/
 #productPage .vl-buy-btn-product {
-  width: 340px !important;
-  height: 38px !important;
+  width: 340px !important;          /* по-продълговат */
+  height: 38px !important;          /* по-тесен (по-нисък) */
   padding-left: 1rem !important;
   padding-right: 1rem !important;
   display: inline-flex !important;
@@ -347,48 +182,138 @@ a .vl-buy-btn-card { margin-top: 0.5rem; }
   line-height: 1 !important;
   box-shadow: 0 6px 12px rgba(0,0,0,0.06) !important;
 }
-
-/* extra buy button overrides duplicate kept intentionally to ensure visual behavior */
-.vl-buy-btn-card {
-  width: clamp(200px, 50vw, 320px) !important;
-  height: clamp(40px, 6vh, 56px) !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  background-size: auto 100% !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  overflow: hidden !important;
-  position: relative !important;
-  padding: 0 1rem !important;
-  border: none !important;
-  border-radius: 0.5rem !important;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
-  color: #fff !important;
-  font-weight: 700 !important;
-  text-shadow: 0 1px 0 rgba(0,0,0,0.25) !important;
-  white-space: nowrap !important;
-}
-.vl-buy-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.22); pointer-events: none; z-index: 0; }
-.vl-buy-text { position: relative; z-index: 1; font-size: 0.95rem; }
-.vl-buy-btn-card::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); z-index: 2; pointer-events: none; }
-@media (max-width: 520px) {
-  .vl-buy-btn-card { width: 90vw !important; max-width: 420px !important; height: clamp(40px, 7vh, 56px) !important; }
-}
 </style>
+</head>
+<body>
 
-<!-- ===================== SCRIPTS (core site logic) ===================== -->
+<header>
+  <div id="homeBtn" class="flex items-center gap-3 cursor-pointer">
+    <img src="images/logo.png" style="height:59px;width:auto;">
+  </div>
+
+  <!-- <<== REPLACED NAV: user-provided nav integrated here (keeps IDs used elsewhere) ==>> -->
+  <nav class="flex items-center">
+    <a id="navHome" class="ml-2">
+      <span class="lang-bg">Начало</span>
+      <span class="lang-en hidden">Home</span>
+    </a>
+    <a id="navProducts" class="ml-2">
+      <span class="lang-bg">Продукти</span>
+      <span class="lang-en hidden">Products</span>
+    </a>
+    <a id="navContact" class="ml-2">
+      <span class="lang-bg">Контакти</span>
+      <span class="lang-en hidden">Contact</span>
+    </a>
+    <a id="navAbout" class="ml-2">
+      <span class="lang-bg">За нас</span>
+      <span class="lang-en hidden">About Us</span>
+    </a>
+
+    <!-- Бутон за превключване на езика -->
+    <a id="toggleLang" class="ml-4 cursor-pointer">EN</a>
+
+    <div class="cart-btn ml-4 flex items-center justify-center" style="width:2.4rem;height:2.4rem;background:#6B4226;border-radius:50%;box-shadow:inset 0 1px 2px rgba(255,255,255,0.15),0 2px 6px rgba(0,0,0,0.25);">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/>
+        <circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.6 13.2a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
+      </svg>
+      <span class="cart-count">0</span>
+    </div>
+  </nav>
+</header>
+
+<section id="hero-bg"></section>
+
+<div id="mainPage" class="mt-24">
+<main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
+<a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
+<img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+<div class="p-4 text-center">
+<h3 class="font-semibold text-lg">Стара дървена дъска</h3>
+<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+</div>
+</a>
+<a href="index.html?product=dd2" class="bg-white rounded-xl shadow hover:scale-105 transition">
+<img src="images/dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
+<div class="p-4 text-center">
+<h3 class="font-semibold text-lg">Рустик дъска</h3>
+<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+</div>
+</a>
+<a href="index.html?product=dg1" class="bg-white rounded-xl shadow hover:scale-105 transition">
+<img src="images/dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+<div class="p-4 text-center">
+<h3 class="font-semibold text-lg">Стара масивна греда</h3>
+<p class="text-[#6B4226] font-bold">Разгледай продукта</p>
+</div>
+</a>
+</main>
+
+<div id="about">
+</div>
+</div>
+
+<div id="productPage">
+<div class="content">
+<div class="grid md:grid-cols-2 gap-10 mt-6">
+<div class="gallery-container">
+<button class="arrow-btn arrow-left">&#8592;</button>
+<img id="mainImage" class="gallery-main" src="" alt="Продукт">
+<button class="arrow-btn arrow-right">&#8594;</button>
+<div id="galleryThumbs" class="gallery-thumbs"></div>
+</div>
+<div>
+<h1 id="title" class="text-3xl font-bold text-[#6B4226] mb-4"></h1>
+<p id="description" class="mb-6"></p>
+<h2 class="text-xl font-bold mb-2">Характеристики</h2>
+<ul id="specs" class="list-disc ml-5 mb-6"></ul>
+<h2 class="text-xl font-bold mb-2">Доставка</h2>
+<p id="delivery"></p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="lightboxOverlay" class="flex">
+<button id="lightboxLeft">←</button>
+<img id="lightboxImage" src="" alt="Продукт">
+<button id="lightboxRight">→</button>
+</div>
+
+<!-- Инпрегниран модал за За нас -->
+<div id="aboutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl max-w-4xl w-full p-8 overflow-y-auto max-h-[90vh] relative">
+    <button id="closeAboutModal" class="text-[#6B4226] font-bold text-lg mb-4 absolute top-4 right-4">✕ Затвори</button>
+    <h2 class="text-3xl font-bold text-[#6B4226] mb-4">История на Vintage Lumber Bulgaria</h2>
+    <nav class="mb-4 flex gap-4 text-[#6B4226] font-semibold">
+      <a href="#aboutIntro" class="aboutNavLink">Въведение</a>
+      <a href="#aboutGrowth" class="aboutNavLink">Развитие</a>
+      <a href="#aboutMission" class="aboutNavLink">Мисия</a>
+      <a href="#aboutLegacy" class="aboutNavLink">Наследство</a>
+    </nav>
+    <section id="aboutIntro" class="mb-4">
+      <h3 class="text-xl font-bold mb-2">Въведение</h3>
+      <p>Vintage Lumber Bulgaria започва като малка семейна инициатива преди десетилетие, със страст към възстановяването на автентични български дървени дъски и греди. Основателите вярват, че всяко парче дърво носи своя уникална история и характер, и че тези истории заслужават да бъдат предадени на следващите поколения.</p>
+    </section>
+    <section id="aboutGrowth" class="mb-4">
+      <h3 class="text-xl font-bold mb-2">Развитие</h3>
+      <p>През годините компанията се разраства, като съчетава традиционните техники на ръчна обработка на дърво с модерни интериорни тенденции. Всеки продукт преминава през внимателен процес на подбор, реставрация и финално обработване, за да се запази естествената му красота и патина.</p>
+    </section>
+    <section id="aboutMission" class="mb-4">
+      <h3 class="text-xl font-bold mb-2">Мисия</h3>
+      <p>Нашата мисия е да съхраним и популяризираме уникалното наследство на българското дърво, да предложим продукти, които вдъхновяват и създават топлина в домовете и интериорите на клиентите ни. Вярваме, че всеки дом заслужава да има своята история и характер, а нашите продукти са част от тази история.</p>
+    </section>
+    <section id="aboutLegacy" class="mb-4">
+      <h3 class="text-xl font-bold mb-2">Наследство</h3>
+      <p>С течение на времето Vintage Lumber Bulgaria се утвърждава като символ на качество, автентичност и любов към детайла, а клиентите ни са нашата най-голяма гордост и вдъхновение за бъдещи проекти.</p>
+    </section>
+  </div>
+</div>
+
 <script>
-/* =========================
-   Products & gallery logic
-   - ensure created images have lazy attributes (reduce CLS)
-   - set src / srcset / sizes where possible
-   ========================= */
-const products={ 
-  dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, 
-  dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, 
-  dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} 
-};
+const products={ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
 
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
@@ -397,7 +322,6 @@ if(productKey && products[productKey]){
  document.getElementById("mainPage").style.display="none";
  document.getElementById("productPage").style.display="block";
  document.getElementById("hero-bg").style.display="none"; 
- document.getElementById("productPage").setAttribute('aria-hidden','false');
  document.getElementById("title").innerText=p.title;
  document.getElementById("description").innerText=p.description;
  document.getElementById("delivery").innerText=p.delivery;
@@ -408,30 +332,8 @@ if(productKey && products[productKey]){
  const leftBtn=document.getElementById("lightboxLeft");
  const rightBtn=document.getElementById("lightboxRight");
  let currentIndex=0;
- function showImage(index){
-   currentIndex=index;
-   // set attributes to help CLS + performance
-   mainImage.src = p.images[currentIndex];
-   mainImage.setAttribute('loading','lazy');
-   mainImage.setAttribute('decoding','async');
-   mainImage.setAttribute('width','1200');
-   mainImage.setAttribute('height','800');
-   Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index));
-   lightboxImage.src=p.images[currentIndex];
- }
- p.images.forEach((imgSrc,i)=>{
-   const thumb=document.createElement("img");
-   thumb.src=imgSrc;
-   thumb.alt = p.title + ' — ' + (i+1);
-   thumb.loading = 'lazy';
-   thumb.decoding = 'async';
-   thumb.width = 70;
-   thumb.height = 70;
-   thumb.style.objectFit = 'cover';
-   if(i===0) thumb.classList.add('active');
-   thumb.addEventListener('click',()=> showImage(i));
-   thumbsContainer.appendChild(thumb);
- });
+ function showImage(index){ currentIndex=index; mainImage.src=p.images[currentIndex]; Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index)); lightboxImage.src=p.images[currentIndex]; }
+ p.images.forEach((imgSrc,i)=>{ const thumb=document.createElement("img"); thumb.src=imgSrc; if(i===0) thumb.classList.add('active'); thumb.addEventListener('click',()=> showImage(i)); thumbsContainer.appendChild(thumb); });
  document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
  document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
  mainImage.addEventListener('click',()=> lightbox.style.display='flex');
@@ -441,11 +343,11 @@ if(productKey && products[productKey]){
  showImage(0);
  p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
 }
-const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; document.getElementById('productPage').setAttribute('aria-hidden','true'); }
+const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; }
 document.getElementById('homeBtn').addEventListener('click',goHome);
 document.getElementById('navHome').addEventListener('click',goHome);
 
-/* About modal handlers (unchanged) */
+// About modal
 const aboutModal = document.getElementById('aboutModal');
 const closeAboutModal = document.getElementById('closeAboutModal');
 document.getElementById('navAbout').addEventListener('click',()=>{
@@ -464,24 +366,403 @@ document.querySelectorAll('.aboutNavLink').forEach(link=>{
 });
 
 document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
+// keep original navContact behavior where present later (some contact handlers below also use navContact)
 </script>
 
-<!-- ===================== START: Cart UI + Buy Buttons (as before, but we ensure lazy backgrounds are applied later) ===================== -->
-<!-- (kept original cart code but nothing blocking) -->
+<!-- ===================== START: Cart UI + Buy Buttons (paste BEFORE </body>) ===================== -->
+<!-- Cart panel (will be created only if not present) -->
 <div id="vl-cart-wrapper-placeholder"></div>
+
+<!-- Toast (only if not present) -->
 <div id="vl-cart-toast-placeholder"></div>
 
 <script>
-/* Cart code (kept, unchanged in behavior). For brevity in this integration we keep same logic but ensure
-   heavy DOM operations are done after DOMContentLoaded (already handled inside IIFE). */
-(function(){
-  /* ... full cart IIFE from original file (omitted here in this snippet for clarity) ... */
-  /* Since in your original HTML the cart code is already present and fully functional,
-     you should keep it (we kept it earlier in the original). */
-})();
-</script>
+/* ===================== Cart + Buy buttons injection =====================
+   (the original block you had — left intact, checkout handler modified to open modal)
+   ======================================================================= */
 
-<!-- Keep the buy-button background enhancer and final script (unchanged) but improved: only apply backgrounds when element is near viewport. -->
+(function(){
+  // --- fallback product info (only used if your `products` object lacks price/images) ---
+  const FALLBACK = {
+    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
+    dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
+    dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
+  };
+
+  // --- ensure cart panel DOM exists (create only if not present) ---
+  function ensureCartDOM(){
+    // Cart panel
+    if(!document.getElementById('vl-cart-panel')){
+      const panel = document.createElement('div');
+      panel.id = 'vl-cart-panel';
+      panel.className = 'fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4';
+      panel.innerHTML = `
+        <div class="bg-white rounded-xl w-full max-w-3xl p-6 relative">
+          <button id="vl-close-cart" class="absolute top-4 right-4 text-[#6B4226] font-bold">✕</button>
+          <h2 class="text-2xl font-bold mb-4">Вашата кошница</h2>
+          <div id="vl-cart-items" class="space-y-4 max-h-[50vh] overflow-auto"></div>
+          <div id="vl-cart-summary" class="mt-4 flex justify-between items-center">
+            <div id="vl-cart-total" class="text-xl font-bold">Обща сума: 0 лв.</div>
+            <div>
+              <button id="vl-refresh-cart" class="mr-2 px-3 py-2 rounded border">Рефреш</button>
+              <button id="vl-clear-cart" class="mr-2 px-3 py-2 rounded border">Изчисти</button>
+              <button id="vl-checkout" class="bg-[#6B4226] text-white px-4 py-2 rounded">Финализирай поръчката</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(panel);
+    }
+
+    // Toast
+    if(!document.getElementById('vl-cart-toast')){
+      const toast = document.createElement('div');
+      toast.id = 'vl-cart-toast';
+      toast.className = 'fixed bottom-6 right-6 hidden bg-white border-2 border-[#6B4226] rounded p-3 flex items-center gap-3 z-60';
+      toast.style.alignItems = 'center';
+      toast.innerHTML = `<img id="vl-cart-toast-img" src="" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:4px;"><div id="vl-cart-toast-text" style="font-weight:600;">Добавено във вашата кошница</div>`;
+      document.body.appendChild(toast);
+    }
+  }
+
+  // --- helpers to read product data (use page's products if present) ---
+  function getProductObj(key){
+    if(window.products && products[key]){
+      // ensure price/images exist (fallback)
+      const p = Object.assign({}, products[key]);
+      if(!p.price && FALLBACK[key]) p.price = FALLBACK[key].price;
+      if(!p.images || !p.images.length) p.images = FALLBACK[key] ? FALLBACK[key].images : [];
+      return p;
+    }
+    return FALLBACK[key] ? Object.assign({}, FALLBACK[key]) : {title:key, images:[], price:0};
+  }
+
+  // --- cart stored in localStorage as array of item objects {key, qty} OR simple array of keys ---
+  // We'll store as array of keys allowing duplicates (ease of operations) similar to previous code.
+  function loadCart(){
+    try{ return JSON.parse(localStorage.getItem('vl_cart_v1') || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveCart(arr){
+    localStorage.setItem('vl_cart_v1', JSON.stringify(arr));
+  }
+
+  // get aggregated counts map {key: qty}
+  function aggregate(cartArr){
+    const counts = {};
+    cartArr.forEach(k => counts[k] = (counts[k] || 0) + 1);
+    return counts;
+  }
+
+  // update header count
+  function updateHeaderCount(){
+    const el = document.querySelector('.cart-count');
+    if(!el) return;
+    const arr = loadCart();
+    el.innerText = arr.length;
+    // pulse effect
+    el.classList.remove('vl-count-pulse');
+    void el.offsetWidth;
+    el.classList.add('vl-count-pulse');
+    setTimeout(()=> el.classList.remove('vl-count-pulse'), 600);
+  }
+
+  // show toast
+  let _vl_toast_timer = null;
+  function showToast(key){
+    const p = getProductObj(key);
+    const toast = document.getElementById('vl-cart-toast');
+    if(!toast) return;
+    const img = document.getElementById('vl-cart-toast-img');
+    const txt = document.getElementById('vl-cart-toast-text');
+    img.src = (p.images && p.images[0])? p.images[0] : '';
+    txt.innerText = `${p.title} — добавено във вашата кошница`;
+    toast.classList.remove('hidden');
+    clearTimeout(_vl_toast_timer);
+    _vl_toast_timer = setTimeout(()=> toast.classList.add('hidden'), 1800);
+  }
+
+  // render Buy buttons inside product cards (does not remove/modify your original content)
+  function injectBuyButtonsToCards(){
+    const main = document.getElementById('mainPage');
+    if(!main) return;
+    const anchors = main.querySelectorAll('a[href*="product="]');
+    anchors.forEach(a=>{
+      // avoid duplicating
+      if(a.querySelector('.vl-buy-btn-card')) return;
+      // extract product key
+      let key = null;
+      try{ const u = new URL(a.href, location.href); key = u.searchParams.get('product'); }catch(e){}
+      if(!key) return;
+      const p = getProductObj(key);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'vl-buy-btn-card vl-buy-btn mt-2 bg-[#6B4226] text-white px-4 py-2 rounded';
+      btn.dataset.key = key;
+      btn.innerText = `Купи — ${p.price} лв.`;
+      // append to sensible container inside card
+      const target = a.querySelector('.p-4') || a.querySelector('.text-center') || a;
+      target.appendChild(btn);
+      btn.addEventListener('click', function(ev){
+        ev.preventDefault();
+        const arr = loadCart();
+        arr.push(key);
+        saveCart(arr);
+        updateHeaderCount();
+        showToast(key);
+      });
+    });
+  }
+
+  // inject buy button on single product page (if opened with ?product=...)
+  function injectBuyOnProductPage(){
+    const params = new URLSearchParams(location.search);
+    const key = params.get('product');
+    if(!key) return;
+    const content = document.querySelector('#productPage .content');
+    if(!content) return;
+    // avoid duplicates
+    if(content.querySelector('.vl-buy-btn-product')) return;
+    const p = getProductObj(key);
+    // price line
+    const priceP = document.createElement('p');
+    priceP.className = 'vl-buy-price text-[#6B4226] font-bold mb-2';
+    priceP.innerText = `Цена: ${p.price} лв.`;
+    // buy button
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded w-full';
+    btn.dataset.key = key;
+    btn.innerText = `Купи — ${p.price} лв.`;
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      const arr = loadCart();
+      arr.push(key);
+      saveCart(arr);
+      updateHeaderCount();
+      showToast(key);
+    });
+    // append after product title/description block (try to find a good place)
+    const rightCol = document.querySelector('#productPage .content > .grid > div:nth-child(2)');
+    if(rightCol){
+      rightCol.insertBefore(priceP, rightCol.firstChild.nextSibling);
+      rightCol.insertBefore(btn, priceP.nextSibling);
+    } else {
+      content.appendChild(priceP);
+      content.appendChild(btn);
+    }
+  }
+
+  // render cart panel items with qty controls (+/-) and refresh button
+  function renderCartPanel(){
+    const panel = document.getElementById('vl-cart-panel');
+    if(!panel) return;
+    const itemsDiv = document.getElementById('vl-cart-items');
+    const totalEl = document.getElementById('vl-cart-total');
+    itemsDiv.innerHTML = '';
+    const arr = loadCart();
+    const counts = aggregate(arr);
+    let total = 0;
+    Object.keys(counts).forEach(key=>{
+      const qty = counts[key];
+      const p = getProductObj(key);
+      total += (p.price || 0) * qty;
+      // item row
+      const item = document.createElement('div');
+      item.className = 'flex items-center justify-between p-2 bg-gray-50 rounded';
+      // left block
+      const left = document.createElement('div');
+      left.className = 'flex items-center gap-3';
+      const img = document.createElement('img');
+      img.src = (p.images && p.images[0])? p.images[0] : '';
+      img.style.width = '56px';
+      img.style.height = '56px';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = '6px';
+      const info = document.createElement('div');
+      info.innerHTML = `<div style="font-weight:600;">${p.title}</div><div class="vl-item-price">${p.price} лв. × <span class="vl-qty">${qty}</span></div>`;
+      left.appendChild(img);
+      left.appendChild(info);
+      // right block - qty controls + remove
+      const right = document.createElement('div');
+      right.className = 'flex items-center gap-2';
+      const minus = document.createElement('button');
+      minus.className = 'vl-qty-minus px-2 py-1 border rounded';
+      minus.innerText = '−';
+      minus.dataset.key = key;
+      const plus = document.createElement('button');
+      plus.className = 'vl-qty-plus px-2 py-1 border rounded';
+      plus.innerText = '+';
+      plus.dataset.key = key;
+      const remove = document.createElement('button');
+      remove.className = 'vl-remove bg-red-600 text-white px-2 py-1 rounded';
+      remove.innerText = 'Премахни';
+      remove.dataset.key = key;
+      right.appendChild(minus);
+      right.appendChild(plus);
+      right.appendChild(remove);
+
+      item.appendChild(left);
+      item.appendChild(right);
+      itemsDiv.appendChild(item);
+
+      // handlers
+      minus.addEventListener('click', ()=> {
+        // remove one instance
+        const cart = loadCart();
+        const idx = cart.indexOf(key);
+        if(idx > -1) cart.splice(idx,1);
+        saveCart(cart);
+        renderCartPanel();
+        updateHeaderCount();
+      });
+      plus.addEventListener('click', ()=>{
+        const cart = loadCart();
+        cart.push(key);
+        saveCart(cart);
+        renderCartPanel();
+        updateHeaderCount();
+      });
+      remove.addEventListener('click', ()=>{
+        // remove all instances of this key
+        let cart = loadCart();
+        cart = cart.filter(k => k !== key);
+        saveCart(cart);
+        renderCartPanel();
+        updateHeaderCount();
+      });
+    });
+
+    totalEl.innerText = `Обща сума: ${total} лв.`;
+  }
+
+  // wire UI interactions (open/close/clear/checkout/refresh)
+  function wireCartUI(){
+    // header cart open - prefer #cartBtn (if you have) else .cart-btn
+    const headerCart = document.getElementById('cartBtn') || document.querySelector('.cart-btn');
+    const panel = document.getElementById('vl-cart-panel');
+    if(headerCart && panel){
+      headerCart.addEventListener('click', function(e){
+        e.preventDefault();
+        renderCartPanel();
+        panel.classList.remove('hidden');
+      });
+    }
+    const close = document.getElementById('vl-close-cart');
+    if(close) close.addEventListener('click', ()=> panel.classList.add('hidden'));
+    const clearBtn = document.getElementById('vl-clear-cart');
+    if(clearBtn) clearBtn.addEventListener('click', ()=>{
+      saveCart([]);
+      updateHeaderCount();
+      renderCartPanel();
+    });
+
+    // Modified checkout handler: open order modal instead of alert + auto-clear
+    const checkoutBtn = document.getElementById('vl-checkout');
+    if(checkoutBtn) checkoutBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const cart = loadCart();
+      if(!cart.length){ alert('Нямате добавени продукти в кошницата.'); return; }
+      // Open order modal (inserted before </body>)
+      const orderModal = document.getElementById('orderSection');
+      if(orderModal){
+        try {
+          const orderCartField = document.getElementById('vl-order-cart-contents');
+          if(orderCartField) orderCartField.value = JSON.stringify(cart);
+        } catch(err){}
+        orderModal.classList.add('open');
+        orderModal.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        if(panel) panel.classList.add('hidden');
+      } else {
+        // Fallback: previous behavior if modal missing
+        alert('Благодарим за поръчката!');
+        saveCart([]);
+        updateHeaderCount();
+        renderCartPanel();
+        if(panel) panel.classList.add('hidden');
+      }
+    });
+    // end modified checkout handler
+
+    const refreshBtn = document.getElementById('vl-refresh-cart');
+    if(refreshBtn) refreshBtn.addEventListener('click', ()=> renderCartPanel());
+    // ESC closes
+    document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') panel.classList.add('hidden'); });
+  }
+
+  // small CSS additions (inject only once)
+  function ensureStyles(){
+    if(document.getElementById('vl-cart-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'vl-cart-styles';
+    s.textContent = `
+      .vl-buy-btn { transition: transform .12s ease, box-shadow .12s ease; }
+      .vl-buy-anim { animation: btn-bump .28s cubic-bezier(.2,.8,.2,1); }
+      @keyframes btn-bump {0%{transform:scale(1);}40%{transform:scale(1.08);}100%{transform:scale(1);} }
+      #vl-cart-toast { opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease; }
+      #vl-cart-toast:not(.hidden) { opacity: 1; transform: translateY(0); animation: toast-pop .35s ease; }
+      @keyframes toast-pop {0%{opacity:0; transform:translateY(12px) scale(.98);}60%{transform:translateY(0) scale(1.02);}100%{transform:translateY(0) scale(1);} }
+      .vl-count-pulse { animation: vl-count-pulse .42s ease; }
+      @keyframes vl-count-pulse {0%{transform:scale(1);}30%{transform:scale(1.25);}60%{transform:scale(.95);}100%{transform:scale(1);} }
+    `;
+    document.head.appendChild(s);
+  }
+
+  // init sequence
+  function init(){
+    ensureStyles();
+    ensureCartDOM();
+    injectBuyButtonsToCards();
+    injectBuyOnProductPage();
+    wireCartUI();
+    updateHeaderCount();
+
+    // observe mainPage for future card adds and inject buy buttons
+    const main = document.getElementById('mainPage');
+    if(main && window.MutationObserver){
+      const mo = new MutationObserver(()=> { injectBuyButtonsToCards(); });
+      mo.observe(main, { childList:true, subtree:true });
+    }
+  }
+
+  // run on DOM ready
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else { init(); }
+
+})(); /* end IIFE */
+</script>
+ <!-- ===== START: Extra long & narrow board-look backgrounds for Buy buttons ===== -->
+<style>
+  .vl-buy-btn-card {
+    width: clamp(200px, 50vw, 320px) !important;
+    height: clamp(40px, 6vh, 56px) !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: auto 100% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    position: relative !important;
+    padding: 0 1rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25) !important;
+    white-space: nowrap !important;
+  }
+  .vl-buy-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.22); pointer-events: none; z-index: 0; }
+  .vl-buy-text { position: relative; z-index: 1; font-size: 0.95rem; }
+  .vl-buy-btn-card::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); z-index: 2; pointer-events: none; }
+  @media (max-width: 520px) {
+    .vl-buy-btn-card { width: 90vw !important; max-width: 420px !important; height: clamp(40px, 7vh, 56px) !important; }
+  }
+</style>
+
 <script>
 (function(){
   const IMG = [
@@ -494,8 +775,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     if(!btn) return;
     if(btn.dataset.vlBgApplied === '1') return;
 
-    // set background lazily (we'll ensure the image is loaded only when needed)
-    if(src) btn.dataset.vlBg = src;
+    btn.style.backgroundImage = src ? `url("${src}")` : '';
 
     if(!btn.querySelector('.vl-buy-bg-overlay')) {
       const overlay = document.createElement('span');
@@ -527,52 +807,20 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     });
   }
 
-  // Lazy-apply CSS background when button is near viewport (IntersectionObserver)
-  function lazyApplyBackgrounds() {
-    const buttons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
-    if(!buttons.length) return;
-
-    if('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting) {
-            const btn = entry.target;
-            const src = btn.dataset.vlBg;
-            if(src) {
-              // create image to ensure browser decodes efficiently
-              const img = new Image();
-              img.src = src;
-              img.onload = () => {
-                btn.style.backgroundImage = `url("${src}")`;
-                btn.style.backgroundSize = 'cover';
-                btn.style.backgroundPosition = 'center';
-              };
-            }
-            obs.unobserve(btn);
-          }
-        });
-      }, {rootMargin: '200px'});
-      buttons.forEach(b => io.observe(b));
-    } else {
-      // fallback - apply directly
-      buttons.forEach(b => {
-        const src = b.dataset.vlBg;
-        if(src) b.style.backgroundImage = `url("${src}")`;
-      });
-    }
-  }
-
   function init(){
     applyToAll();
-    lazyApplyBackgrounds();
+
     const main = document.getElementById('mainPage') || document.body;
     if(window.MutationObserver && main) {
-      const mo = new MutationObserver(() => {
+      const mo = new MutationObserver((mut) => {
         applyToAll();
-        lazyApplyBackgrounds();
       });
       mo.observe(main, { childList: true, subtree: true });
     }
+
+    window.addEventListener('resize', () => {
+      applyToAll();
+    }, { passive: true });
   }
 
   if(document.readyState === 'loading') {
@@ -582,8 +830,9 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
   }
 })();
 </script>
+<!-- ===== END: Extra long & narrow board-look for Buy buttons ===== -->
 
-<!-- ===== START: Contact Modal (unchanged) ===== -->
+<!-- ===== START: Contact Modal ===== -->
 <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
   <div class="bg-white rounded-xl w-full max-w-sm p-6 relative">
     <button id="closeContactModal" class="absolute top-3 right-3 text-[#6B4226] font-bold text-lg">✕</button>
@@ -621,19 +870,117 @@ if(navContactBtn && contactModal && closeContactModal){
   });
 }
 </script>
+<!-- ===== END: Contact Modal ===== -->
 
-<!-- ====== ORDER FORM MODAL (unchanged) ====== -->
+<!-- ===================== FIX: final small script that ensures buy-buttons exist and backgrounds are applied ========== -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const mapping = { dd1: 'images/board_5.png', dd2: 'images/board_6.png', dg1: 'images/board_7.png' };
+
+  // 1) Създай липсващи buy бутони (ако оригиналният инжектор не е сработил)
+  document.querySelectorAll('a[href*="product="]').forEach(a=>{
+    try{
+      const u = new URL(a.href, location.href);
+      const key = u.searchParams.get('product');
+      if(!key) return;
+      if(a.querySelector('.vl-buy-btn-card')) return; // вече има
+      // цена fallback
+      const p = window.products && products[key] ? products[key] : null;
+      const price = (p && p.price) ? p.price : (key==='dd1'?120: key==='dd2'?150:200);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'vl-buy-btn-card vl-buy-btn';
+      btn.dataset.key = key;
+      btn.innerText = `Купи — ${price} лв.`;
+      const target = a.querySelector('.p-4') || a.querySelector('.text-center') || a;
+      target.appendChild(btn);
+      btn.addEventListener('click', function(ev){
+        ev.preventDefault();
+        const arr = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
+        arr.push(key);
+        localStorage.setItem('vl_cart_v1', JSON.stringify(arr));
+        if(typeof updateHeaderCount === 'function') updateHeaderCount();
+        if(typeof showToast === 'function') showToast(key);
+      });
+    } catch(e){ /* silent */ }
+  });
+
+  // 2) Функция за прилагане на фон + обвивка
+  function enhance(btn, src){
+    if(!btn) return;
+    if(btn.dataset.vlBgApplied === '1') return;
+    if(src) {
+      btn.style.backgroundImage = `url("${src}")`;
+      btn.style.backgroundSize = 'cover';
+      btn.style.backgroundPosition = 'center';
+      btn.style.backgroundRepeat = 'no-repeat';
+    }
+    if(!btn.querySelector('.vl-buy-bg-overlay')){
+      const overlay = document.createElement('span');
+      overlay.className = 'vl-buy-bg-overlay';
+      btn.insertAdjacentElement('afterbegin', overlay);
+    }
+    if(!btn.querySelector('.vl-buy-text')){
+      const raw = btn.innerHTML;
+      btn.innerHTML = '';
+      const overlay = btn.querySelector('.vl-buy-bg-overlay');
+      if(overlay) btn.appendChild(overlay);
+      const txt = document.createElement('span');
+      txt.className = 'vl-buy-text';
+      txt.innerHTML = raw;
+      btn.appendChild(txt);
+    }
+    btn.dataset.vlBgApplied = '1';
+  }
+
+  // 3) Приложи фон на картите (първите 3 продукта) — базирано на data-key или подредба
+  const cardButtons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
+  cardButtons.forEach((btn, idx) => {
+    const key = btn.dataset.key;
+    const src = (key && mapping[key]) ? mapping[key] : Object.values(mapping)[idx % 3];
+    enhance(btn, src);
+  });
+
+  // 4) Продуктова страница — ако има .vl-buy-btn-product, сложи board_5.png (или съответния за продукта)
+  const productBtn = document.querySelector('.vl-buy-btn-product');
+  if(productBtn){
+    const key = new URLSearchParams(location.search).get('product');
+    const src = mapping[key] || mapping['dd1'];
+    enhance(productBtn, src);
+  }
+
+  // 5) run the original background appliers (if present) after our fixes
+  setTimeout(()=> {
+    try{ if(typeof applyBackgroundsToBuyButtons === 'function') applyBackgroundsToBuyButtons(); } catch(e){}
+  }, 50);
+});
+</script>
+
+<!-- ====== ORDER FORM MODAL (INTEGRATED) ====== -->
 <style>
-  /* order modal styles kept as in original */
+  /* Модален фон и стилове */
   #orderSection { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
   #orderSection.open { display: flex; }
   #orderSection .overlay { position:absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
-  #orderSection .box { position: relative; z-index: 2201; width: 360px; max-width: 92%; background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); font-family: inherit; }
+  #orderSection .box { 
+    position: relative; z-index: 2201; width: 360px; max-width: 92%; 
+    background: #fff; border-radius: 10px; padding: 18px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25); font-family: inherit; 
+  }
   #orderSection .box h3 { margin:0 0 8px; color:#6B4226; font-size:1.15rem; }
-  #orderSection .close-btn { position:absolute; right:10px; top:8px; border:none; background:transparent; color:#6B4226; font-size:18px; cursor:pointer; }
+  #orderSection .close-btn {
+    position:absolute; right:10px; top:8px; border:none; background:transparent; 
+    color:#6B4226; font-size:18px; cursor:pointer; 
+  }
   #orderSection label { display:block; margin:8px 0 4px; color:#333; }
-  #orderSection input, #orderSection textarea { width:100%; padding:8px; margin-bottom:12px; border:1px solid #ccc; border-radius:4px; box-sizing: border-box; }
-  #orderSection button[type="submit"] { background:#6B4226; color:#fff; padding:10px 16px; border:none; border-radius:4px; cursor:pointer; }
+  #orderSection input, #orderSection textarea {
+    width:100%; padding:8px; margin-bottom:12px; 
+    border:1px solid #ccc; border-radius:4px; box-sizing: border-box;
+  }
+  #orderSection button[type="submit"] {
+    background:#6B4226; color:#fff; padding:10px 16px; 
+    border:none; border-radius:4px; cursor:pointer;
+  }
   #orderSection button[type="submit"]:hover { background:#A66B3C; }
   @media (max-width:520px){ #orderSection .box{ width:92%; padding:14px; } }
 </style>
@@ -659,6 +1006,7 @@ if(navContactBtn && contactModal && closeContactModal){
       <label><span class="lang-bg">Адрес:</span><span class="lang-en hidden">Address:</span></label>
       <input type="text" name="address">
 
+      <!-- невидимо поле с продуктовата информация (попълва се автоматично) -->
       <input type="hidden" name="cart_contents" id="vl-order-cart-contents">
 
       <button type="submit">
@@ -670,6 +1018,7 @@ if(navContactBtn && contactModal && closeContactModal){
 </div>
 
 <script>
+  // Показване и скриване на формата за поръчка
   (function(){
     const orderModal = document.getElementById('orderSection');
     if(!orderModal) return;
@@ -708,21 +1057,26 @@ if(navContactBtn && contactModal && closeContactModal){
 
     closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
 
+    // Затваряне при кликане извън формата
     orderModal.addEventListener('click', (e) => {
       if (e.target === orderModal) closeOrderModal();
     });
 
+    // ESC затваря
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && orderModal.classList.contains('open')) closeOrderModal();
     });
 
+    // При подаване на формата — Formspree ще обработи изпращането.
+    // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
     orderForm.addEventListener('submit', function(){
-      // normal submit to Formspree (you can add AJAX handling if desired)
+      // оставено празно за нормален submit
     });
   })();
 </script>
+<!-- ====== END ORDER FORM MODAL ====== -->
 
-<!-- ====== LANGUAGE TOGGLE (unchanged) ====== -->
+<!-- ====== LANGUAGE TOGGLE: applies to all elements with .lang-bg / .lang-en ====== -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   const toggle = document.getElementById('toggleLang');
@@ -749,110 +1103,6 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 </script>
-
-<!-- ====== LAZY HERO BACKGROUND SCRIPT (IntersectionObserver) ====== -->
-<script>
-(function(){
-  const hero = document.getElementById('hero-bg');
-  if(!hero) return;
-
-  function applyHeroBg(src){
-    // set background-image only when needed
-    hero.style.backgroundImage = `url("${src}")`;
-    hero.classList.add('bg-loaded');
-  }
-
-  // If IntersectionObserver available, wait until hero is near viewport (rootMargin to help LCP)
-  if('IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach(e => {
-        if(e.isIntersecting){
-          const src = hero.dataset.bg;
-          if(src){
-            // preload image (browser likely already has it if preloaded in head)
-            const img = new Image();
-            img.src = src;
-            img.onload = () => applyHeroBg(src);
-          }
-          obs.unobserve(hero);
-        }
-      });
-    }, {rootMargin: '200px 0px'});
-    io.observe(hero);
-  } else {
-    // fallback - immediate apply
-    const src = hero.dataset.bg;
-    if(src) applyHeroBg(src);
-  }
-})();
-</script>
-
-<!-- ====== OPTIONAL: Helpful server / build snippets (copy into your repo/server) ====== -->
-<!--
-  1) Node build script (use sharp) to generate WebP/AVIF + resized images
-  package.json (snippet):
-  {
-    "scripts": {
-      "img:build": "node tools/image-build.js"
-    },
-    "dependencies": {
-      "sharp": "^0.32.0"
-    }
-  }
-
-  tools/image-build.js:
-  -----------------------------------------
-  const fs = require('fs');
-  const path = require('path');
-  const sharp = require('sharp');
-
-  const srcDir = path.join(__dirname, '..', 'src_images');
-  const outDir = path.join(__dirname, '..', 'public', 'images');
-
-  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-
-  const sizes = [400, 800, 1200];
-
-  fs.readdirSync(srcDir).forEach(file => {
-    const input = path.join(srcDir, file);
-    const name = path.parse(file).name;
-
-    sizes.forEach(async w => {
-      const outWebp = path.join(outDir, `${name}-${w}.webp`);
-      const outAvif = path.join(outDir, `${name}-${w}.avif`);
-      await sharp(input).resize({ width: w}).webp({quality:80}).toFile(outWebp);
-      await sharp(input).resize({ width: w}).avif({quality:60}).toFile(outAvif);
-    });
-
-    const outJpg = path.join(outDir, `${name}-800.jpg`);
-    sharp(input).resize({ width: 800 }).jpeg({quality:75}).toFile(outJpg);
-  });
-
-  console.log('Images built.');
-  -----------------------------------------
-
-  2) NGINX snippet for gzip/brotli + caching (copy to your server config)
-  -----------------------------------------
-  gzip on;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-  gzip_proxied any;
-  gzip_min_length 256;
-
-  brotli on;
-  brotli_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
-
-  location ~* \.(?:css|js)$ {
-    expires 7d;
-    add_header Cache-Control "public, max-age=604800, immutable";
-  }
-
-  location ~* \.(?:png|jpg|jpeg|gif|webp|avif|svg)$ {
-    expires 30d;
-    add_header Cache-Control "public, max-age=2592000";
-    try_files $uri =404;
-  }
-  -----------------------------------------
--->
 
 </body>
 </html>
