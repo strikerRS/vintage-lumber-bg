@@ -1158,111 +1158,45 @@ document.addEventListener('DOMContentLoaded', function(){
 
 });
 </script>
-<style>
-  /* Реалистични размери на дъските за всички бутони "Купи" */
+</script>
 
-  /* бутоните под картите на началната страница */
-  .vl-buy-btn-card,
-  /* бутонът в продуктовата страница */
-  #productPage .vl-buy-btn-product {
-    width: 230px !important;            /* ширина на дъската */
-    height: 46px !important;            /* височина – по-реалистична */
-    padding: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important; /* текст по средата */
-    background-size: contain !important;/* пази пропорциите на дъската */
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    border-radius: 0 !important;        /* без заоблени ръбове */
-    box-shadow: none !important;
-  }
-
-  /* текстът да стои точно в средата на самата дъска */
-  .vl-buy-btn-card .vl-buy-text,
-  #productPage .vl-buy-btn-product .vl-buy-text {
-    margin: 0 !important;
-    padding: 0 !important;
-    line-height: 1 !important;
-  }
-</style>
 <style>
-  /* Реалистични дървени бутони */
+  /* ГОЛЕМИ, РЕАЛИСТИЧНИ ДЪСКИ ЗА ВСИЧКИ БУТОНИ "Купи" */
+
   .vl-buy-btn-card,
   #productPage .vl-buy-btn-product {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 1.2rem !important;
-
-    /* нови реалистични размери */
-    width: auto !important;
-    min-width: calc(1.6 * 100px) !important;  /* ~1.6x ширина спрямо текста */
-    height: 58px !important;                 /* по-високи */
-    
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    margin-top: 0.4rem !important;
-  }
-
-  /* текстът да не бута бутона */
-  .vl-buy-btn-card .vl-buy-text,
-  #productPage .vl-buy-btn-product .vl-buy-text {
-    white-space: nowrap !important;
-    font-size: 1rem !important;
-    line-height: 1 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-</style>
-<style>
-  /* Реалистични дървени бутони */
-  .vl-buy-btn-card {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 
-    width: 70% !important;        /* 70% от ширината на продукта */
-    height: 60px !important;       /* реалистична височина */
-    margin: 0.6rem auto !important;
+    width: 80% !important;          /* утроено спрямо преди */
+    max-width: 420px !important;    /* да не става прекалено широка на големи екрани */
+    height: 72px !important;        /* по-дебела дъска */
+    margin: 0.7rem auto !important;
 
     padding: 0 !important;
     background-size: contain !important;
-    background-position: center !important;
+    background-position: center center !important;
     background-repeat: no-repeat !important;
     border-radius: 0 !important;
     box-shadow: none !important;
   }
 
-  /* текст */
-  .vl-buy-btn-card .vl-buy-text {
-    font-size: 1rem !important;
+  .vl-buy-btn-card .vl-buy-text,
+  #productPage .vl-buy-btn-product .vl-buy-text {
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
     line-height: 1 !important;
     white-space: nowrap !important;
     margin: 0 !important;
+    padding: 0 !important;
   }
 </style>
-.vl-buy-btn-card,
-#productPage .vl-buy-btn-product {
-  width: 70% !important;
-  height: 60px !important;
-  margin: 0.5rem auto !important;
-  background-size: 100% 100% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.vl-buy-text {
-  font-size: 1.15rem !important;
-  font-weight: 800 !important;
-}
 
 </body>
 </html>
+
+
 
 
 
