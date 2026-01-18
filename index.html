@@ -1158,8 +1158,37 @@ document.addEventListener('DOMContentLoaded', function(){
 
 });
 </script>
+<style>
+  /* Реалистични размери на дъските за всички бутони "Купи" */
+
+  /* бутоните под картите на началната страница */
+  .vl-buy-btn-card,
+  /* бутонът в продуктовата страница */
+  #productPage .vl-buy-btn-product {
+    width: 230px !important;            /* ширина на дъската */
+    height: 46px !important;            /* височина – по-реалистична */
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* текст по средата */
+    background-size: contain !important;/* пази пропорциите на дъската */
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    border-radius: 0 !important;        /* без заоблени ръбове */
+    box-shadow: none !important;
+  }
+
+  /* текстът да стои точно в средата на самата дъска */
+  .vl-buy-btn-card .vl-buy-text,
+  #productPage .vl-buy-btn-product .vl-buy-text {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+  }
+</style>
 
 </body>
 </html>
+
 
 
