@@ -1186,9 +1186,42 @@ document.addEventListener('DOMContentLoaded', function(){
     line-height: 1 !important;
   }
 </style>
+<style>
+  /* Реалистични дървени бутони */
+  .vl-buy-btn-card,
+  #productPage .vl-buy-btn-product {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 1.2rem !important;
+
+    /* нови реалистични размери */
+    width: auto !important;
+    min-width: calc(1.6 * 100px) !important;  /* ~1.6x ширина спрямо текста */
+    height: 58px !important;                 /* по-високи */
+    
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin-top: 0.4rem !important;
+  }
+
+  /* текстът да не бута бутона */
+  .vl-buy-btn-card .vl-buy-text,
+  #productPage .vl-buy-btn-product .vl-buy-text {
+    white-space: nowrap !important;
+    font-size: 1rem !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+</style>
 
 </body>
 </html>
+
 
 
 
