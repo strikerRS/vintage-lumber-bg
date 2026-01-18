@@ -1128,7 +1128,38 @@ document.addEventListener('DOMContentLoaded', function(){
     padding-top: 5rem !important;        /* колко да е надолу; може 4rem/6rem по вкус */
   }
 </style>
+<script>
+/* === Подмяна на дървените фонове === */
+document.addEventListener('DOMContentLoaded', function(){
+
+  const boardMap = {
+    dd1: 'images/1.png',   // board_5 → 1
+    dd2: 'images/2.png',   // board_6 → 2
+    dg1: 'images/3.png'    // board_7 → 3
+  };
+
+  /* Подмяна върху картовите бутони */
+  document.querySelectorAll('.vl-buy-btn-card').forEach(btn => {
+    const key = btn.dataset.key;
+    if(boardMap[key]) {
+      btn.style.backgroundImage = `url(${boardMap[key]})`;
+    }
+  });
+
+  /* Подмяна върху продуктовата страница */
+  const params = new URLSearchParams(location.search);
+  const productKey = params.get('product');
+  const productBtn = document.querySelector('.vl-buy-btn-product');
+  if(productBtn && boardMap[productKey]) {
+    productBtn.style.backgroundImage = `url(${boardMap[productKey]})`;
+    productBtn.style.backgroundSize = '100% 100%';
+    productBtn.style.backgroundRepeat = 'no-repeat';
+  }
+
+});
+</script>
 
 </body>
 </html>
+
 
