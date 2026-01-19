@@ -1257,10 +1257,97 @@ document.addEventListener('DOMContentLoaded', function(){
 }
 </style>
 
+<!-- ====== OVERRIDES: нови снимки за продукти + фонове на бутоните ====== -->
+<script>
+window.addEventListener('load', function () {
+
+  /* 1) Нови снимки за трите продуктови карти на началната страница */
+  var cardDd1 = document.querySelector('a[href*="product=dd1"] img');
+  if (cardDd1) {
+    cardDd1.src = 'products/A.PNG';
+    cardDd1.alt = 'Стара дървена дъска';
+  }
+
+  var cardDd2 = document.querySelector('a[href*="product=dd2"] img');
+  if (cardDd2) {
+    cardDd2.src = 'products/B.PNG';
+    cardDd2.alt = 'Рустик дъска';
+  }
+
+  var cardDg1 = document.querySelector('a[href*="product=dg1"] img');
+  if (cardDg1) {
+    cardDg1.src = 'products/V.PNG';
+    cardDg1.alt = 'Стара масивна греда';
+  }
+
+  /* 2) Нови снимки за вътрешната галерия (обекта products) */
+  try {
+    if (window.products) {
+      if (products.dd1) {
+        products.dd1.images = [
+          'products/A.PNG',
+          'products/B.PNG',
+          'products/V.PNG'
+        ];
+      }
+      if (products.dd2) {
+        products.dd2.images = [
+          'products/B.PNG',
+          'products/A.PNG',
+          'products/V.PNG'
+        ];
+      }
+      if (products.dg1) {
+        products.dg1.images = [
+          'products/V.PNG',
+          'products/A.PNG',
+          'products/B.PNG'
+        ];
+      }
+    }
+  } catch (e) {
+    console && console.warn && console.warn('Не успях да обновя products:', e);
+  }
+
+  /* 3) Фонове на бутоните (дъските 1.png, 2.png, 3.png) */
+  function applyWoodBackgrounds() {
+    var sources = [
+      'images/1.png',
+      'images/2.png',
+      'images/3.png'
+    ];
+    var buttons = document.querySelectorAll('.vl-buy-btn-card, #productPage .vl-buy-btn-product');
+    if (!buttons.length) return;
+
+    buttons.forEach(function (btn, index) {
+      var src = sources[index % sources.length];
+      btn.style.backgroundImage   = 'url("' + src + '")';
+      btn.style.backgroundSize    = 'cover';
+      btn.style.backgroundPosition= 'center';
+      btn.style.backgroundRepeat  = 'no-repeat';
+    });
+  }
+
+  // Първоначално при зареждане
+  applyWoodBackgrounds();
+
+  // Ако по-късно се добавят нови бутони (динамично)
+  if (window.MutationObserver) {
+    var main = document.getElementById('mainPage') || document.body;
+    var mo = new MutationObserver(function () {
+      applyWoodBackgrounds();
+    });
+    mo.observe(main, { childList: true, subtree: true });
+  }
+
+});
+</script>
+<!-- ====== END OVERRIDES ====== -->
 
 
 </body>
 </html>
+
 
 
 
