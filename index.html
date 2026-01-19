@@ -1160,23 +1160,28 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 <style>
+  /* Реалистични дървени бутони – без размазване */
+
   .vl-buy-btn-card,
   #productPage .vl-buy-btn-product {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
 
-    height: 48px !important;                 /* височината на дъската */
-    padding: 0 2.2rem !important;            /* 2 пъти текста по хоризонтала */
-    
-    background-size: 100% 100% !important;
+    /* дължина близо 2× текста */
+    padding: 0 2.4rem !important;
+
+    /* по-дебела, но не прекалено */
+    height: 38px !important;
+
+    /* качество: не разтягаме грозно, пазим пропорциите */
+    background-size: contain !important;
     background-repeat: no-repeat !important;
-    background-position: center !important;
+    background-position: center center !important;
 
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-
     margin: 0.6rem auto !important;
   }
 
@@ -1184,13 +1189,16 @@ document.addEventListener('DOMContentLoaded', function(){
     font-size: 1.05rem !important;
     font-weight: 800 !important;
     white-space: nowrap !important;
-    padding: 0 !important;
     margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
   }
 </style>
 
+  
 </body>
 </html>
+
 
 
 
