@@ -1236,9 +1236,31 @@ document.addEventListener('DOMContentLoaded', function(){
 }
 </style>
 
- 
+ <style>
+  /* Стилен модерен надпис за всички бутони "Купи --- ХХ лв." */
+
+  .vl-buy-text {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-size: 1.05rem !important;           /* малко по-фин от преди */
+    font-weight: 800 !important;
+    text-transform: uppercase !important;    /* КУПИ --- 150 ЛВ. */
+    letter-spacing: 0.08em !important;       /* леко разредени букви */
+
+    color: #3b2414 !important;               /* топло, тъмно кафяво – не чисто черно */
+    text-shadow:
+      0 1px 0 rgba(255,255,255,0.35),        /* лек светъл релеф отгоре */
+      0 0 6px rgba(0,0,0,0.45);              /* фин „glow“ за контраст върху дъската */
+
+    white-space: nowrap !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.1 !important;
+  }
+</style>
+
 </body>
 </html>
+
 
 
 
