@@ -1257,9 +1257,35 @@ document.addEventListener('DOMContentLoaded', function(){
 }
 </style>
 
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const mapping = {
+    dd1: "products/A.png",
+    dd2: "products/B.png",
+    dg1: "products/V.png"
+  };
+
+  // сменяме фоновете на бутоните
+  document.querySelectorAll('.vl-buy-btn-card').forEach(btn => {
+    const key = btn.dataset.key;
+    if(!key || !mapping[key]) return;
+    btn.style.backgroundImage = `url("${mapping[key]}")`;
+  });
+
+  // сменяме фона и за single-product
+  const params = new URLSearchParams(location.search);
+  const productKey = params.get("product");
+  const singleBtn = document.querySelector('#productPage .vl-buy-btn-product');
+
+  if(singleBtn && mapping[productKey]) {
+    singleBtn.style.backgroundImage = `url("${mapping[productKey]}")`;
+  }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
