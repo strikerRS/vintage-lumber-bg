@@ -1257,10 +1257,61 @@ document.addEventListener('DOMContentLoaded', function(){
 }
 </style>
 
+<!-- ===== OVERRIDE: Нови снимки за продуктите ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // помощна функция за смяна на снимката в картите на началната страница
+  function setCardImage(productKey, src, alt) {
+    var img = document.querySelector('a[href*="product=' + productKey + '"] img');
+    if (img) {
+      img.src = src;
+      if (alt) img.alt = alt;
+    }
+  }
+
+  // 1) Външните карти (трите продукта на началната страница)
+  setCardImage('dd1', 'products/A.png', 'Стара дървена дъска');
+  setCardImage('dd2', 'products/B.png', 'Рустик дъска');
+  setCardImage('dg1', 'products/V.png', 'Стара масивна греда');
+
+  // 2) Вътрешната галерия (обекта products)
+  try {
+    if (window.products) {
+      if (products.dd1) {
+        products.dd1.images = [
+          'products/A.png',
+          'products/B.png',
+          'products/V.png'
+        ];
+      }
+      if (products.dd2) {
+        products.dd2.images = [
+          'products/B.png',
+          'products/A.png',
+          'products/V.png'
+        ];
+      }
+      if (products.dg1) {
+        products.dg1.images = [
+          'products/V.png',
+          'products/A.png',
+          'products/B.png'
+        ];
+      }
+    }
+  } catch (e) {
+    console && console.warn && console.warn('products override error:', e);
+  }
+
+});
+</script>
+<!-- ===== END OVERRIDE ===== -->
 
 
 </body>
 </html>
+
 
 
 
