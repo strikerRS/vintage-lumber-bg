@@ -1160,40 +1160,38 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 <style>
-  /* ГОЛЕМИ, РЕАЛИСТИЧНИ ДЪСКИ ЗА ВСИЧКИ БУТОНИ "Купи" */
-
   .vl-buy-btn-card,
   #productPage .vl-buy-btn-product {
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
 
-    width: 80% !important;          /* утроено спрямо преди */
-    max-width: 420px !important;    /* да не става прекалено широка на големи екрани */
-    height: 72px !important;        /* по-дебела дъска */
-    margin: 0.7rem auto !important;
-
-    padding: 0 !important;
-    background-size: contain !important;
-    background-position: center center !important;
+    height: 48px !important;                 /* височината на дъската */
+    padding: 0 2.2rem !important;            /* 2 пъти текста по хоризонтала */
+    
+    background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
+    background-position: center !important;
+
+    border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
+
+    margin: 0.6rem auto !important;
   }
 
-  .vl-buy-btn-card .vl-buy-text,
-  #productPage .vl-buy-btn-product .vl-buy-text {
-    font-size: 1.1rem !important;
+  .vl-buy-text {
+    font-size: 1.05rem !important;
     font-weight: 800 !important;
-    line-height: 1 !important;
     white-space: nowrap !important;
-    margin: 0 !important;
     padding: 0 !important;
+    margin: 0 !important;
   }
 </style>
 
 </body>
 </html>
+
 
 
 
