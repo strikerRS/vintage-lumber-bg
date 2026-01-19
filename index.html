@@ -1188,11 +1188,33 @@ document.addEventListener('DOMContentLoaded', function(){
     padding: 0 !important;
     color: #000 !important;
   }
+
+<style>
+  .vl-buy-btn-anim {
+    animation: vl-pulse 180ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  @keyframes vl-pulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
 </style>
 
+ <script>
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.vl-buy-btn-card, .vl-buy-btn-product');
+  if(!btn) return;
   
+  btn.classList.remove('vl-buy-btn-anim');
+  void btn.offsetWidth; // reset animation
+  btn.classList.add('vl-buy-btn-anim');
+});
+</script>
+ 
 </body>
 </html>
+
 
 
 
