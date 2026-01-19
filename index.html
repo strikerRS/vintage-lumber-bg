@@ -1255,65 +1255,10 @@ document.addEventListener('DOMContentLoaded', function(){
   line-height: 1.1 !important;
 }
 </style>
-<!-- ===== OVERRIDE: Нови снимки за продуктите (карти + вътрешна галерия) ===== -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-  // помощна функция – сменя снимката в картите на началната страница
-  function setCardImage(productKey, src, alt) {
-    var img = document.querySelector('a[href*="product=' + productKey + '"] img');
-    if (img) {
-      img.src = src;
-      if (alt) img.alt = alt;
-    }
-  }
-
-  // 1) ВЪНШНИ КАРТИ (трите продукта на началната страница)
-  //   !!! ВАЖНО: тук ползваме точно A.PNG / B.PNG / V.PNG с главни букви
-  setCardImage('dd1', 'products/A.PNG', 'Стара дървена дъска');
-  setCardImage('dd2', 'products/B.PNG', 'Рустик дъска');
-  setCardImage('dg1', 'products/V.PNG', 'Стара масивна греда');
-
-  // 2) ВЪТРЕШНА ГАЛЕРИЯ (обекта products в index.html)
-  try {
-    if (window.products) {
-
-      if (products.dd1) {
-        products.dd1.images = [
-          'products/A.PNG',
-          'products/B.PNG',
-          'products/V.PNG'
-        ];
-      }
-
-      if (products.dd2) {
-        products.dd2.images = [
-          'products/B.PNG',
-          'products/A.PNG',
-          'products/V.PNG'
-        ];
-      }
-
-      if (products.dg1) {
-        products.dg1.images = [
-          'products/V.PNG',
-          'products/A.PNG',
-          'products/B.PNG'
-        ];
-      }
-    }
-  } catch (e) {
-    if (window.console && console.warn) {
-      console.warn('products override error:', e);
-    }
-  }
-
-});
-</script>
-<!-- ===== END OVERRIDE ===== -->
 
 </body>
 </html>
+
 
 
 
