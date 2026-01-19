@@ -1180,7 +1180,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   .vl-buy-text {
-    font-size: 1.2rem !important;      /* ВРЪЩАМЕ ГОЛЕМИЯ ТЕКСТ */
+    font-size: 1.0rem !important;      /* ВРЪЩАМЕ ГОЛЕМИЯ ТЕКСТ */
     font-weight: 700 !important;
     white-space: nowrap !important;
     line-height: 1 !important;
@@ -1191,30 +1191,55 @@ document.addEventListener('DOMContentLoaded', function(){
 <style>
   
 <style>
-  .vl-buy-btn-anim {
-    animation: vl-pulse 180ms cubic-bezier(.2,.8,.2,1);
-  }
+/* --- унифицирани дървени бутони (вън & вътре) --- */
 
-  @keyframes vl-pulse {
-    0%   { transform: scale(1); }
-    40%  { transform: scale(1.08); }
-    100% { transform: scale(1); }
-  }
+.vl-buy-btn-card,
+#productPage .vl-buy-btn-product {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 70% !important;
+  max-width: 480px !important;
+  height: 60px !important;
+  margin: 0.9rem auto !important;
+
+  padding: 0 2.6rem !important;
+
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  cursor: pointer !important;
+  transition: transform 0.18s cubic-bezier(.2,.8,.2,1);
+}
+
+/* --- текст върху бутона --- */
+
+.vl-buy-text {
+  font-size: 1.22rem !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+  color: #000 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* --- пулс ефект при клик --- */
+.vl-buy-btn-card:active,
+#productPage .vl-buy-btn-product:active {
+  transform: scale(0.94);
+}
 </style>
 
- <script>
-document.addEventListener('click', function(e){
-  const btn = e.target.closest('.vl-buy-btn-card, .vl-buy-btn-product');
-  if(!btn) return;
-  
-  btn.classList.remove('vl-buy-btn-anim');
-  void btn.offsetWidth; // reset animation
-  btn.classList.add('vl-buy-btn-anim');
-});
-</script>
  
 </body>
 </html>
+
 
 
 
