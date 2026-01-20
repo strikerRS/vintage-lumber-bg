@@ -1359,9 +1359,26 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const titleEl = document.querySelector('#productTitle');
+  if (!titleEl) return;
+
+  const oldNames = [
+    'Стара дървена дъска',
+    'Рустик дъска',
+    'Стара масивна греда'
+  ];
+
+  if (oldNames.includes(titleEl.textContent.trim())) {
+    titleEl.textContent = 'Естествено състарена дървена дъска';
+  }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
