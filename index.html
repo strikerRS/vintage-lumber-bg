@@ -1255,9 +1255,26 @@ document.addEventListener('DOMContentLoaded', function(){
   line-height: 1.1 !important;
 }
 </style>
+<!-- Скриване на имената и кратките описания в продуктова страница -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // проверяваме дали сме на продуктова страница (има ?product=...)
+  const key = new URLSearchParams(window.location.search).get('product');
+  if (!key) return;
+
+  // намираме заглавието и описанието на продукта
+  const titleEl = document.getElementById('title');
+  const descEl  = document.getElementById('description');
+
+  // ако съществуват, премахваме ги (или може да се ползва titleEl.textContent = ''; ако искаш да остане празно място)
+  if (titleEl) titleEl.remove();
+  if (descEl)  descEl.remove();
+});
+</script>
 
 </body>
 </html>
+
 
 
 
