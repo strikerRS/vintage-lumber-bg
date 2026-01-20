@@ -1280,38 +1280,43 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-<!-- Добавете този код над </body> -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Описания и характеристики за трите продукта
-  const descV = 'По-топли тонове, леко опушено, селско, “хамбарно” усещане';
-  const descB = 'По-тъмни и по-чисти, устойчиво и плътно';
-  const descA = 'Смесени, най-естествено-винтидж с патина, реално старинно';
 
-  if (window.products) {
-    // Продукт V (dd1) – добавяме описанието и го вкарваме и в характеристиките
-    if (products.dd1) {
-      products.dd1.description = descV;
-      products.dd1.specs = products.dd1.specs || [];
-      products.dd1.specs.push(descV);
-    }
-    // Продукт B (dd2) – добавяме описанието и го вкарваме и в характеристиките
-    if (products.dd2) {
-      products.dd2.description = descB;
-      products.dd2.specs = products.dd2.specs || [];
-      products.dd2.specs.push(descB);
-    }
-    // Продукт A (dg1) – само характеристика
-    if (products.dg1) {
-      products.dg1.specs = products.dg1.specs || [];
-      products.dg1.specs.push(descA);
-    }
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('product'); // dd1, dd2, dg1
+
+  const descV = "По-топли тонове, леко опушено, селско, хамбарно усещане.";
+  const descB = "По-тъмни и по-чисти, устойчиво и плътно.";
+  const descA = "Смесени, най-естествено-винтидж с патина, реално старинно.";
+
+  const descEl = document.querySelector('#productDesc');
+  const specsList = document.querySelector('#productSpecs');
+
+  if (!descEl || !specsList) return; // ако не сме в продуктова страница
+
+  switch (productId) {
+    case 'dd1': // V
+      descEl.innerText = descV;
+      specsList.innerHTML += `<li>${descV}</li>`;
+      break;
+
+    case 'dd2': // B
+      descEl.innerText = descB;
+      specsList.innerHTML += `<li>${descB}</li>`;
+      break;
+
+    case 'dg1': // A
+      specsList.innerHTML += `<li>${descA}</li>`;
+      break;
   }
 });
 </script>
 
 </body>
 </html>
+
 
 
 
