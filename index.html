@@ -1292,36 +1292,41 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // 👉 ТУК ПИПАШ САМО АКО ТРЯБВА:
-  // смени '#cartIcon' с реалния селектор на твоята количка, ако е друг
-  const cart = document.querySelector('#cartIcon, .cart-icon, [data-cart-icon]');
-  if (!cart) return;
+  // 👉 ТУК СА ВСИЧКИ ВЪЗМОЖНИ СЕЛЕКТОРИ ЗА КОЛИЧКАТА
+  // ако твоята е с id="cartIcon" или class="cart-icon" или class="cart" и т.н.
+  const cart = document.querySelector('#cartIcon, .cart-icon, .cart, [data-cart-icon], [data-cart]');
+  if (!cart) return; // ако не намерим количка – излизаме тихо
 
-  // всички бутони "Купи" (ако класът е друг – смени '.vl-buy-btn')
-  const buyButtons = document.querySelectorAll('.vl-buy-btn');
+  // намираме всички бутони "Купи"
+  // 1) .vl-buy-btn (както ги правихме)
+  // 2) всички button / a със съдържание "Купи"
+  let buyButtons = Array.from(document.querySelectorAll('.vl-buy-btn'));
+  const extraButtons = Array.from(document.querySelectorAll('button, a'))
+    .filter(el => el.textContent.trim().toLowerCase().startsWith('купи'));
+  buyButtons = Array.from(new Set(buyButtons.concat(extraButtons)));
+
+  if (!buyButtons.length) return;
 
   buyButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      // намираме картата / продукта около бутона
-      let card = btn.closest('a, .bg-white, .product-card, .group, .relative, .vl-card');
+      // намираме снимката на продукта, най-близо до бутона
+      let card = btn.closest('a, .bg-white, .product-card, .group, .relative, .vl-card, div');
       let img = card ? card.querySelector('img') : null;
 
-      // ако не намерим в картата, ползваме първата снимка в productPage
+      // ако не успеем да намерим в картата, пробваме в productPage
       if (!img) {
         const productPage = document.getElementById('productPage');
-        if (productPage) {
-          img = productPage.querySelector('img');
-        }
+        if (productPage) img = productPage.querySelector('img');
       }
-
       if (!img) return;
 
       const imgRect = img.getBoundingClientRect();
       const cartRect = cart.getBoundingClientRect();
 
-      // правим умалено копие на дъската
+      // клонираме снимката (дъската)
       const clone = img.cloneNode(true);
       clone.style.position = 'fixed';
       clone.style.left = imgRect.left + 'px';
@@ -1330,16 +1335,16 @@ document.addEventListener('DOMContentLoaded', function () {
       clone.style.height = imgRect.height + 'px';
       clone.style.zIndex = '9999';
       clone.style.pointerEvents = 'none';
-      clone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
       clone.style.borderRadius = '8px';
       clone.style.objectFit = 'cover';
+      clone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
 
       document.body.appendChild(clone);
 
       const translateX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
       const translateY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
 
-      // стартираме анимацията
+      // стартираме анимацията в следващ кадър
       requestAnimationFrame(function () {
         clone.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(0.2)';
         clone.style.opacity = '0';
@@ -1355,6 +1360,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
