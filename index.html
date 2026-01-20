@@ -1352,9 +1352,105 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // всички бутони "Купи" – ако класът е друг, смени '.vl-buy-btn'
+  const buyButtons = document.querySelectorAll('.vl-buy-btn');
+  if (!buyButtons.length) return;
+
+  buyButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      // 1) НАМИРАМЕ СНИМКАТА НА ПРОДУКТА
+      let card = btn.closest('a, .bg-white, .product-card, .group, .relative, .vl-card, div');
+      let img = card ? card.querySelector('img') : null;
+
+      // ако не намерим в картата, пробваме в productPage (детайлната страница)
+      if (!img) {
+        const productPage = document.getElementById('productPage');
+        if (productPage) img = productPage.querySelector('img');
+      }
+
+      // цел: горен десен ъгъл (където е количката)
+      const targetX = window.innerWidth - 40;
+      const targetY = 20;
+
+      // 1) ЛЕТЯЩА СНИМКА НА ПРОДУКТА
+      if (img) {
+        const imgRect = img.getBoundingClientRect();
+        const startX = imgRect.left + imgRect.width / 2;
+        const startY = imgRect.top + imgRect.height / 2;
+        const translateX = targetX - startX;
+        const translateY = targetY - startY;
+
+        const clone = img.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.left = imgRect.left + 'px';
+        clone.style.top = imgRect.top + 'px';
+        clone.style.width = imgRect.width + 'px';
+        clone.style.height = imgRect.height + 'px';
+        clone.style.zIndex = '9999';
+        clone.style.pointerEvents = 'none';
+        clone.style.borderRadius = '8px';
+        clone.style.objectFit = 'cover';
+        clone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
+
+        document.body.appendChild(clone);
+
+        requestAnimationFrame(function () {
+          clone.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(0.2)';
+          clone.style.opacity = '0';
+        });
+
+        clone.addEventListener('transitionend', function () {
+          clone.remove();
+        });
+      }
+
+      // 2) ЛЕТЯЩ ФОН НА БУТОНА ("дървената" дъска на бутона Купи)
+      const btnRect = btn.getBoundingClientRect();
+      const style = window.getComputedStyle(btn);
+      const bgImage = style.backgroundImage;
+
+      if (bgImage && bgImage !== 'none') {
+        const startX2 = btnRect.left + btnRect.width / 2;
+        const startY2 = btnRect.top + btnRect.height / 2;
+        const translateX2 = targetX - startX2;
+        const translateY2 = targetY - startY2;
+
+        const bgClone = document.createElement('div');
+        bgClone.style.position = 'fixed';
+        bgClone.style.left = btnRect.left + 'px';
+        bgClone.style.top = btnRect.top + 'px';
+        bgClone.style.width = btnRect.width + 'px';
+        bgClone.style.height = btnRect.height + 'px';
+        bgClone.style.zIndex = '9998';
+        bgClone.style.pointerEvents = 'none';
+        bgClone.style.borderRadius = style.borderRadius || '8px';
+        bgClone.style.backgroundImage = bgImage;
+        bgClone.style.backgroundSize = style.backgroundSize || 'cover';
+        bgClone.style.backgroundPosition = style.backgroundPosition || 'center';
+        bgClone.style.backgroundRepeat = 'no-repeat';
+        bgClone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
+
+        document.body.appendChild(bgClone);
+
+        requestAnimationFrame(function () {
+          bgClone.style.transform = 'translate(' + translateX2 + 'px, ' + translateY2 + 'px) scale(0.3)';
+          bgClone.style.opacity = '0';
+        });
+
+        bgClone.addEventListener('transitionend', function () {
+          bgClone.remove();
+        });
+      }
+    });
+  });
+});
+</script>
 
 </body>
 </html>
+
 
 
 
