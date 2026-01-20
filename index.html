@@ -1374,38 +1374,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const targetX = window.innerWidth - 40;
       const targetY = 20;
 
-      // 1) ЛЕТЯЩА СНИМКА НА ПРОДУКТА
-      if (img) {
-        const imgRect = img.getBoundingClientRect();
-        const startX = imgRect.left + imgRect.width / 2;
-        const startY = imgRect.top + imgRect.height / 2;
-        const translateX = targetX - startX;
-        const translateY = targetY - startY;
-
-        const clone = img.cloneNode(true);
-        clone.style.position = 'fixed';
-        clone.style.left = imgRect.left + 'px';
-        clone.style.top = imgRect.top + 'px';
-        clone.style.width = imgRect.width + 'px';
-        clone.style.height = imgRect.height + 'px';
-        clone.style.zIndex = '9999';
-        clone.style.pointerEvents = 'none';
-        clone.style.borderRadius = '8px';
-        clone.style.objectFit = 'cover';
-        clone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
-
-        document.body.appendChild(clone);
-
-        requestAnimationFrame(function () {
-          clone.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(0.2)';
-          clone.style.opacity = '0';
-        });
-
-        clone.addEventListener('transitionend', function () {
-          clone.remove();
-        });
-      }
-
       // 2) ЛЕТЯЩ ФОН НА БУТОНА ("дървената" дъска на бутона Купи)
       const btnRect = btn.getBoundingClientRect();
       const style = window.getComputedStyle(btn);
@@ -1447,89 +1415,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-<!-- Включваме PayPal SDK (вмъкнете вашия client-id) -->
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=BGN"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const orderModal = document.getElementById('orderSection');
-  if (!orderModal) return;
-
-  // Създаваме контейнер за PayPal бутона
-  const buttonContainer = document.createElement('div');
-  buttonContainer.id = 'paypal-button-container';
-  // Поставяме го в кутията на модала
-  const box = orderModal.querySelector('.box');
-  box.appendChild(buttonContainer);
-
-  // Създаваме PayPal бутона
-  paypal.Buttons({
-    // Създаваме поръчка – изчисляваме total спрямо количката
-    createOrder: function(data, actions) {
-      // Четем количката от localStorage
-      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-      // Цени по ключ (използвайте вашите реални цени)
-      const prices = {
-        'dd1': 120,
-        'dd2': 150,
-        'dg1': 200,
-        'A': 200,
-        'B': 150,
-        'V': 120
-      };
-      // Сумираме
-      let total = 0;
-      cart.forEach(k => { total += prices[k] || 0; });
-
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: total.toFixed(2),
-            currency_code: 'BGN'
-          }
-        }]
-      });
-    },
-    // При успешно плащане
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function() {
-        // Изпращаме поръчката чрез Formspree
-        const form = document.getElementById('vl-order-form');
-        const hiddenField = document.getElementById('vl-order-cart-contents');
-        try {
-          hiddenField.value = localStorage.getItem('vl_cart_v1') || '[]';
-        } catch(e) {
-          hiddenField.value = '[]';
-        }
-        form.submit();
-
-        // Изчистваме количката
-        localStorage.setItem('vl_cart_v1', '[]');
-        // Обновяваме брояча
-        if (typeof updateHeaderCount === 'function') updateHeaderCount();
-        // Затваряме модала
-        orderModal.classList.remove('open');
-        orderModal.setAttribute('aria-hidden','true');
-        document.body.style.overflow = '';
-
-        // Показваме уведомление
-        alert('Плащането е успешно! Вашата поръчка беше изпратена.');
-      });
-    },
-    // При отказ
-    onCancel: function (data) {
-      alert('Плащането беше отменено.');
-    },
-    onError: function (err) {
-      console.error('PayPal Error', err);
-      alert('Възникна грешка при плащането.');
-    }
-  }).render('#paypal-button-container');
-});
-</script>
 
 </body>
 </html>
+
 
 
 
