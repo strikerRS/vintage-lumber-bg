@@ -399,14 +399,6 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
    (the original block you had — left intact, checkout handler modified to open modal)
    ======================================================================= */
 
-(function(){
-  // --- fallback product info (only used if your `products` object lacks price/images) ---
-  const FALLBACK = {
-    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
-    dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
-    dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
-  };
-
   // --- ensure cart panel DOM exists (create only if not present) ---
   function ensureCartDOM(){
     // Cart panel
@@ -1386,6 +1378,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
