@@ -1272,44 +1272,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
   
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // работим само на продуктовата страница (когато има ?product=...)
-  const params = new URLSearchParams(window.location.search);
-  const key = params.get('product');
-  if (!key) return;
-
-  // 1) Махаме заглавието и описанието в секцията със снимки + инфо
-  const titleEl = document.getElementById('title');
-  const descEl  = document.getElementById('description');
-
-  if (titleEl) titleEl.textContent = '';   // или titleEl.remove();
-  if (descEl)  descEl.textContent  = '';   // или descEl.remove();
-
-  // 2) Чистим от ХАРАКТЕРИСТИКИ редове, които съдържат старите имена
-  const unwantedTexts = [
-    'Стара дървена дъска',
-    'Рустик дъска',
-    'Стара масивна греда',
-    'Автентична стара дървена дъска',
-    'Автентична рустик дъска',
-    'Масивна греда'
-  ];
-
-  const specsUl = document.getElementById('specs');
-  if (specsUl) {
-    Array.from(specsUl.querySelectorAll('li')).forEach(li => {
-      const text = li.textContent.trim();
-      if (unwantedTexts.some(t => text.indexOf(t) !== -1)) {
-        li.remove();
-      }
-    });
-  }
-});
-</script>
-
 </body>
 </html>
+
 
 
 
