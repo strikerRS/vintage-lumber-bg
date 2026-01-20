@@ -1272,8 +1272,25 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
   
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // вземаме всички бутони "КУПИ ХХ ЛВ." на началната страница
+  const buyButtons = document.querySelectorAll('#mainPage .vl-buy-btn');
+
+  buyButtons.forEach(btn => {
+    btn.style.backgroundImage = 'url("images/1.png")';
+    btn.style.backgroundSize = 'cover';
+    btn.style.backgroundPosition = 'center';
+    btn.style.backgroundRepeat = 'no-repeat';
+  });
+
+});
+</script>
+
 </body>
 </html>
+
 
 
 
