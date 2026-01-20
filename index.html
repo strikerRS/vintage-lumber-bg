@@ -399,6 +399,14 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
    (the original block you had — left intact, checkout handler modified to open modal)
    ======================================================================= */
 
+(function(){
+  // --- fallback product info (only used if your `products` object lacks price/images) ---
+  const FALLBACK = {
+    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
+    dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
+    dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
+  };
+
   // --- ensure cart panel DOM exists (create only if not present) ---
   function ensureCartDOM(){
     // Cart panel
@@ -1247,150 +1255,9 @@ document.addEventListener('DOMContentLoaded', function(){
   line-height: 1.1 !important;
 }
 </style>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Смяна на изображенията в картите на началната страница
-  const cardImgs = document.querySelectorAll('#mainPage a[href*="product="] img');
-  if (cardImgs.length >= 3) {
-    cardImgs[0].src = 'PRODUCTS/V.png'; // за първия продукт
-    cardImgs[1].src = 'PRODUCTS/B.png'; // за втория продукт
-    cardImgs[2].src = 'PRODUCTS/A.png'; // за третия продукт
-  }
-
-  // Ако съществува обект products, сменяме първата снимка в масива images за всеки продукт
-  if (window.products) {
-    if (products.dd1 && Array.isArray(products.dd1.images)) products.dd1.images[0] = 'PRODUCTS/V.png';
-    if (products.dd2 && Array.isArray(products.dd2.images)) products.dd2.images[0] = 'PRODUCTS/B.png';
-    if (products.dg1 && Array.isArray(products.dg1.images)) products.dg1.images[0] = 'PRODUCTS/A.png';
-  }
-
-  // При желание – сменяме и fallback‑изображенията
-  if (typeof FALLBACK !== 'undefined') {
-    if (FALLBACK.dd1 && Array.isArray(FALLBACK.dd1.images)) FALLBACK.dd1.images[0] = 'PRODUCTS/V.png';
-    if (FALLBACK.dd2 && Array.isArray(FALLBACK.dd2.images)) FALLBACK.dd2.images[0] = 'PRODUCTS/B.png';
-    if (FALLBACK.dg1 && Array.isArray(FALLBACK.dg1.images)) FALLBACK.dg1.images[0] = 'PRODUCTS/A.png';
-  }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Взимаме кой продукт е от URL: ?product=dd1 / dd2 / dg1
-  const params = new URLSearchParams(window.location.search);
-  const key = params.get('product');   // dd1, dd2, dg1
-
-  const descEl  = document.getElementById('description'); // текста под заглавието
-  const specsUl = document.getElementById('specs');       // списъка "Характеристики"
-
-  if (!key || !descEl || !specsUl) return; // ако не сме на продуктова страница
-
-  // Текстовете, които ми каза:
-  const data = {
-    dd1: {  // продукт V
-      desc: 'По-топли тонове, леко опушено, селско, „хамбарно“ усещане.',
-      spec: 'По-топли тонове, леко опушено, селско, „хамбарно“ усещане.'
-    },
-    dd2: {  // продукт B
-      desc: 'По-тъмни и по-чисти, устойчиво и плътно.',
-      spec: 'По-тъмни и по-чисти, устойчиво и плътно.'
-    },
-    dg1: {  // продукт A
-      desc: null, // описанието си остава както е
-      spec: 'Смесени, най-естествено-винтидж с патина, реално старинно.'
-    }
-  };
-
-  const cfg = data[key];
-  if (!cfg) return;
-
-  // ако имаме ново описание – сменяме го
-  if (cfg.desc) {
-    descEl.textContent = cfg.desc;
-  }
-
-  // добавяме НОВ ред в характеристиките
-  if (cfg.spec) {
-    const li = document.createElement('li');
-    li.textContent = cfg.spec;
-    specsUl.appendChild(li);
-  }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  
-  const titles = [
-    'Масивна греда',
-    'Стара дървена дъска',
-    'Рустик дъска'
-  ];
-
-  const productTitleEl = document.querySelector('#productTitle');
-
-  if (productTitleEl && titles.includes(productTitleEl.textContent.trim())) {
-    productTitleEl.style.display = 'none';
-  }
-
-});
-</script>
-  
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // взимаме трите карти на началната страница
-  const titles = document.querySelectorAll('#mainPage h3.font-semibold.text-lg');
-
-  // ако намерим 3 заглавия – сменяме текста им
-  titles.forEach(function (el) {
-    el.textContent = 'Естествено състарена дървена дъска';
-  });
-});
-</script>
-  
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-  const url = new URLSearchParams(window.location.search);
-  const product = url.get('product'); // dd1 / dd2 / dg1
-
-  // елементи, които показват името в продуктова страница
-  const titleEl = document.querySelector('h2.font-bold.text-2xl');
-  const subTitleEl = document.querySelector('#productTitle');
-
-  const oldNames = [
-    'Стара дървена дъска',
-    'Рустик дъска',
-    'Стара масивна греда'
-  ];
-
-  if (product && (titleEl || subTitleEl)) {
-
-    // сменяме заглавието над снимките + инфо
-    if (titleEl && oldNames.includes(titleEl.textContent.trim())) {
-      titleEl.textContent = 'Естествено състарена дървена дъска';
-    }
-
-    if (subTitleEl && oldNames.includes(subTitleEl.textContent.trim())) {
-      subTitleEl.textContent = 'Естествено състарена дървена дъска';
-    }
-  }
-});
-</script>
-
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
