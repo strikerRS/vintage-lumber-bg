@@ -1340,9 +1340,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // проверяваме дали сме на продуктова страница
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('product'); // dd1, dd2, dg1
+
+  // ако няма продукт в URL – нищо не правим
+  if (!key) return;
+
+  // взимаме елемента с описанието под заглавието
+  const descEl = document.getElementById('description');
+  if (!descEl) return;
+
+  // за трите продукта изчистваме текста в описанието
+  if (['dd1', 'dd2', 'dg1'].includes(key)) {
+    descEl.textContent = '';
+  }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
