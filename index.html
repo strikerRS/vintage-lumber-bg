@@ -1280,6 +1280,35 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+<!-- Добавете този код над </body> -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Описания и характеристики за трите продукта
+  const descV = 'По-топли тонове, леко опушено, селско, “хамбарно” усещане';
+  const descB = 'По-тъмни и по-чисти, устойчиво и плътно';
+  const descA = 'Смесени, най-естествено-винтидж с патина, реално старинно';
+
+  if (window.products) {
+    // Продукт V (dd1) – добавяме описанието и го вкарваме и в характеристиките
+    if (products.dd1) {
+      products.dd1.description = descV;
+      products.dd1.specs = products.dd1.specs || [];
+      products.dd1.specs.push(descV);
+    }
+    // Продукт B (dd2) – добавяме описанието и го вкарваме и в характеристиките
+    if (products.dd2) {
+      products.dd2.description = descB;
+      products.dd2.specs = products.dd2.specs || [];
+      products.dd2.specs.push(descB);
+    }
+    // Продукт A (dg1) – само характеристика
+    if (products.dg1) {
+      products.dg1.specs = products.dg1.specs || [];
+      products.dg1.specs.push(descA);
+    }
+  }
+});
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -1316,6 +1345,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
 
