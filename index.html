@@ -1255,9 +1255,35 @@ document.addEventListener('DOMContentLoaded', function(){
   line-height: 1.1 !important;
 }
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Смяна на изображенията в картите на началната страница
+  const cardImgs = document.querySelectorAll('#mainPage a[href*="product="] img');
+  if (cardImgs.length >= 3) {
+    cardImgs[0].src = 'PRODUCTS/V.png'; // за първия продукт
+    cardImgs[1].src = 'PRODUCTS/B.png'; // за втория продукт
+    cardImgs[2].src = 'PRODUCTS/A.png'; // за третия продукт
+  }
+
+  // Ако съществува обект products, сменяме първата снимка в масива images за всеки продукт
+  if (window.products) {
+    if (products.dd1 && Array.isArray(products.dd1.images)) products.dd1.images[0] = 'PRODUCTS/V.png';
+    if (products.dd2 && Array.isArray(products.dd2.images)) products.dd2.images[0] = 'PRODUCTS/B.png';
+    if (products.dg1 && Array.isArray(products.dg1.images)) products.dg1.images[0] = 'PRODUCTS/A.png';
+  }
+
+  // При желание – сменяме и fallback‑изображенията
+  if (typeof FALLBACK !== 'undefined') {
+    if (FALLBACK.dd1 && Array.isArray(FALLBACK.dd1.images)) FALLBACK.dd1.images[0] = 'PRODUCTS/V.png';
+    if (FALLBACK.dd2 && Array.isArray(FALLBACK.dd2.images)) FALLBACK.dd2.images[0] = 'PRODUCTS/B.png';
+    if (FALLBACK.dg1 && Array.isArray(FALLBACK.dg1.images)) FALLBACK.dg1.images[0] = 'PRODUCTS/A.png';
+  }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
