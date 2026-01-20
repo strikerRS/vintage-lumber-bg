@@ -246,8 +246,8 @@ a .vl-buy-btn-card { margin-top: 0.5rem; }
 
 <div id="mainPage" class="mt-24">
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-<a href="index.html?product=A" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="PRODUCTS/A.png" class="h-56 w-full object-cover rounded-t-xl">
+<a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
+<img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
@@ -331,7 +331,7 @@ a .vl-buy-btn-card { margin-top: 0.5rem; }
 </div>
 
 <script>
-const products={ A:{title:"Стара дървена дъска",images:["PRODUCTS/A.png","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, dg1:{title:"Стара масивна греда",images:["images/prоduct1.jpg"]description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
+const products={ dd1:{title:"Стара дървена дъска",images:["images/dd1.jpg","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, dd2:{title:"Рустик дъска",images:["images/dd3.jpg","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, dg1:{title:"Стара масивна греда",images:["images/logo.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
 
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
@@ -402,7 +402,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
   const FALLBACK = {
-    A:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
+    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
     dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
     dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
   };
@@ -893,7 +893,7 @@ if(navContactBtn && contactModal && closeContactModal){
 <!-- ===================== FIX: final small script that ensures buy-buttons exist and backgrounds are applied ========== -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  const mapping = { A: 'images/board_5.png', dd2: 'images/board_6.png', dg1: 'images/board_7.png' };
+  const mapping = { dd1: 'images/board_5.png', dd2: 'images/board_6.png', dg1: 'images/board_7.png' };
 
   // 1) Създай липсващи buy бутони (ако оригиналният инжектор не е сработил)
   document.querySelectorAll('a[href*="product="]').forEach(a=>{
@@ -904,7 +904,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(a.querySelector('.vl-buy-btn-card')) return; // вече има
       // цена fallback
       const p = window.products && products[key] ? products[key] : null;
-      const price = (p && p.price) ? p.price : (key==='A'?120: key==='dd2'?150:200);
+      const price = (p && p.price) ? p.price : (key==='dd1'?120: key==='dd2'?150:200);
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'vl-buy-btn-card vl-buy-btn';
@@ -963,7 +963,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const productBtn = document.querySelector('.vl-buy-btn-product');
   if(productBtn){
     const key = new URLSearchParams(location.search).get('product');
-    const src = mapping[key] || mapping['A'];
+    const src = mapping[key] || mapping['dd1'];
     enhance(productBtn, src);
   }
 
@@ -1271,34 +1271,9 @@ document.addEventListener('DOMContentLoaded', function () {
   if (descEl)  descEl.remove();
 });
 </script>
-  
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-
-  // вземаме всички бутони "КУПИ ХХ ЛВ." на началната страница
-  const buyButtons = document.querySelectorAll('#mainPage .vl-buy-btn');
-
-  buyButtons.forEach(btn => {
-    btn.style.backgroundImage = 'url("images/1.png")';
-    btn.style.backgroundSize = 'cover';
-    btn.style.backgroundPosition = 'center';
-    btn.style.backgroundRepeat = 'no-repeat';
-  });
-
-});
-</script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 
