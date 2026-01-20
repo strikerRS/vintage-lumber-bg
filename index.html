@@ -1273,31 +1273,21 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  
-  const cards = document.querySelectorAll('#mainPage a[href*="product="]');
+  // намираме трите картинки в картите на продуктите на началната страница
+  const imgs = document.querySelectorAll('#mainPage a[href*="product"] img');
 
-  cards.forEach(card => {
-    const url = new URL(card.href);
-    const key = url.searchParams.get('product'); // A, B, V
-    
-    const img = card.querySelector('img');
+  // пътищата до новите снимки
+  const srcs = [
+    'PRODUCTS/V.png', // първи продукт (ляв)
+    'PRODUCTS/B.png', // втори продукт (среден)
+    'PRODUCTS/A.png'  // трети продукт (десен)
+  ];
 
-    // ако изображението липсва или е празно → слагаме новото
-    if (img && (!img.src || img.src.includes('data:image') || img.src.includes('undefined'))) {
-      switch (key) {
-        case 'V':
-          img.src = 'PRODUCTS/V.png';
-          break;
-        case 'B':
-          img.src = 'PRODUCTS/B.png';
-          break;
-        case 'A':
-          img.src = 'PRODUCTS/A.png';
-          break;
-      }
+  imgs.forEach((img, index) => {
+    if (index < srcs.length) {
+      img.src = srcs[index];        // сменяме източника на снимката
+      img.alt = 'Продукт ' + (index + 1);
       img.style.objectFit = 'cover';
-      img.style.width = '100%';
-      img.style.height = '100%';
     }
   });
 });
@@ -1305,6 +1295,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
