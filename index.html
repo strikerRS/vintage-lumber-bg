@@ -1292,31 +1292,20 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // 👉 ТУК СА ВСИЧКИ ВЪЗМОЖНИ СЕЛЕКТОРИ ЗА КОЛИЧКАТА
-  // ако твоята е с id="cartIcon" или class="cart-icon" или class="cart" и т.н.
-  const cart = document.querySelector('#cartIcon, .cart-icon, .cart, [data-cart-icon], [data-cart]');
-  if (!cart) return; // ако не намерим количка – излизаме тихо
-
-  // намираме всички бутони "Купи"
-  // 1) .vl-buy-btn (както ги правихме)
-  // 2) всички button / a със съдържание "Купи"
-  let buyButtons = Array.from(document.querySelectorAll('.vl-buy-btn'));
-  const extraButtons = Array.from(document.querySelectorAll('button, a'))
-    .filter(el => el.textContent.trim().toLowerCase().startsWith('купи'));
-  buyButtons = Array.from(new Set(buyButtons.concat(extraButtons)));
+  // всички бутони "Купи"
+  const buyButtons = document.querySelectorAll('.vl-buy-btn');
 
   if (!buyButtons.length) return;
 
   buyButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      // намираме снимката на продукта, най-близо до бутона
+      // намираме най-близката снимка на продукта
       let card = btn.closest('a, .bg-white, .product-card, .group, .relative, .vl-card, div');
       let img = card ? card.querySelector('img') : null;
 
-      // ако не успеем да намерим в картата, пробваме в productPage
+      // ако не намерим в картата, пробваме в productPage
       if (!img) {
         const productPage = document.getElementById('productPage');
         if (productPage) img = productPage.querySelector('img');
@@ -1324,13 +1313,22 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!img) return;
 
       const imgRect = img.getBoundingClientRect();
-      const cartRect = cart.getBoundingClientRect();
+
+      // координати на "целта" – горен десен ъгъл (около количката)
+      const targetX = window.innerWidth - 40; // малко навътре от десния край
+      const targetY = 20;                     // малко надолу от горния край
+
+      const startX = imgRect.left + imgRect.width / 2;
+      const startY = imgRect.top + imgRect.height / 2;
+
+      const translateX = targetX - startX;
+      const translateY = targetY - startY;
 
       // клонираме снимката (дъската)
       const clone = img.cloneNode(true);
       clone.style.position = 'fixed';
-      clone.style.left = imgRect.left + 'px';
-      clone.style.top = imgRect.top + 'px';
+      clone.style.left = (imgRect.left) + 'px';
+      clone.style.top = (imgRect.top) + 'px';
       clone.style.width = imgRect.width + 'px';
       clone.style.height = imgRect.height + 'px';
       clone.style.zIndex = '9999';
@@ -1340,9 +1338,6 @@ document.addEventListener('DOMContentLoaded', function () {
       clone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
 
       document.body.appendChild(clone);
-
-      const translateX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
-      const translateY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
 
       // стартираме анимацията в следващ кадър
       requestAnimationFrame(function () {
@@ -1360,6 +1355,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
