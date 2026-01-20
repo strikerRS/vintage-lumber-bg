@@ -1271,9 +1271,41 @@ document.addEventListener('DOMContentLoaded', function () {
   if (descEl)  descEl.remove();
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  
+  const cards = document.querySelectorAll('#mainPage a[href*="product="]');
+
+  cards.forEach(card => {
+    const url = new URL(card.href);
+    const key = url.searchParams.get('product'); // A, B, V
+    
+    const img = card.querySelector('img');
+
+    // ако изображението липсва или е празно → слагаме новото
+    if (img && (!img.src || img.src.includes('data:image') || img.src.includes('undefined'))) {
+      switch (key) {
+        case 'V':
+          img.src = 'PRODUCTS/V.png';
+          break;
+        case 'B':
+          img.src = 'PRODUCTS/B.png';
+          break;
+        case 'A':
+          img.src = 'PRODUCTS/A.png';
+          break;
+      }
+      img.style.objectFit = 'cover';
+      img.style.width = '100%';
+      img.style.height = '100%';
+    }
+  });
+});
+</script>
 
 </body>
 </html>
+
 
 
 
