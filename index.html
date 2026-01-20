@@ -1292,9 +1292,40 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Вземаме кой продукт е от URL: ?product=A / B / V
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('product'); // A, B, V
+
+  const imgMap = {
+    'V': 'PRODUCTS/V.png',
+    'B': 'PRODUCTS/B.png',
+    'A': 'PRODUCTS/A.png'
+  };
+
+  const src = imgMap[key];
+  if (!src) return; // ако не сме на продуктова страница – нищо не пипаме
+
+  // Взимаме всички снимки в секцията на продукта
+  const productPage = document.getElementById('productPage');
+  if (!productPage) return;
+
+  const imgs = productPage.querySelectorAll('img');
+
+  imgs.forEach((img) => {
+    img.src = src;
+    img.alt = 'Продукт';
+    img.style.objectFit = 'cover';
+    img.style.width = '100%';
+    img.style.height = '100%';
+  });
+});
+</script>
 
 </body>
 </html>
+
 
 
 
