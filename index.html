@@ -1323,9 +1323,27 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  const titles = [
+    'Масивна греда',
+    'Стара дървена дъска',
+    'Рустик дъска'
+  ];
+
+  const productTitleEl = document.querySelector('#productTitle');
+
+  if (productTitleEl && titles.includes(productTitleEl.textContent.trim())) {
+    productTitleEl.style.display = 'none';
+  }
+
+});
+</script>
 
 </body>
 </html>
+
 
 
 
