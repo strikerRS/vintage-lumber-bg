@@ -1292,42 +1292,45 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Вземаме кой продукт е от URL: ?product=A / B / V
-  const params = new URLSearchParams(window.location.search);
-  const key = params.get('product'); // A, B или V
 
-  const imgMap = {
+  // Определяме кой продукт е
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('product');  // A / B / V
+
+  // Пътища към снимките (както ти ги каза!)
+  const imgsMap = {
     'V': 'PRODUCTS/V.png',
     'B': 'PRODUCTS/B.png',
     'A': 'PRODUCTS/A.png'
   };
 
-  const src = imgMap[key];
-  if (!src) return; // ако не сме на продуктова страница – излизаме
+  const src = imgsMap[key];
+  if (!src) return;
 
-  // Намираме основното счупено изображение в страницата на продукта
-  // (това, което показва ALT текста „Продукт“)
-  const mainImg = document.querySelector('img[alt="Продукт"]');
-  if (!mainImg) return;
+  // намираме трите малки квадратчета
+  const thumbs = document.querySelectorAll('#productPage img');
 
-  // Взимаме всички изображения в същия контейнер (голямата снимка + малките отдолу)
-  const container = mainImg.closest('div');
-  if (!container) return;
+  // очакваме последните 3 да са в тази секция
+  const count = thumbs.length;
+  if (count >= 3) {
+    for (let i = count - 3; i < count; i++) {
+      thumbs[i].src = src;
+      thumbs[i].alt = 'Продукт';
+      thumbs[i].style.objectFit = 'cover';
+      thumbs[i].style.width = '100%';
+      thumbs[i].style.height = '100%';
+    }
+  }
 
-  const imgs = container.querySelectorAll('img');
-
-  imgs.forEach(function (img) {
-    img.src = src;                 // задаваме съответното A/B/V
-    img.alt = 'Продукт';
-    img.style.objectFit = 'cover';
-  });
 });
 </script>
 
 </body>
 </html>
+
 
 
 
