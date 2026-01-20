@@ -1352,10 +1352,41 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const url = new URLSearchParams(window.location.search);
+  const product = url.get('product'); // dd1 / dd2 / dg1
+
+  // елементи, които показват името в продуктова страница
+  const titleEl = document.querySelector('h2.font-bold.text-2xl');
+  const subTitleEl = document.querySelector('#productTitle');
+
+  const oldNames = [
+    'Стара дървена дъска',
+    'Рустик дъска',
+    'Стара масивна греда'
+  ];
+
+  if (product && (titleEl || subTitleEl)) {
+
+    // сменяме заглавието над снимките + инфо
+    if (titleEl && oldNames.includes(titleEl.textContent.trim())) {
+      titleEl.textContent = 'Естествено състарена дървена дъска';
+    }
+
+    if (subTitleEl && oldNames.includes(subTitleEl.textContent.trim())) {
+      subTitleEl.textContent = 'Естествено състарена дървена дъска';
+    }
+  }
+});
+</script>
 
 
 </body>
 </html>
+
 
 
 
