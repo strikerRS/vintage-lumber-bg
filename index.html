@@ -1340,44 +1340,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
+  
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // проверяваме дали сме на продуктова страница
-  const params = new URLSearchParams(window.location.search);
-  const key = params.get('product'); // dd1, dd2, dg1
+  // взимаме трите карти на началната страница
+  const titles = document.querySelectorAll('#mainPage h3.font-semibold.text-lg');
 
-  // ако няма продукт в URL – нищо не правим
-  if (!key) return;
-
-  // взимаме елемента с описанието под заглавието
-  const descEl = document.getElementById('description');
-  if (!descEl) return;
-
-  // за трите продукта изчистваме текста в описанието
-  if (['dd1', 'dd2', 'dg1'].includes(key)) {
-    descEl.textContent = '';
-  }
+  // ако намерим 3 заглавия – сменяме текста им
+  titles.forEach(function (el) {
+    el.textContent = 'Естествено състарена дървена дъска';
+  });
 });
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const titleEl = document.querySelector('#productTitle');
-  if (!titleEl) return;
 
-  const oldNames = [
-    'Стара дървена дъска',
-    'Рустик дъска',
-    'Стара масивна греда'
-  ];
-
-  if (oldNames.includes(titleEl.textContent.trim())) {
-    titleEl.textContent = 'Естествено състарена дървена дъска';
-  }
-});
-</script>
 
 </body>
 </html>
+
 
 
 
