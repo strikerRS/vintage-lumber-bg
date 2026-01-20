@@ -1292,45 +1292,23 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // 1) Намираме или създаваме иконата на количка горе вдясно
-  let cart = document.querySelector('#cartIcon');
-  if (!cart) {
-    cart = document.createElement('div');
-    cart.id = 'cartIcon';
-    cart.textContent = '🛒';
-    Object.assign(cart.style, {
-      position: 'fixed',
-      top: '12px',
-      right: '12px',
-      width: '40px',
-      height: '40px',
-      borderRadius: '9999px',
-      background: 'rgba(0,0,0,0.4)',
-      color: 'white',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '20px',
-      zIndex: '9999',
-      boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-      cursor: 'pointer'
-    });
-    document.body.appendChild(cart);
-  }
+  // 👉 ТУК ПИПАШ САМО АКО ТРЯБВА:
+  // смени '#cartIcon' с реалния селектор на твоята количка, ако е друг
+  const cart = document.querySelector('#cartIcon, .cart-icon, [data-cart-icon]');
+  if (!cart) return;
 
-  // 2) Вземаме всички бутони "Купи"
-  const buyButtons = document.querySelectorAll('.vl-buy-btn, button[data-buy], a[data-buy]');
+  // всички бутони "Купи" (ако класът е друг – смени '.vl-buy-btn')
+  const buyButtons = document.querySelectorAll('.vl-buy-btn');
 
   buyButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      // намираме най-близката снимка на продукта
-      let card = btn.closest('a, .bg-white, .relative, .group, div');
+      // намираме картата / продукта около бутона
+      let card = btn.closest('a, .bg-white, .product-card, .group, .relative, .vl-card');
       let img = card ? card.querySelector('img') : null;
 
-      // ако не намерим в картата, пробваме първата снимка в productPage
+      // ако не намерим в картата, ползваме първата снимка в productPage
       if (!img) {
         const productPage = document.getElementById('productPage');
         if (productPage) {
@@ -1343,27 +1321,25 @@ document.addEventListener('DOMContentLoaded', function () {
       const imgRect = img.getBoundingClientRect();
       const cartRect = cart.getBoundingClientRect();
 
-      // правим летящо копие на дъската
+      // правим умалено копие на дъската
       const clone = img.cloneNode(true);
-      Object.assign(clone.style, {
-        position: 'fixed',
-        left: imgRect.left + 'px',
-        top: imgRect.top + 'px',
-        width: imgRect.width + 'px',
-        height: imgRect.height + 'px',
-        zIndex: '9998',
-        transition: 'transform 0.8s ease-in-out, opacity 0.8s ease-in-out',
-        pointerEvents: 'none',
-        borderRadius: '8px',
-        objectFit: 'cover'
-      });
+      clone.style.position = 'fixed';
+      clone.style.left = imgRect.left + 'px';
+      clone.style.top = imgRect.top + 'px';
+      clone.style.width = imgRect.width + 'px';
+      clone.style.height = imgRect.height + 'px';
+      clone.style.zIndex = '9999';
+      clone.style.pointerEvents = 'none';
+      clone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
+      clone.style.borderRadius = '8px';
+      clone.style.objectFit = 'cover';
 
       document.body.appendChild(clone);
 
       const translateX = cartRect.left + cartRect.width / 2 - (imgRect.left + imgRect.width / 2);
       const translateY = cartRect.top + cartRect.height / 2 - (imgRect.top + imgRect.height / 2);
 
-      // малко забавяне за да се “хване” началната позиция
+      // стартираме анимацията
       requestAnimationFrame(function () {
         clone.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(0.2)';
         clone.style.opacity = '0';
@@ -1372,16 +1348,6 @@ document.addEventListener('DOMContentLoaded', function () {
       clone.addEventListener('transitionend', function () {
         clone.remove();
       });
-
-      // малък "bump" ефект на количката
-      cart.animate(
-        [
-          { transform: 'scale(1)' },
-          { transform: 'scale(1.25)' },
-          { transform: 'scale(1)' }
-        ],
-        { duration: 300, easing: 'ease-out' }
-      );
     });
   });
 });
@@ -1389,6 +1355,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
