@@ -1280,9 +1280,53 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Взимаме кой продукт е от URL: ?product=dd1 / dd2 / dg1
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('product');   // dd1, dd2, dg1
+
+  const descEl  = document.getElementById('description'); // текста под заглавието
+  const specsUl = document.getElementById('specs');       // списъка "Характеристики"
+
+  if (!key || !descEl || !specsUl) return; // ако не сме на продуктова страница
+
+  // Текстовете, които ми каза:
+  const data = {
+    dd1: {  // продукт V
+      desc: 'По-топли тонове, леко опушено, селско, „хамбарно“ усещане.',
+      spec: 'По-топли тонове, леко опушено, селско, „хамбарно“ усещане.'
+    },
+    dd2: {  // продукт B
+      desc: 'По-тъмни и по-чисти, устойчиво и плътно.',
+      spec: 'По-тъмни и по-чисти, устойчиво и плътно.'
+    },
+    dg1: {  // продукт A
+      desc: null, // описанието си остава както е
+      spec: 'Смесени, най-естествено-винтидж с патина, реално старинно.'
+    }
+  };
+
+  const cfg = data[key];
+  if (!cfg) return;
+
+  // ако имаме ново описание – сменяме го
+  if (cfg.desc) {
+    descEl.textContent = cfg.desc;
+  }
+
+  // добавяме НОВ ред в характеристиките
+  if (cfg.spec) {
+    const li = document.createElement('li');
+    li.textContent = cfg.spec;
+    specsUl.appendChild(li);
+  }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
