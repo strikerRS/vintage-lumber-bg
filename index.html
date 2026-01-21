@@ -562,13 +562,11 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     });
     // append after product title/description block (try to find a good place)
     const rightCol = document.querySelector('#productPage .content > .grid > div:nth-child(2)');
-    if(rightCol){
-      rightCol.insertBefore(priceP, rightCol.firstChild.nextSibling);
-      rightCol.insertBefore(btn, priceP.nextSibling);
-    } else {
-      content.appendChild(priceP);
-      content.appendChild(btn);
-    }
+if(rightCol){
+  rightCol.insertBefore(btn, rightCol.firstChild.nextSibling);
+} else {
+  content.appendChild(btn);
+}
   }
 
   // render cart panel items with qty controls (+/-) and refresh button
@@ -1439,6 +1437,7 @@ document.addEventListener('DOMContentLoaded', function(){
    
 </body>
 </html>
+
 
 
 
