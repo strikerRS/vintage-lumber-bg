@@ -1121,12 +1121,14 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <style>
-  /* Смъкване на прозореца с кошницата малко надолу */
+  /* Смъкване на прозореца с кошницата малко надолу + винаги най-отгоре */
   #vl-cart-panel {
-    align-items: flex-start !important;  /* вместо да е в самия връх на екрана */
-    padding-top: 5rem !important;        /* колко да е надолу; може 4rem/6rem по вкус */
+    align-items: flex-start !important;
+    padding-top: 5rem !important;
+    z-index: 9999 !important;   /* ВАЖНО: панелът е над бутоните КУПИ */
   }
 </style>
+
 <script>
 /* === Подмяна на дървените фонове === */
 document.addEventListener('DOMContentLoaded', function(){
@@ -1438,6 +1440,7 @@ document.addEventListener('DOMContentLoaded', function(){
    
 </body>
 </html>
+
 
 
 
