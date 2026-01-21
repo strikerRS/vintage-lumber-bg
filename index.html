@@ -401,12 +401,11 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
- const FALLBACK = {
-  dd1:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:120},
-  dd2:{title:"Рустик дъска",       images:["PRODUCTS/B.png"], price:150},
-  dg1:{title:"Стара масивна греда", images:["PRODUCTS/A.png"], price:200}
-};
-
+  const FALLBACK = {
+    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:120},
+    dd2:{title:"Рустик дъска", images:["images/dd2.jpg"], price:150},
+    dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:200}
+  };
 
   // --- ensure cart panel DOM exists (create only if not present) ---
   function ensureCartDOM(){
@@ -1438,7 +1437,6 @@ document.addEventListener('DOMContentLoaded', function(){
    
 </body>
 </html>
-
 
 
 
