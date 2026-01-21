@@ -1441,76 +1441,69 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function(){
-  // Хващаме бутоните "Купи" в продуктовата страница (vl-buy-btn-product)
-  document.querySelectorAll('.vl-buy-btn-product').forEach(btn => {
-    // Добавяме capturing слушател, който спира оригиналната анимация
-    btn.addEventListener('click', function(e){
-      // спира всички други click‑хендлъри върху бутона (отлитащи снимки и др.)
+document.addEventListener('DOMContentLoaded', function() {
+  // прихващаме клика на бутона "Купи" само на продуктовата страница
+  document.querySelectorAll('.vl-buy-btn-product').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      // предотвратяваме оригиналните обработчици (те анимират снимката)
       e.stopImmediatePropagation();
+      e.preventDefault();
 
-      // Определяме координатите на целта (горен десен ъгъл при количката)
-      const targetX = window.innerWidth - 40;
-      const targetY = 20;
-
-      // Фон на бутона (дървената дъска)
-      const btnRect   = btn.getBoundingClientRect();
-      const styles    = window.getComputedStyle(btn);
-      const bgImage   = styles.backgroundImage;
-      const bgSize    = styles.backgroundSize  || 'cover';
-      const bgPos     = styles.backgroundPosition || 'center';
-      const bgRepeat  = styles.backgroundRepeat || 'no-repeat';
-      const borderRad = styles.borderRadius || '8px';
-
-      // Ако има фон (дървена дъска) – копираме го и го анимираме
-      if (bgImage && bgImage !== 'none') {
-        const startX2 = btnRect.left + btnRect.width  / 2;
-        const startY2 = btnRect.top  + btnRect.height / 2;
-        const translateX2 = targetX - startX2;
-        const translateY2 = targetY - startY2;
-
-        const bgClone = document.createElement('div');
-        bgClone.style.position        = 'fixed';
-        bgClone.style.left            = btnRect.left + 'px';
-        bgClone.style.top             = btnRect.top  + 'px';
-        bgClone.style.width           = btnRect.width  + 'px';
-        bgClone.style.height          = btnRect.height + 'px';
-        bgClone.style.zIndex          = '9998';
-        bgClone.style.pointerEvents   = 'none';
-        bgClone.style.borderRadius    = borderRad;
-        bgClone.style.backgroundImage = bgImage;
-        bgClone.style.backgroundSize  = bgSize;
-        bgClone.style.backgroundPosition = bgPos;
-        bgClone.style.backgroundRepeat   = bgRepeat;
-        bgClone.style.transition      = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
-
-        document.body.appendChild(bgClone);
-
-        requestAnimationFrame(() => {
-          bgClone.style.transform = `translate(${translateX2}px, ${translateY2}px) scale(0.3)`;
-          bgClone.style.opacity   = '0';
-        });
-
-        bgClone.addEventListener('transitionend', () => {
-          bgClone.remove();
-        });
-      }
-
-      // Добавяне в количката (копирано от твоите buy‑бутон скриптове)
-      const key   = btn.dataset.key;
-      const cart  = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
+      // четем ключа на продукта от data-key
+      const key  = btn.dataset.key;
+      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
       cart.push(key);
       localStorage.setItem('vl_cart_v1', JSON.stringify(cart));
 
+      // обновяваме брояча и показваме toast (използват се вече дефинираните функции)
       if (typeof updateHeaderCount === 'function') updateHeaderCount();
-      if (typeof showToast === 'function') showToast(key);
-    }, true); // capturing: true, за да изпреварим другите listeners
+      if (typeof showToast        === 'function') showToast(key);
+
+      // 🪵 анимираме само дървения фон на бутона
+      const btnRect   = btn.getBoundingClientRect();
+      const styles    = window.getComputedStyle(btn);
+      const targetX   = window.innerWidth - 40; // горен десен ъгъл
+      const targetY   = 20;
+      const startX    = btnRect.left + btnRect.width  / 2;
+      const startY    = btnRect.top  + btnRect.height / 2;
+      const translateX = targetX - startX;
+      const translateY = targetY - startY;
+
+      // създаваме копие на фона (малка дъска)
+      const bgClone = document.createElement('div');
+      bgClone.style.position        = 'fixed';
+      bgClone.style.left            = btnRect.left + 'px';
+      bgClone.style.top             = btnRect.top  + 'px';
+      bgClone.style.width           = btnRect.width  + 'px';
+      bgClone.style.height          = btnRect.height + 'px';
+      bgClone.style.zIndex          = '9998';
+      bgClone.style.pointerEvents   = 'none';
+      bgClone.style.borderRadius    = styles.borderRadius || '8px';
+      bgClone.style.backgroundImage = styles.backgroundImage;
+      bgClone.style.backgroundSize  = styles.backgroundSize  || 'cover';
+      bgClone.style.backgroundPosition = styles.backgroundPosition || 'center';
+      bgClone.style.backgroundRepeat   = styles.backgroundRepeat || 'no-repeat';
+      bgClone.style.transition      = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
+
+      document.body.appendChild(bgClone);
+
+      requestAnimationFrame(function() {
+        bgClone.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(0.3)';
+        bgClone.style.opacity   = '0';
+      });
+
+      bgClone.addEventListener('transitionend', function() {
+        bgClone.remove();
+      });
+
+    }, true); // capture=true, за да изпреварим оригиналния listener
   });
 });
 </script>
 
 </body>
 </html>
+
 
 
 
