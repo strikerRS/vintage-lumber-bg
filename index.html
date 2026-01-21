@@ -1455,10 +1455,6 @@ document.addEventListener('DOMContentLoaded', function() {
       cart.push(key);
       localStorage.setItem('vl_cart_v1', JSON.stringify(cart));
 
-      // обновяваме брояча и показваме toast (използват се вече дефинираните функции)
-      if (typeof updateHeaderCount === 'function') updateHeaderCount();
-      if (typeof showToast        === 'function') showToast(key);
-
       // 🪵 анимираме само дървения фон на бутона
       const btnRect   = btn.getBoundingClientRect();
       const styles    = window.getComputedStyle(btn);
@@ -1469,39 +1465,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const translateX = targetX - startX;
       const translateY = targetY - startY;
 
-      // създаваме копие на фона (малка дъска)
-      const bgClone = document.createElement('div');
-      bgClone.style.position        = 'fixed';
-      bgClone.style.left            = btnRect.left + 'px';
-      bgClone.style.top             = btnRect.top  + 'px';
-      bgClone.style.width           = btnRect.width  + 'px';
-      bgClone.style.height          = btnRect.height + 'px';
-      bgClone.style.zIndex          = '9998';
-      bgClone.style.pointerEvents   = 'none';
-      bgClone.style.borderRadius    = styles.borderRadius || '8px';
-      bgClone.style.backgroundImage = styles.backgroundImage;
-      bgClone.style.backgroundSize  = styles.backgroundSize  || 'cover';
-      bgClone.style.backgroundPosition = styles.backgroundPosition || 'center';
-      bgClone.style.backgroundRepeat   = styles.backgroundRepeat || 'no-repeat';
-      bgClone.style.transition      = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
-
-      document.body.appendChild(bgClone);
-
-      requestAnimationFrame(function() {
-        bgClone.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(0.3)';
-        bgClone.style.opacity   = '0';
-      });
-
-      bgClone.addEventListener('transitionend', function() {
-        bgClone.remove();
-      });
-
-    }, true); // capture=true, за да изпреварим оригиналния listener
-  });
-});
-</script>
-
 
 </body>
 </html>
+
 
