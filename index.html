@@ -401,12 +401,11 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
- const FALLBACK = {
-    dd1:{title:"Стара дървена дъска", images:["images/dd1.jpg"], price:25},
-    dd2:{title:"Рустик дъска",       images:["images/dd2.jpg"], price:25},
-    dg1:{title:"Стара масивна греда", images:["images/dg1.jpg"], price:28}
+  const FALLBACK = {
+    dd1:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:120},
+    dd2:{title:"Рустик дъска", images:["PRODUCTS/B.png"], price:150},
+    dg1:{title:"Стара масивна греда", images:["PRODUCTS/A.png"], price:200}
   };
-
 
   // --- ensure cart panel DOM exists (create only if not present) ---
   function ensureCartDOM(){
@@ -903,7 +902,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(a.querySelector('.vl-buy-btn-card')) return; // вече има
       // цена fallback
       const p = window.products && products[key] ? products[key] : null;
-      const price = (p && p.price) ? p.price : (key==='dd1'?25: key==='dd2'?25:28);
+      const price = (p && p.price) ? p.price : (key==='dd1'?120: key==='dd2'?150:200);
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'vl-buy-btn-card vl-buy-btn';
@@ -1023,9 +1022,8 @@ document.addEventListener('DOMContentLoaded', function(){
       <label><span class="lang-bg">Адрес:</span><span class="lang-en hidden">Address:</span></label>
       <input type="text" name="address">
 
-     <!-- невидимо поле с продуктовата информация (попълва се автоматично) -->
-<textarea name="cart_contents" id="vl-order-cart-contents" style="display:none;"></textarea>
-
+      <!-- невидимо поле с продуктовата информация (попълва се автоматично) -->
+      <input type="hidden" name="cart_contents" id="vl-order-cart-contents">
 
       <button type="submit">
         <span class="lang-bg">Изпрати поръчката</span>
@@ -1413,79 +1411,9 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 </script>
-   <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('vl-order-form');
-  if (!form) return;
-
-  form.addEventListener('submit', function (e) {
-    // четем количката от localStorage
-    let cart;
-    try {
-      cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-    } catch (err) {
-      cart = [];
-    }
-
-    if (!cart.length) {
-      alert('Нямате добавени продукти в кошницата.');
-      e.preventDefault();
-      return;
-    }
-
-    // продуктов каталог (имена + цени)
-    const PRODUCTS = {
-      dd1: { name: 'Стара дървена дъска',  price: 120 },
-      dd2: { name: 'Рустик дъска',         price: 150 },
-      dg1: { name: 'Стара масивна греда',  price: 200 }
-    };
-
-    const VAT_RATE = 0.20;  // 20% ДДС
-    const SHIPPING = 20;    // фиксирана доставка (ако искаш, ще я направим динамична)
-
-    // броим по колко от всеки продукт има
-    const counts = {};
-    cart.forEach(key => {
-      counts[key] = (counts[key] || 0) + 1;
-    });
-
-    let subtotal = 0;
-    const lines = [];
-
-    lines.push('*** ПОРЪЧКА ОТ САЙТА ***');
-    lines.push('');
-    lines.push('Продукти:');
-
-    Object.keys(counts).forEach(key => {
-      const p = PRODUCTS[key] || { name: key, price: 0 };
-      const qty = counts[key];
-      const lineTotal = (p.price || 0) * qty;
-      subtotal += lineTotal;
-      lines.push(` - ${p.name} × ${qty} = ${lineTotal} лв`);
-    });
-
-    const vat = subtotal * VAT_RATE;
-    const total = subtotal + vat + SHIPPING;
-
-    lines.push('');
-    lines.push(`Междинна сума: ${subtotal.toFixed(2)} лв`);
-    lines.push(`ДДС (20%): ${vat.toFixed(2)} лв`);
-    lines.push(`Доставка: ${SHIPPING.toFixed(2)} лв`);
-    lines.push(`Крайна сума: ${total.toFixed(2)} лв`);
-
-    const summaryField = document.getElementById('vl-order-cart-contents');
-    if (summaryField) {
-      summaryField.value = lines.join('\n');
-    }
-  });
-});
-</script>
-
+   
 </body>
 </html>
-
-
-
 
 
 
