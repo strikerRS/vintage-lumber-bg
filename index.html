@@ -972,29 +972,9 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
+<!-- ====== ORDER FORM MODAL (INTEGRATED) ====== -->
+<style>
   /* Модален фон и стилове */
-  #orderSection {
-    display: none;
-    position: fixed;
-    inset: 0;
-    align-items: center;
-    justify-content: center;
-    z-index: 2200;
-    background: #ffffff;          /* ПЛЪТЕН БЯЛ ФОН ЗА ЦЕЛИЯ ЕКРАН */
-  }
-
-  #orderSection.open {
-    display: flex;
-  }
-
-  #orderSection .overlay {
-    position: absolute;
-    inset: 0;
-    background: #ffffff;          /* вместо прозрачно черно */
-    backdrop-filter: none;        /* махаме замъгляването */
-    opacity: 1;
-  }
-
   #orderSection { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
   #orderSection.open { display: flex; }
   #orderSection .overlay { position:absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
@@ -1434,8 +1414,6 @@ document.addEventListener('DOMContentLoaded', function () {
    
 </body>
 </html>
-
-
 
 
 
