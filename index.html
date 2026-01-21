@@ -1439,34 +1439,10 @@ document.addEventListener('DOMContentLoaded', function(){
     }, true); // използваме capture, за да изпреварим оригиналния listener
   });
 });
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // прихващаме клика на бутона "Купи" само на продуктовата страница
-  document.querySelectorAll('.vl-buy-btn-product').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      // предотвратяваме оригиналните обработчици (те анимират снимката)
-      e.stopImmediatePropagation();
-      e.preventDefault();
-
-      // четем ключа на продукта от data-key
-      const key  = btn.dataset.key;
-      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-      cart.push(key);
-      localStorage.setItem('vl_cart_v1', JSON.stringify(cart));
-
-      // 🪵 анимираме само дървения фон на бутона
-      const btnRect   = btn.getBoundingClientRect();
-      const styles    = window.getComputedStyle(btn);
-      const targetX   = window.innerWidth - 40; // горен десен ъгъл
-      const targetY   = 20;
-      const startX    = btnRect.left + btnRect.width  / 2;
-      const startY    = btnRect.top  + btnRect.height / 2;
-      const translateX = targetX - startX;
-      const translateY = targetY - startY;
-
-
+</scriptt>
+   
 </body>
 </html>
+
 
 
