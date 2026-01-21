@@ -1301,11 +1301,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   buyButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      // намираме най-близката снимка на продукта
-      let card = btn.closest('a, .bg-white, .product-card, .group, .relative, .vl-card, div');
-      let img = card ? card.querySelector('img') : null;
-
-      // ако не намерим в картата, пробваме в productPage
+     
       if (!img) {
         const productPage = document.getElementById('productPage');
         if (productPage) img = productPage.querySelector('img');
@@ -1443,6 +1439,7 @@ document.addEventListener('DOMContentLoaded', function(){
    
 </body>
 </html>
+
 
 
 
