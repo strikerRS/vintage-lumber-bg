@@ -1188,9 +1188,9 @@ document.addEventListener('DOMContentLoaded', function(){
     color: #000 !important;
   }
 <style>
-  
 <style>
 /* --- унифицирани дървени бутони (вън & вътре) --- */
+
 .vl-buy-btn-card,
 #productPage .vl-buy-btn-product {
   display: flex !important;
@@ -1201,6 +1201,7 @@ document.addEventListener('DOMContentLoaded', function(){
   max-width: 480px !important;
   height: 60px !important;
   margin: 0.9rem auto !important;
+
   padding: 0 2.6rem !important;
 
   background-size: cover !important;
@@ -1214,38 +1215,22 @@ document.addEventListener('DOMContentLoaded', function(){
   transition: transform 0.18s cubic-bezier(.2,.8,.2,1);
 }
 
-/* --- текст върху бутона (като на първия бутон) --- */
+/* --- текст върху бутона --- */
+
 .vl-buy-text {
-  font-size: 1.15rem !important;
-  font-weight: 900 !important;
-  text-transform: uppercase !important;
+  font-size: 1.22rem !important;
+  font-weight: 800 !important;
   white-space: nowrap !important;
-
-  color: #ffffff !important;
-  -webkit-text-stroke: 1px #5a3a1f !important;
-  text-stroke: 1px #5a3a1f !important;
-
-  text-shadow:
-    0 1px 1px rgba(0,0,0,0.5),
-    0 0 4px rgba(0,0,0,0.4) !important;
-
+  color: #000 !important;
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 1.1 !important;
+  line-height: 1 !important;
 }
 
-/* --- леко свиване при клик --- */
+/* --- пулс ефект при клик --- */
 .vl-buy-btn-card:active,
 #productPage .vl-buy-btn-product:active {
   transform: scale(0.94);
-}
-
-/* --- ВАЖНО: прозорчетата винаги над бутоните --- */
-#vl-cart-toast,
-#vl-cart-panel,
-#orderSection {
-  position: fixed !important;
-  z-index: 99999 !important;
 }
 </style>
 
@@ -1449,13 +1434,31 @@ document.addEventListener('DOMContentLoaded', function(){
     }, true); // използваме capture, за да изпреварим оригиналния listener
   });
 });
-</script>
+</scriptt>
+<style>
+/* === Шрифт за бутоните КУПИ — финален и правилен === */
+.vl-buy-text {
+  font-size: 1.15rem !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
 
+  color: #ffffff !important;   /* бял текст */
+  -webkit-text-stroke: 1px #5a3a1f !important; /* кафяв контур */
+  text-stroke: 1px #5a3a1f !important;
+
+  text-shadow:
+    0 1px 1px rgba(0,0,0,0.5),
+    0 0 4px rgba(0,0,0,0.4) !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.1 !important;
+}
+</style>
 
 </body>
 </html>
-
-
 
 
 
