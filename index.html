@@ -977,7 +977,7 @@ document.addEventListener('DOMContentLoaded', function(){
   /* Модален фон и стилове */
   #orderSection { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
   #orderSection.open { display: flex; }
-  #orderSection .overlay { position: absolute; inset: 0; background: #000; backdrop-filter: none; }
+  #orderSection .overlay { position:absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
   #orderSection .box { 
     position: relative; z-index: 2201; width: 360px; max-width: 92%; 
     background: #fff; border-radius: 10px; padding: 18px; 
