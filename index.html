@@ -551,7 +551,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     btn.type = 'button';
     btn.className = 'vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded w-full';
     btn.dataset.key = key;
-    btn.innerText = `Купи ${p.price} eu.`;
+    btn.innerText = `Купи ${p.price} EUR`;
     btn.addEventListener('click', function(e){
       e.preventDefault();
       const arr = loadCart();
@@ -1414,6 +1414,7 @@ document.addEventListener('DOMContentLoaded', function () {
    
 </body>
 </html>
+
 
 
 
