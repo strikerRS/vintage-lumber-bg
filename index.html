@@ -1121,14 +1121,12 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <style>
-  /* Смъкване на прозореца с кошницата малко надолу + винаги най-отгоре */
+  /* Смъкване на прозореца с кошницата малко надолу */
   #vl-cart-panel {
-    align-items: flex-start !important;
-    padding-top: 5rem !important;
-    z-index: 9999 !important;   /* ВАЖНО: панелът е над бутоните КУПИ */
+    align-items: flex-start !important;  /* вместо да е в самия връх на екрана */
+    padding-top: 5rem !important;        /* колко да е надолу; може 4rem/6rem по вкус */
   }
 </style>
-
 <script>
 /* === Подмяна на дървените фонове === */
 document.addEventListener('DOMContentLoaded', function(){
@@ -1437,34 +1435,34 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 </scriptt>
-  <style>
-/* Финален стил за текста върху всички дървени бутони КУПИ */
+<style>
+/* ВРЪЩАМЕ ШРИФТА КАКТО НА ПЪРВИЯ БУТОН */
 .vl-buy-text {
-  font-size: 1.15rem !important;
+  font-family: inherit !important;
+  font-size: 1.1rem !important;
   font-weight: 900 !important;
   text-transform: uppercase !important;
-  white-space: nowrap !important;
-
   color: #ffffff !important;
+
   -webkit-text-stroke: 1px #5a3a1f !important;
   text-stroke: 1px #5a3a1f !important;
 
   text-shadow:
     0 1px 1px rgba(0,0,0,0.5),
-    0 0 4px rgba(0,0,0,0.4) !important;
+    0 0 3px rgba(0,0,0,0.4) !important;
 
+  white-space: nowrap !important;
+  line-height: 1 !important;
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 1.1 !important;
+}
+
+.vl-buy-bg-overlay {
+  display: none !important;  /* както е на първия! */
 }
 </style>
- 
+
 </body>
 </html>
-
-
-
-
-
 
 
