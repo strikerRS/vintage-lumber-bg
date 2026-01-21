@@ -1461,8 +1461,25 @@ document.addEventListener('DOMContentLoaded', function(){
   display: none !important;  /* както е на първия! */
 }
 </style>
+.vl-buy-btn-card,
+#productPage .vl-buy-btn-product {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+#orderSection,
+#orderSection .box,
+#orderSection .overlay {
+  position: relative !important;
+  z-index: 99999 !important;
+}
+
+#vl-cart-panel {
+  z-index: 99990 !important;
+}
 
 </body>
 </html>
+
 
 
