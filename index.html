@@ -1477,9 +1477,25 @@ document.addEventListener('DOMContentLoaded', function(){
 #vl-cart-panel {
   z-index: 99990 !important;
 }
+<style>
+  /* 1. Всички бутони "Купи" да са под прозорците */
+  .vl-buy-btn-card,
+  #productPage .vl-buy-btn-product {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* 2. Всички прозорчета (кошница, toast, форма за поръчка) винаги най-отгоре */
+  #vl-cart-panel,
+  #vl-cart-toast,
+  #orderSection {
+    z-index: 99999 !important;
+  }
+</style>
 
 </body>
 </html>
+
 
 
 
