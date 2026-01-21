@@ -444,7 +444,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
   }
 
   // --- helpers to read product data (use page's products if present) ---
-  function getProductObj(key){
+    function getProductObj(key){
     if(window.products && products[key]){
       // ensure price/images exist (fallback)
       const p = Object.assign({}, products[key]);
@@ -454,6 +454,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     }
     return FALLBACK[key] ? Object.assign({}, FALLBACK[key]) : {title:key, images:[], price:0};
   }
+
 
   // --- cart stored in localStorage as array of item objects {key, qty} OR simple array of keys ---
   // We'll store as array of keys allowing duplicates (ease of operations) similar to previous code.
@@ -1418,47 +1419,26 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-  
+
 <script>
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function() {
   // хващаме бутоните "Купи" на продуктовата страница (vl-buy-btn-product)
   const productBtns = document.querySelectorAll('.vl-buy-btn-product');
   productBtns.forEach(btn => {
-    btn.addEventListener('click', function(e){
-      // спираме изпълнението на другите click‑хендлъри (анимацията)
+    btn.addEventListener('click', function(e) {
       e.stopImmediatePropagation();
 
-      // взимаме ключа на продукта
       const key = btn.dataset.key;
-      // четем количката и добавяме продукта
       const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
       cart.push(key);
       localStorage.setItem('vl_cart_v1', JSON.stringify(cart));
 
-      // обновяваме брояча и показваме toast
       if (typeof updateHeaderCount === 'function') updateHeaderCount();
       if (typeof showToast === 'function') showToast(key);
-
-      // тук НЕ правим анимация за снимката – само добавяне в количката
-    }, true); // използваме capture, за да изпреварим оригиналния listener
+    }, true);
   });
 });
-</scriptt>
-   
-</body>
-  <script>
-window.productImages = {
-  dd1: "PRODUCTS/V.png",
-  dd2: "PRODUCTS/B.png",
-  dg1: "PRODUCTS/A.png"
-};
 </script>
 
+</body>
 </html>
-
-
-
-
-
-
-
