@@ -542,11 +542,8 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     // avoid duplicates
     if(content.querySelector('.vl-buy-btn-product')) return;
     const p = getProductObj(key);
-    // price line
-    const priceP = document.createElement('p');
-    priceP.className = 'vl-buy-price text-[#6B4226] font-bold mb-2';
-    priceP.innerText = `Цена: ${p.price} лв.`;
-    // buy button
+
+    // само бутон "Купи", без ред "Цена: ..."
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded w-full';
@@ -560,16 +557,15 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
       updateHeaderCount();
       showToast(key);
     });
-    // append after product title/description block (try to find a good place)
+
     const rightCol = document.querySelector('#productPage .content > .grid > div:nth-child(2)');
     if(rightCol){
-      rightCol.insertBefore(priceP, rightCol.firstChild.nextSibling);
-      rightCol.insertBefore(btn, priceP.nextSibling);
+      rightCol.insertBefore(btn, rightCol.firstChild.nextSibling);
     } else {
-      content.appendChild(priceP);
       content.appendChild(btn);
     }
   }
+
 
   // render cart panel items with qty controls (+/-) and refresh button
   function renderCartPanel(){
@@ -1439,6 +1435,7 @@ document.addEventListener('DOMContentLoaded', function(){
    
 </body>
 </html>
+
 
 
 
