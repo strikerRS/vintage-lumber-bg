@@ -444,7 +444,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
   }
 
   // --- helpers to read product data (use page's products if present) ---
-    function getProductObj(key){
+  function getProductObj(key){
     if(window.products && products[key]){
       // ensure price/images exist (fallback)
       const p = Object.assign({}, products[key]);
@@ -454,7 +454,6 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     }
     return FALLBACK[key] ? Object.assign({}, FALLBACK[key]) : {title:key, images:[], price:0};
   }
-
 
   // --- cart stored in localStorage as array of item objects {key, qty} OR simple array of keys ---
   // We'll store as array of keys allowing duplicates (ease of operations) similar to previous code.
@@ -543,8 +542,11 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     // avoid duplicates
     if(content.querySelector('.vl-buy-btn-product')) return;
     const p = getProductObj(key);
-
-    // само бутон "Купи", без ред "Цена: ..."
+    // price line
+    const priceP = document.createElement('p');
+    priceP.className = 'vl-buy-price text-[#6B4226] font-bold mb-2';
+    priceP.innerText = `Цена: ${p.price} лв.`;
+    // buy button
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded w-full';
@@ -558,15 +560,16 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
       updateHeaderCount();
       showToast(key);
     });
-
+    // append after product title/description block (try to find a good place)
     const rightCol = document.querySelector('#productPage .content > .grid > div:nth-child(2)');
     if(rightCol){
-      rightCol.insertBefore(btn, rightCol.firstChild.nextSibling);
+      rightCol.insertBefore(priceP, rightCol.firstChild.nextSibling);
+      rightCol.insertBefore(btn, priceP.nextSibling);
     } else {
+      content.appendChild(priceP);
       content.appendChild(btn);
     }
   }
-
 
   // render cart panel items with qty controls (+/-) and refresh button
   function renderCartPanel(){
@@ -588,14 +591,8 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
       // left block
       const left = document.createElement('div');
       left.className = 'flex items-center gap-3';
-     const img = document.createElement('img');
-const map = window.productImages || {};
-img.src = map[key] || (p.images && p.images[0]) || "images/noimg.png";
-img.style.width = "64px";
-img.style.height = "64px";
-img.style.objectFit = "cover";
-img.style.borderRadius = "6px";
-
+      const img = document.createElement('img');
+      img.src = (p.images && p.images[0])? p.images[0] : '';
       img.style.width = '56px';
       img.style.height = '56px';
       img.style.objectFit = 'cover';
@@ -1125,17 +1122,12 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <style>
-  /* Смъкване на прозореца с кошницата и гарантиран най-отгоре слой */
+  /* Смъкване на прозореца с кошницата малко надолу */
   #vl-cart-panel {
-    align-items: flex-start !important;  /* да не е залепен за горния ръб */
-    padding-top: 5rem !important;        /* колко да е надолу */
-
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 9999 !important;            /* ВАЖНО: панелът е над всички бутони/снимки */
+    align-items: flex-start !important;  /* вместо да е в самия връх на екрана */
+    padding-top: 5rem !important;        /* колко да е надолу; може 4rem/6rem по вкус */
   }
 </style>
-
 <script>
 /* === Подмяна на дървените фонове === */
 document.addEventListener('DOMContentLoaded', function(){
@@ -1419,26 +1411,34 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function(){
   // хващаме бутоните "Купи" на продуктовата страница (vl-buy-btn-product)
   const productBtns = document.querySelectorAll('.vl-buy-btn-product');
   productBtns.forEach(btn => {
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function(e){
+      // спираме изпълнението на другите click‑хендлъри (анимацията)
       e.stopImmediatePropagation();
 
+      // взимаме ключа на продукта
       const key = btn.dataset.key;
+      // четем количката и добавяме продукта
       const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
       cart.push(key);
       localStorage.setItem('vl_cart_v1', JSON.stringify(cart));
 
+      // обновяваме брояча и показваме toast
       if (typeof updateHeaderCount === 'function') updateHeaderCount();
       if (typeof showToast === 'function') showToast(key);
-    }, true);
+
+      // тук НЕ правим анимация за снимката – само добавяне в количката
+    }, true); // използваме capture, за да изпреварим оригиналния listener
   });
 });
-</script>
-
+</scriptt>
+   
 </body>
 </html>
+
+
+
