@@ -1435,66 +1435,11 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 </scriptt>
-<style>
-/* ВРЪЩАМЕ ШРИФТА КАКТО НА ПЪРВИЯ БУТОН */
-.vl-buy-text {
-  font-family: inherit !important;
-  font-size: 1.1rem !important;
-  font-weight: 900 !important;
-  text-transform: uppercase !important;
-  color: #ffffff !important;
 
-  -webkit-text-stroke: 1px #5a3a1f !important;
-  text-stroke: 1px #5a3a1f !important;
-
-  text-shadow:
-    0 1px 1px rgba(0,0,0,0.5),
-    0 0 3px rgba(0,0,0,0.4) !important;
-
-  white-space: nowrap !important;
-  line-height: 1 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.vl-buy-bg-overlay {
-  display: none !important;  /* както е на първия! */
-}
-</style>
-.vl-buy-btn-card,
-#productPage .vl-buy-btn-product {
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-#orderSection,
-#orderSection .box,
-#orderSection .overlay {
-  position: relative !important;
-  z-index: 99999 !important;
-}
-
-#vl-cart-panel {
-  z-index: 99990 !important;
-}
-<style>
-  /* 1. Всички бутони "Купи" да са под прозорците */
-  .vl-buy-btn-card,
-  #productPage .vl-buy-btn-product {
-    position: relative !important;
-    z-index: 1 !important;
-  }
-
-  /* 2. Всички прозорчета (кошница, toast, форма за поръчка) винаги най-отгоре */
-  #vl-cart-panel,
-  #vl-cart-toast,
-  #orderSection {
-    z-index: 99999 !important;
-  }
-</style>
 
 </body>
 </html>
+
 
 
 
