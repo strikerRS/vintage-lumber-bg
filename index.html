@@ -420,7 +420,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
           <h2 class="text-2xl font-bold mb-4">Вашата кошница</h2>
           <div id="vl-cart-items" class="space-y-4 max-h-[50vh] overflow-auto"></div>
           <div id="vl-cart-summary" class="mt-4 flex justify-between items-center">
-            <div id="vl-cart-total" class="text-xl font-bold">Обща сума: 0 лв.</div>
+            <div id="vl-cart-total" class="text-xl font-bold">Обща сума: 0 eu.</div>
             <div>
               <button id="vl-refresh-cart" class="mr-2 px-3 py-2 rounded border">Рефреш</button>
               <button id="vl-clear-cart" class="mr-2 px-3 py-2 rounded border">Изчисти</button>
@@ -517,7 +517,7 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
       btn.type = 'button';
       btn.className = 'vl-buy-btn-card vl-buy-btn mt-2 bg-[#6B4226] text-white px-4 py-2 rounded';
       btn.dataset.key = key;
-      btn.innerText = `Купи ${p.price} лв.`;
+      btn.innerText = `Купи ${p.price} eu.`;
       // append to sensible container inside card
       const target = a.querySelector('.p-4') || a.querySelector('.text-center') || a;
       target.appendChild(btn);
@@ -545,13 +545,13 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
     // price line
     const priceP = document.createElement('p');
     priceP.className = 'vl-buy-price text-[#6B4226] font-bold mb-2';
-    priceP.innerText = `Цена: ${p.price} лв.`;
+    priceP.innerText = `Цена: ${p.price} eu.`;
     // buy button
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'vl-buy-btn-product vl-buy-btn bg-[#6B4226] text-white px-4 py-2 rounded w-full';
     btn.dataset.key = key;
-    btn.innerText = `Купи ${p.price} лв.`;
+    btn.innerText = `Купи ${p.price} eu.`;
     btn.addEventListener('click', function(e){
       e.preventDefault();
       const arr = loadCart();
@@ -596,7 +596,7 @@ if(rightCol){
       img.style.objectFit = 'cover';
       img.style.borderRadius = '6px';
       const info = document.createElement('div');
-      info.innerHTML = `<div style="font-weight:600;">${p.title}</div><div class="vl-item-price">${p.price} лв. × <span class="vl-qty">${qty}</span></div>`;
+      info.innerHTML = `<div style="font-weight:600;">${p.title}</div><div class="vl-item-price">${p.price} eu. × <span class="vl-qty">${qty}</span></div>`;
       left.appendChild(img);
       left.appendChild(info);
       // right block - qty controls + remove
@@ -649,7 +649,7 @@ if(rightCol){
       });
     });
 
-    totalEl.innerText = `Обща сума: ${total} лв.`;
+    totalEl.innerText = `Обща сума: ${total} eu.`;
   }
 
   // wire UI interactions (open/close/clear/checkout/refresh)
@@ -907,7 +907,7 @@ document.addEventListener('DOMContentLoaded', function(){
       btn.type = 'button';
       btn.className = 'vl-buy-btn-card vl-buy-btn';
       btn.dataset.key = key;
-      btn.innerText = `Купи ${price} лв.`;
+      btn.innerText = `Купи ${price} eu.`;
       const target = a.querySelector('.p-4') || a.querySelector('.text-center') || a;
       target.appendChild(btn);
       btn.addEventListener('click', function(ev){
@@ -1414,6 +1414,7 @@ document.addEventListener('DOMContentLoaded', function () {
    
 </body>
 </html>
+
 
 
 
