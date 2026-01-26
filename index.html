@@ -297,22 +297,22 @@ html {
 
 <div id="mainPage" class="mt-24">
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
-<a href="index.html?product=dd1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/dd1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+<a href="index.html?product=A" class="bg-white rounded-xl shadow hover:scale-105 transition">
+<img src="images/A.png" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
 </div>
 </a>
-<a href="index.html?product=dd2" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/dd2.jpg" class="h-56 w-full object-cover rounded-t-xl">
+<a href="index.html?product=B" class="bg-white rounded-xl shadow hover:scale-105 transition">
+<img src="images/B.png" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
 </div>
 </a>
-<a href="index.html?product=dg1" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/dg1.jpg" class="h-56 w-full object-cover rounded-t-xl">
+<a href="index.html?product=V" class="bg-white rounded-xl shadow hover:scale-105 transition">
+<img src="images/V.png" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
@@ -382,7 +382,7 @@ html {
 </div>
 
 <script>
-const products={ dd1:{title:"Стара дървена дъска",images:["PRODUCTS/V.png","images/dd2.jpg","images/dg1.jpg"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, dd2:{title:"Рустик дъска",images:["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, dg1:{title:"Стара масивна греда",images:["PRODUCTS/A.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
+const products={ A:{title:"Стара дървена дъска",images:["PRODUCTS/V.png","images/B.png","images/V.png"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, B:{title:"Рустик дъска",images:["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],description:"Автентична рустик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, V:{title:"Стара масивна греда",images:["PRODUCTS/A.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
 
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
@@ -453,9 +453,9 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
   const FALLBACK = {
-    dd1:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:50},
-    dd2:{title:"Стара дървена дъска", images:["PRODUCTS/B.png"], price:50},
-    dg1:{title:"Стара дървена дъска", images:["PRODUCTS/A.png"], price:50}
+    A:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:50},
+    B:{title:"Стара дървена дъска", images:["PRODUCTS/B.png"], price:50},
+    V:{title:"Стара дървена дъска", images:["PRODUCTS/A.png"], price:50}
   };
 
   // --- ensure cart panel DOM exists (create only if not present) ---
@@ -942,7 +942,7 @@ if(navContactBtn && contactModal && closeContactModal){
 <!-- ===================== FIX: final small script that ensures buy-buttons exist and backgrounds are applied ========== -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  const mapping = { dd1: 'images/board_5.png', dd2: 'images/board_6.png', dg1: 'images/board_7.png' };
+  const mapping = { A: 'images/board_5.png', B: 'images/board_6.png', V: 'images/board_7.png' };
 
   // 1) Създай липсващи buy бутони (ако оригиналният инжектор не е сработил)
   document.querySelectorAll('a[href*="product="]').forEach(a=>{
@@ -953,7 +953,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(a.querySelector('.vl-buy-btn-card')) return; // вече има
       // цена fallback
       const p = window.products && products[key] ? products[key] : null;
-      const price = (p && p.price) ? p.price : (key==='dd1'?50: key==='dd2'?50:50);
+      const price = (p && p.price) ? p.price : (key==='A'?50: key==='B'?50:50);
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'vl-buy-btn-card vl-buy-btn';
@@ -1012,7 +1012,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const productBtn = document.querySelector('.vl-buy-btn-product');
   if(productBtn){
     const key = new URLSearchParams(location.search).get('product');
-    const src = mapping[key] || mapping['dd1'];
+    const src = mapping[key] || mapping['A'];
     enhance(productBtn, src);
   }
 
@@ -1182,9 +1182,9 @@ document.addEventListener('DOMContentLoaded', function(){
 document.addEventListener('DOMContentLoaded', function(){
 
   const boardMap = {
-    dd1: 'images/1.png',   // board_5 → 1
-    dd2: 'images/2.png',   // board_6 → 2
-    dg1: 'images/3.png'    // board_7 → 3
+    A: 'images/1.png',   // board_5 → 1
+    B: 'images/2.png',   // board_6 → 2
+    V: 'images/3.png'    // board_7 → 3
   };
 
   /* Подмяна върху картовите бутони */
@@ -1750,17 +1750,17 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
   // ТУК СВЪРЗВАМЕ ID-тата ОТ КОЛИЧКАТА С РЕАЛНИ ПРОДУКТИ
   const PRODUCT_DATA = {
-    "dd1": {
+    "A": {
       name: "Vintage Board A (A.png)",
       price: 25,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/A.png"
     },
-    "dd2": {
+    "B": {
       name: "Vintage Board B (B.png)",
       price: 25,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/B.png"
     },
-    "dg1": {
+    "V": {
       name: "Vintage Board V (V.png)",
       price: 28,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/V.png"
@@ -1792,7 +1792,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- ПРОДУКТИ ОТ КОЛИЧКАТА --------
     let raw = cartField.value || "";
-    raw = raw.replace(/&quot;/g, '"'); // [&quot;dd1&quot;...] -> ["dd1"...]
+    raw = raw.replace(/&quot;/g, '"'); // [&quot;A&quot;...] -> ["A"...]
 
     let items = [];
     try {
@@ -1839,6 +1839,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
