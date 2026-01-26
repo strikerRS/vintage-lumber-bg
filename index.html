@@ -36,8 +36,20 @@ html, body { height: 100%; margin: 0; }
 /* допълнителна защита: премахваме 1px линии от hr и подобни */
 hr, .divider, .line { border: 0 !important; height: 0 !important; box-shadow: none !important; }
 
-body { scroll-behavior: smooth; background: #f4eadf; color: #333; }
-#hero-bg { background-image: url('images/bg-old-bulgarian-farm.jpg'); background-attachment: fixed; background-size: cover; background-position: center; height: 110vh; }
+body {
+  scroll-behavior: smooth;
+  background: #f4eadf url('images/aaw.png') top center / cover no-repeat fixed;
+  color: #333;
+}
+
+#hero-bg {
+  background-image: url('images/aaw.png');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  height: 110vh;
+}
+
 header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.2rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 header h1 { font-size:1.75rem; color:#6B4226; font-weight:bold; cursor:pointer; }
 nav a { margin-left:1rem; font-weight:500; color:#6B4226; transition:0.3s; cursor:pointer; }
@@ -1863,6 +1875,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
