@@ -1746,56 +1746,97 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
+
 <script>
-const form = document.querySelector('form');
-const cartField = document.getElementById('vl-order-cart-contents');
-const summaryField = document.getElementById('order_summary');
+document.addEventListener('DOMContentLoaded', function () {
+  // Картата: ID от количката -> име, цена, снимка
+  const PRODUCT_DATA = {
+    "dd1": {
+      name: "Vintage Board A",
+      price: 25,
+      img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/A.png"
+    },
+    "dd2": {
+      name: "Vintage Board B",
+      price: 25,
+      img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/B.png"
+    },
+    "dg1": {
+      name: "Vintage Board V",
+      price: 28,
+      img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/V.png"
+    }
+  };
 
-form.addEventListener('submit', () => {
-  // --- данни за клиента ---
-  const name    = form.querySelector('[name="name"]')?.value || "";
-  const phone   = form.querySelector('[name="phone"]')?.value || "";
-  const address = form.querySelector('[name="address"]')?.value || "";
-  const email   = form.querySelector('[name="email"]')?.value || "";
+  // Взимаме самата форма към Formspree
+  const form = document.querySelector('form[action*="formspree.io"]');
+  // Скритите полета
+  const cartField   = document.querySelector('input[name="cart_contents"]');
+  const summaryField = document.querySelector('input[name="order_summary"]');
 
-  let html = '';
-  html += `КЛИЕНТ:<br>`;
-  if(name) html += `Име: ${name}<br>`;
-  if(phone) html += `Телефон: ${phone}<br>`;
-  if(address) html += `Адрес: ${address}<br>`;
-  if(email) html += `Email: ${email}<br>`;
-  html += `<br>ПОРЪЧКА:<br><br>`;
+  if (!form || !cartField || !summaryField) return;
 
-  // --- продукти ---
-  let raw = cartField.value.replace(/&quot;/g,'"');
-  let items = [];
-  try { items = JSON.parse(raw); } catch(e){}
+  form.addEventListener('submit', function () {
+    // 1) Данни за клиента
+    const name    = form.querySelector('[name="name"]')?.value || "";
+    const phone   = form.querySelector('[name="phone"]')?.value || "";
+    const address = form.querySelector('[name="address"]')?.value || "";
+    const email   = form.querySelector('[name="_replyto"],[name="email"]')?.value || "";
 
-  const counts = {};
-  items.forEach(p => counts[p] = (counts[p] || 0) + 1);
+    let html = "";
 
-  let total = 0;
+    html += "КЛИЕНТ:<br>";
+    if (name)    html += "Име: "     + name    + "<br>";
+    if (phone)   html += "Телефон: " + phone   + "<br>";
+    if (address) html += "Адрес: "   + address + "<br>";
+    if (email)   html += "Email: "   + email   + "<br>";
+    html += "<br>";
 
-  for(const id in counts){
-    const d = PRODUCT_DATA[id] || {};
-    const qty = counts[id];
-    const price = d.price || 0;
-    const sum = qty * price;
-    total += sum;
+    // 2) Продуктите от cart_contents
+    let raw = cartField.value || "";
+    raw = raw.replace(/&quot;/g, '"');
 
-    if(d.img) html += `<img src="${d.img}" width="120" style="margin-bottom:4px;"><br>`;
-    html += `${d.name || id} — ${qty} бр × ${price}€ = ${sum}€<br><br>`;
-  }
+    let items = [];
+    try {
+      items = JSON.parse(raw);
+    } catch (e) {
+      summaryField.value = "CART PARSE ERROR: " + raw;
+      return;
+    }
 
-  html += `-----------------------------<br>`;
-  html += `Общо: ${total}€ (без доставка)<br>`;
+    const counts = {};
+    items.forEach(id => { counts[id] = (counts[id] || 0) + 1; });
 
-  summaryField.value = html;
+    html += "ПОРЪЧКА:<br><br>";
+    let total = 0;
+
+    for (const id in counts) {
+      const qty = counts[id];
+      const data  = PRODUCT_DATA[id] || {};
+      const nameP = data.name || id;
+      const price = data.price || 0;
+      const sum   = price * qty;
+      total += sum;
+
+      if (data.img) {
+        html += `<img src="${data.img}" width="120" style="border-radius:6px;margin-bottom:6px;"><br>`;
+      }
+
+      html += `${nameP} — ${qty} бр × ${price}€ = ${sum}€<br><br>`;
+    }
+
+    html += "--------------------------------<br>";
+    html += `Общо: ${total}€ (без доставка)<br>`;
+
+    // 3) Пишем всичко в скритото поле, което Formspree праща
+    summaryField.value = html;
+  });
 });
 </script>
 
 </body>
 </html>
+
 
 
 
