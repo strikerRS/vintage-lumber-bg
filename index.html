@@ -201,6 +201,56 @@ a .vl-buy-btn-card { margin-top: 0.5rem; }
   box-shadow: 0 6px 12px rgba(0,0,0,0.06) !important;
 }
 </style>
+  /* Smooth scroll за всички anchor линкове */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Общ стил за елементите от навигацията */
+#navHome,
+#navProducts,
+#navInterior,
+#navContact,
+#navAbout,
+.nav-link {
+  position: relative;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+/* underline ефект */
+#navHome::after,
+#navProducts::after,
+#navInterior::after,
+#navContact::after,
+#navAbout::after,
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #fbbf24, #f97316);
+  transition: width 0.25s ease;
+}
+
+/* при hover и при active клас */
+#navHome:hover::after,
+#navProducts:hover::after,
+#navInterior:hover::after,
+#navContact:hover::after,
+#navAbout:hover::after,
+.nav-link:hover::after,
+.nav-active::after {
+  width: 100%;
+}
+
+/* цвят за активния бутон */
+.nav-active {
+  color: #fbbf24;
+}
+</style>
 </head>
 <body>
 
@@ -222,8 +272,14 @@ a .vl-buy-btn-card { margin-top: 0.5rem; }
       <a href="#interior" class="nav-link ml-2">
   <span class="lang-bg">Интериор</span>
   <span class="lang-en hidden">Interior</span>
-</a>
+  </a>
       
+<a id="navInterior" href="#interior" class="nav-link ml-2">
+  <span class="lang-bg">Интериор</span>
+  <span class="lang-en hidden">Interior</span>
+</a>
+
+ 
     </a>
     <a id="navContact" class="ml-2">
       <span class="lang-bg">Контакти</span>
@@ -1648,9 +1704,63 @@ document.addEventListener('DOMContentLoaded', function () {
     cards.forEach(card => observer.observe(card));
   });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // секции от страницата + съответните бутони
+    const map = [
+      { sectionId: 'hero',     navId: 'navHome' },
+      { sectionId: 'products', navId: 'navProducts' },
+      { sectionId: 'interior', navId: 'navInterior' },
+      { sectionId: 'contacts', navId: 'navContact' },
+      { sectionId: 'about',    navId: 'navAbout' }
+    ];
+
+    const pairs = map.map(item => {
+      const section = document.getElementById(item.sectionId);
+      const nav = document.getElementById(item.navId);
+      return section && nav ? { section, nav } : null;
+    }).filter(Boolean);
+
+    const activeClass = 'nav-active';
+
+    function setActiveNav(targetNav) {
+      pairs.forEach(({ nav }) => {
+        nav.classList.toggle(activeClass, nav === targetNav);
+      });
+    }
+
+    // IntersectionObserver за следене на секции при скрол
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const match = pairs.find(p => p.section === entry.target);
+          if (match) {
+            setActiveNav(match.nav);
+          }
+        }
+      });
+    }, {
+      threshold: 0.4
+    });
+
+    pairs.forEach(({ section }) => observer.observe(section));
+
+    // по желание: клик по nav бутоните да скролва плавно
+    pairs.forEach(({ section, nav }) => {
+      nav.addEventListener('click', (e) => {
+        // ако вече имаш друг клик-скрол код, този може да се махне
+        if (section && section.scrollIntoView) {
+          e.preventDefault();
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
+
 
 
 
