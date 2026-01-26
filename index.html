@@ -1748,38 +1748,38 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // ТУК СВЪРЗВАМЕ ID-тата ОТ КОЛИЧКАТА С РЕАЛНИ ПРОДУКТИ
+  // Продуктите – САМО A.png / B.png / V.png
   const PRODUCT_DATA = {
-    "A": {
-      name: "Vintage Board A (A.png)",
+    "A.png": {
+      name: "Vintage Board A",
       price: 25,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/A.png"
     },
-    "B": {
-      name: "Vintage Board B (B.png)",
+    "B.png": {
+      name: "Vintage Board B",
       price: 25,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/B.png"
     },
-    "V": {
-      name: "Vintage Board V (V.png)",
+    "V.png": {
+      name: "Vintage Board V",
       price: 28,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/V.png"
     }
   };
 
-  // Формата към Formspree
-  const form = document.querySelector('form[action*="formspree.io"]');
-  const cartField    = document.querySelector('input[name="cart_contents"]');
-  const summaryField = document.querySelector('input[name="order_summary"]');
+  // Формата (първата във файла)
+  const form = document.querySelector('form');
+  const cartField    = document.getElementById('vl-order-cart-contents');
+  const summaryField = document.getElementById('order_summary');
 
   if (!form || !cartField || !summaryField) return;
 
   form.addEventListener('submit', function () {
-    // --- КЛИЕНТ -----------------------
+    // 1) Данни за клиента
     const name    = form.querySelector('[name="name"]')?.value    || "";
     const phone   = form.querySelector('[name="phone"]')?.value   || "";
     const address = form.querySelector('[name="address"]')?.value || "";
-    const email   = form.querySelector('[name="_replyto"],[name="email"]')?.value || "";
+    const email   = form.querySelector('[name="email"],[name="_replyto"]')?.value || "";
 
     let html = "";
 
@@ -1790,16 +1790,16 @@ document.addEventListener('DOMContentLoaded', function () {
     if (email)   html += "Email: "   + email   + "<br>";
     html += "<br>";
 
-    // --- ПРОДУКТИ ОТ КОЛИЧКАТА --------
+    // 2) Количката
     let raw = cartField.value || "";
-    raw = raw.replace(/&quot;/g, '"'); // [&quot;A&quot;...] -> ["A"...]
+    raw = raw.replace(/&quot;/g, '"');
 
     let items = [];
     try {
-      items = JSON.parse(raw);
+      items = JSON.parse(raw);    // очакваме ["A.png","B.png",...]
     } catch (e) {
-      summaryField.value = "CART PARSE ERROR: " + raw;
-      return;
+      summaryField.value = html + "ГРЕШКА В КОЛИЧКАТА: " + raw;
+      return; // не спираме submit-а, просто не пращаме детайлна поръчка
     }
 
     const counts = {};
@@ -1819,26 +1819,26 @@ document.addEventListener('DOMContentLoaded', function () {
       const sum   = price * qty;
       total += sum;
 
-      // снимка 120px
       if (data.img) {
         html += `<img src="${data.img}" width="120" style="border-radius:6px;margin-bottom:6px;"><br>`;
       }
 
-      // ред: Име — Х бр × Y€ = Z€
       html += `${nameP} — ${qty} бр × ${price}€ = ${sum}€<br><br>`;
     }
 
     html += "--------------------------------<br>";
     html += `Общо: ${total}€ (без доставка)<br>`;
 
-    // Пишем готовия HTML в скритото поле – Formspree го праща на мейла
+    // 3) Пишем резултата в скритото поле – Formspree го праща по имейл
     summaryField.value = html;
+    // ВАЖНО: НЕ СПИРАМЕ submit-а (няма preventDefault)
   });
 });
 </script>
 
 </body>
 </html>
+
 
 
 
