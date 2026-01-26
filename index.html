@@ -1050,43 +1050,6 @@ const PRODUCT_DATA = {
   "V": { name: "Vintage Board V", price: 50 }
 };
 
-if (orderForm && orderCartField) {
-  orderForm.addEventListener('submit', function (e) {
-    // четем съдържанието на количката
-    let cart = [];
-    try {
-      cart = JSON.parse(orderCartField.value || '[]');
-    } catch (e) {}
-
-    // броим бройките по ключ
-    const counts = {};
-    cart.forEach(id => {
-      counts[id] = (counts[id] || 0) + 1;
-    });
-
-    // генерираме редове от вида: „Vintage Board A – 2 бр. × 25€ = 50€“
-    let total = 0;
-    const lines = [];
-    Object.keys(counts).forEach(id => {
-      const qty  = counts[id];
-      const data = PRODUCT_DATA[id] || { name: id, price: 0 };
-      const sum  = data.price * qty;
-      total += sum;
-      lines.push(`${data.name} – ${qty} бр. × ${data.price}€ = ${sum}€`);
-    });
-
-    // крайно резюме
-    const summary =
-      `ПОРЪЧКА:\n` +
-      lines.join('\n') +
-      `\n-------------------------\n` +
-      `Общо: ${total}€ (без доставка)`;
-
-    // записваме в скритото поле
-    document.getElementById('order_summary').value = summary;
-
-    // НЕ спираме submit, формата ще си тръгне към Formspree
-  });
 }
 
   }
@@ -1147,7 +1110,7 @@ if (orderForm && orderCartField) {
   };
 
   if (orderForm && orderCartField) {
-    orderForm.addEventListener('submit', function (e) {
+    orderForm.addEventListener('submit', function () {
       // четем кошницата от скритото поле
       let cart = [];
       try {
@@ -1223,9 +1186,7 @@ if (orderForm && orderCartField) {
    
     // При подаване на формата — Formspree ще обработи изпращането.
     // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
-    orderForm.addEventListener('submit', function(e){
-      // оставено празно за нормален submit
-    });
+    
   })();
 </script>
 <!-- ====== END ORDER FORM MODAL ====== -->
@@ -1836,6 +1797,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
