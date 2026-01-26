@@ -1051,7 +1051,7 @@ const PRODUCT_DATA = {
 };
 
 if (orderForm && orderCartField) {
-  orderForm.addEventListener('submit', function () {
+  orderForm.addEventListener('submit', function (e) {
     // четем съдържанието на количката
     let cart = [];
     try {
@@ -1147,7 +1147,7 @@ if (orderForm && orderCartField) {
   };
 
   if (orderForm && orderCartField) {
-    orderForm.addEventListener('submit', function () {
+    orderForm.addEventListener('submit', function (e) {
       // четем кошницата от скритото поле
       let cart = [];
       try {
@@ -1223,7 +1223,7 @@ if (orderForm && orderCartField) {
    
     // При подаване на формата — Formspree ще обработи изпращането.
     // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
-    orderForm.addEventListener('submit', function(){
+    orderForm.addEventListener('submit', function(e){
       // оставено празно за нормален submit
     });
   })();
@@ -1836,6 +1836,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
