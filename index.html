@@ -1077,7 +1077,10 @@ const PRODUCT_DATA = {
       <input type="tel" name="phone" required>
 
       <label><span class="lang-bg">Имейл:</span><span class="lang-en hidden">Email:</span></label>
-      <input type="email" name="_replyto" required>
+      <label><span class="lang-bg">E-mail:</span> <span class="lang-en hidden">E-mail:</span></label>
+      <input type="email" name="_replyto" id="client_email" required>
+      <input type="hidden" name="email" id="order_email">
+
 
       <label><span class="lang-bg">Адрес:</span><span class="lang-en hidden">Address:</span></label>
       <input type="text" name="address">
@@ -1112,6 +1115,10 @@ const PRODUCT_DATA = {
     // ---- НАЧАЛО НА НОВИЯ КОД ЗА РЕЗЮМЕ ----
   if (orderForm && orderCartField) {
     orderForm.addEventListener('submit', function () {
+      const replyTo = document.getElementById('client_email');
+const hiddenEmail = document.getElementById('order_email');
+if (replyTo && hiddenEmail) hiddenEmail.value = replyTo.value;
+
       // четем количката от скритото поле
       let cart = [];
       try {
@@ -1835,6 +1842,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
