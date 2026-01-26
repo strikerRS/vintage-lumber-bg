@@ -457,9 +457,9 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
   const FALLBACK = {
-    dd1:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:120},
-    dd2:{title:"Рустик дъска", images:["PRODUCTS/B.png"], price:150},
-    dg1:{title:"Стара масивна греда", images:["PRODUCTS/A.png"], price:200}
+    dd1:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:50},
+    dd2:{title:"Рустик дъска", images:["PRODUCTS/B.png"], price:50},
+    dg1:{title:"Стара масивна греда", images:["PRODUCTS/A.png"], price:50}
   };
 
   // --- ensure cart panel DOM exists (create only if not present) ---
@@ -957,7 +957,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(a.querySelector('.vl-buy-btn-card')) return; // вече има
       // цена fallback
       const p = window.products && products[key] ? products[key] : null;
-      const price = (p && p.price) ? p.price : (key==='dd1'?120: key==='dd2'?150:200);
+      const price = (p && p.price) ? p.price : (key==='dd1'?50: key==='dd2'?50:50);
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'vl-buy-btn-card vl-buy-btn';
@@ -1753,6 +1753,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
