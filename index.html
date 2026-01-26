@@ -1115,6 +1115,28 @@ const PRODUCT_DATA = {
     // ---- НАЧАЛО НА НОВИЯ КОД ЗА РЕЗЮМЕ ----
   if (orderForm && orderCartField) {
     orderForm.addEventListener('submit', function () {
+      // ---- AUTOREPLY до клиента ----
+
+// 1) взимаме имейла на клиента
+const clientEmail = document.getElementById('client_email')?.value;
+
+// 2) взимаме summary което вече изпращаш при теб
+const summaryField = document.getElementById('order_summary')?.value || "";
+
+// 3) ако има e-mail → пращаме и на клиента
+if (clientEmail && summaryField) {
+  fetch("https://formsubmit.co/ajax/" + clientEmail, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      _subject: "УСПЕШНА ПОРЪЧКА!",
+      message: `УСПЕШНА ПОРЪЧКА!\n\n${summaryField}`
+    })
+  });
+}
+
       const replyTo = document.getElementById('client_email');
 const hiddenEmail = document.getElementById('order_email');
 if (replyTo && hiddenEmail) hiddenEmail.value = replyTo.value;
@@ -1842,6 +1864,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
