@@ -1748,58 +1748,48 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Продуктите – САМО A.png / B.png / V.png
+  // ВНИМАНИЕ: количката ти праща ["V","B","A"]
   const PRODUCT_DATA = {
-    "A.png": {
+    "A": {
       name: "Vintage Board A",
       price: 25,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/A.png"
     },
-    "B.png": {
+    "B": {
       name: "Vintage Board B",
       price: 25,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/B.png"
     },
-    "V.png": {
+    "V": {
       name: "Vintage Board V",
       price: 28,
       img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/V.png"
     }
   };
 
-  // Формата (първата във файла)
-  const form = document.querySelector('form');
+  const form         = document.querySelector('form');
   const cartField    = document.getElementById('vl-order-cart-contents');
   const summaryField = document.getElementById('order_summary');
 
   if (!form || !cartField || !summaryField) return;
 
   form.addEventListener('submit', function () {
-    // 1) Данни за клиента
+    // --- Данни за клиента ---
     const name    = form.querySelector('[name="name"]')?.value    || "";
     const phone   = form.querySelector('[name="phone"]')?.value   || "";
     const address = form.querySelector('[name="address"]')?.value || "";
     const email   = form.querySelector('[name="email"],[name="_replyto"]')?.value || "";
 
-    let html = "";
-
-    html += "КЛИЕНТ:<br>";
-    if (name)    html += "Име: "     + name    + "<br>";
-    if (phone)   html += "Телефон: " + phone   + "<br>";
-    if (address) html += "Адрес: "   + address + "<br>";
-    if (email)   html += "Email: "   + email   + "<br>";
-    html += "<br>";
-
-    // 2) Количката
+    // --- Количка ---
     let raw = cartField.value || "";
-    raw = raw.replace(/&quot;/g, '"');
+    raw = raw.replace(/&quot;/g, '"');  // за всеки случай
 
     let items = [];
     try {
-      items = JSON.parse(raw);    // очакваме ["A.png","B.png",...]
+      items = JSON.parse(raw);          // очакваме ["V","B","A", ...]
     } catch (e) {
-      summaryField.value = html + "ГРЕШКА В КОЛИЧКАТА: " + raw;
-      return; // не спираме submit-а, просто не пращаме детайлна поръчка
+      summaryField.value = "ГРЕШКА В КОЛИЧКАТА: " + raw;
+      return;
     }
 
     const counts = {};
@@ -1807,9 +1797,31 @@ document.addEventListener('DOMContentLoaded', function () {
       counts[id] = (counts[id] || 0) + 1;
     });
 
-    html += "ПОРЪЧКА:<br><br>";
-
+    // --- Сглобяване на HTML-а за мейла ---
     let total = 0;
+
+    let html = "";
+
+    // Таблица за клиента
+    html += '<table style="width:100%;max-width:650px;border-collapse:collapse;border:1px solid #ddd;margin-bottom:16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;">';
+    html += '<tr style="background:#f5f5f5;"><th colspan="2" style="padding:8px;border-bottom:1px solid #ddd;text-align:left;">Данни за клиента</th></tr>';
+    if (name)    html += `<tr><td style="padding:6px;border-bottom:1px solid #eee;width:140px;">Име</td><td style="padding:6px;border-bottom:1px solid #eee;">${name}</td></tr>`;
+    if (phone)   html += `<tr><td style="padding:6px;border-bottom:1px solid #eee;">Телефон</td><td style="padding:6px;border-bottom:1px solid #eee;">${phone}</td></tr>`;
+    if (address) html += `<tr><td style="padding:6px;border-bottom:1px solid #eee;">Адрес</td><td style="padding:6px;border-bottom:1px solid #eee;">${address}</td></tr>`;
+    if (email)   html += `<tr><td style="padding:6px;">Email</td><td style="padding:6px;">${email}</td></tr>`;
+    html += '</table>';
+
+    // Таблица за поръчката
+    html += '<table style="width:100%;max-width:650px;border-collapse:collapse;border:1px solid #ddd;font-family:Arial,Helvetica,sans-serif;font-size:13px;">';
+    html += '<thead>';
+    html += '<tr style="background:#f5f5f5;">';
+    html += '<th style="padding:8px;border-bottom:1px solid #ddd;text-align:left;">Продукт</th>';
+    html += '<th style="padding:8px;border-bottom:1px solid #ddd;text-align:center;width:60px;">Бр.</th>';
+    html += '<th style="padding:8px;border-bottom:1px solid #ddd;text-align:right;width:80px;">Цена</th>';
+    html += '<th style="padding:8px;border-bottom:1px solid #ddd;text-align:right;width:90px;">Общо</th>';
+    html += '</tr>';
+    html += '</thead>';
+    html += '<tbody>';
 
     for (const id in counts) {
       const qty  = counts[id];
@@ -1819,25 +1831,39 @@ document.addEventListener('DOMContentLoaded', function () {
       const sum   = price * qty;
       total += sum;
 
+      html += '<tr>';
+      html += '<td style="padding:8px;border-bottom:1px solid #eee;vertical-align:top;">';
       if (data.img) {
-        html += `<img src="${data.img}" width="120" style="border-radius:6px;margin-bottom:6px;"><br>`;
+        html += `<img src="${data.img}" width="60" style="display:inline-block;vertical-align:middle;margin-right:8px;border-radius:4px;">`;
       }
-
-      html += `${nameP} — ${qty} бр × ${price}€ = ${sum}€<br><br>`;
+      html += `<span style="vertical-align:middle;">${nameP}</span>`;
+      html += '</td>';
+      html += `<td style="padding:8px;border-bottom:1px solid #eee;text-align:center;vertical-align:top;">${qty}</td>`;
+      html += `<td style="padding:8px;border-bottom:1px solid #eee;text-align:right;vertical-align:top;">${price.toFixed(2)} €</td>`;
+      html += `<td style="padding:8px;border-bottom:1px solid #eee;text-align:right;vertical-align:top;">${sum.toFixed(2)} €</td>`;
+      html += '</tr>';
     }
 
-    html += "--------------------------------<br>";
-    html += `Общо: ${total}€ (без доставка)<br>`;
+    html += '</tbody>';
+    // Общо
+    html += '<tfoot>';
+    html += '<tr>';
+    html += '<td colspan="3" style="padding:8px;border-top:1px solid #ddd;text-align:right;font-weight:bold;">Общо (без доставка):</td>';
+    html += `<td style="padding:8px;border-top:1px solid #ddd;text-align:right;font-weight:bold;">${total.toFixed(2)} €</td>`;
+    html += '</tr>';
+    html += '</tfoot>';
 
-    // 3) Пишем резултата в скритото поле – Formspree го праща по имейл
+    html += '</table>';
+
+    // Пишем в скритото поле – Formspree го праща като HTML
     summaryField.value = html;
-    // ВАЖНО: НЕ СПИРАМЕ submit-а (няма preventDefault)
   });
 });
 </script>
 
 </body>
 </html>
+
 
 
 
