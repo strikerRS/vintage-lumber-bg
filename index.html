@@ -1808,7 +1808,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // динамично смятане на височината на хедъра
   function getHeaderOffset() {
     const header = document.querySelector('header');
-    const extra = -115; // малък въздух под менюто
+    const extra = -150; // малък въздух под менюто
     if (!header) return 80 + extra;
     return header.getBoundingClientRect().height + extra;
   }
@@ -1863,6 +1863,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
