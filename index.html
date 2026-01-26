@@ -453,9 +453,9 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
   const FALLBACK = {
-    A:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:50},
-    B:{title:"Стара дървена дъска", images:["PRODUCTS/B.png"], price:50},
-    V:{title:"Стара дървена дъска", images:["PRODUCTS/A.png"], price:50}
+    A:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:49.99},
+    B:{title:"Стара дървена дъска", images:["PRODUCTS/B.png"], price:49.99},
+    V:{title:"Стара дървена дъска", images:["PRODUCTS/A.png"], price:49.99}
   };
 
   // --- ensure cart panel DOM exists (create only if not present) ---
@@ -1045,9 +1045,9 @@ document.addEventListener('DOMContentLoaded', function(){
     border:1px solid #ccc; border-radius:4px; box-sizing: border-box;
     // НОВО: генериране на резюме
 const PRODUCT_DATA = {
-  "A": { name: "Vintage Board A", price: 50 },
-  "B": { name: "Vintage Board B", price: 50 },
-  "V": { name: "Vintage Board V", price: 50 }
+  "A": { name: "Vintage Board A", price: 49.99 },
+  "B": { name: "Vintage Board B", price: 49.99 },
+  "V": { name: "Vintage Board V", price: 49.99 }
 };
 
 }
@@ -1105,9 +1105,9 @@ const PRODUCT_DATA = {
     const orderForm = document.getElementById('vl-order-form');
   // ---- НОВО: обобщение на поръчката за имейла ----
   const PRODUCT_DATA = {
-    "A": { name: "Vintage Board A", price: 50 },
-    "B": { name: "Vintage Board B", price: 50 },
-    "V": { name: "Vintage Board V", price: 50 }
+    "A": { name: "Vintage Board A", price: 49.99 },
+    "B": { name: "Vintage Board B", price: 49.99 },
+    "V": { name: "Vintage Board V", price: 49.99 }
   };
 
   if (orderForm && orderCartField) {
@@ -1798,6 +1798,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
