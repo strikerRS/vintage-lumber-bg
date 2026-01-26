@@ -1218,15 +1218,9 @@ if (orderForm && orderCartField) {
     closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
 
     // Затваряне при кликане извън формата
-    orderModal.addEventListener('click', (e) => {
-      if (e.target === orderModal) closeOrderModal();
-    });
-
+   
     // ESC затваря
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && orderModal.classList.contains('open')) closeOrderModal();
-    });
-
+   
     // При подаване на формата — Formspree ще обработи изпращането.
     // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
     orderForm.addEventListener('submit', function(){
@@ -1842,6 +1836,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
