@@ -434,7 +434,7 @@ document.querySelectorAll('.aboutNavLink').forEach(link=>{
  });
 });
 
-document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop, behavior:'smooth'}); });
+document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop - 120, behavior:'smooth'}); });
 // keep original navContact behavior where present later (some contact handlers below also use navContact)
 </script>
 
@@ -1798,6 +1798,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
