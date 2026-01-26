@@ -1795,9 +1795,75 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
+<!-- === GLOBAL SMOOTH SCROLL + AUTO HEADER OFFSET === -->
+<style>
+  /* по умолчание – плавен скрол */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+
+<script>
+(function () {
+  // динамично смятане на височината на хедъра
+  function getHeaderOffset() {
+    const header = document.querySelector('header');
+    const extra = 10; // малък въздух под менюто
+    if (!header) return 80 + extra;
+    return header.getBoundingClientRect().height + extra;
+  }
+
+  // задаваме scroll-padding-top, за да работи за anchor-и и scrollIntoView
+  function updateScrollPadding() {
+    const offset = getHeaderOffset();
+    document.documentElement.style.scrollPaddingTop = offset + 'px';
+  }
+
+  // глобален handler за всички <a href="#..."> и елементи с data-scroll="#id"
+  function handleSmoothAnchorClick(e) {
+    const link = e.target.closest('a[href^="#"], [data-scroll]');
+    if (!link) return;
+
+    const raw = link.getAttribute('href') || link.getAttribute('data-scroll');
+    if (!raw || raw === '#') return;
+
+    // НЯМА да пипаме линкове, които отварят модали/друго (нямат #)
+    if (!raw.startsWith('#')) return;
+
+    const target = document.querySelector(raw);
+    if (!target) return;
+
+    e.preventDefault();
+
+    const offset = getHeaderOffset();
+    const rect = target.getBoundingClientRect();
+    const top = rect.top + window.pageYOffset - offset;
+
+    window.scrollTo({
+      top,
+      behavior: 'smooth'
+    });
+  }
+
+  // инициализация
+  function initSmoothScroll() {
+    updateScrollPadding();
+    window.addEventListener('resize', updateScrollPadding, { passive: true });
+    document.addEventListener('click', handleSmoothAnchorClick);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmoothScroll);
+  } else {
+    initSmoothScroll();
+  }
+})();
+</script>
+<!-- === END GLOBAL SMOOTH SCROLL === -->
 
 </body>
 </html>
+
 
 
 
