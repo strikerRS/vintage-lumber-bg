@@ -1746,52 +1746,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
+
 <script>
-  const PRODUCT_DATA = {
-    "dd1": { name: "Vintage Board A", price: 25, img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/A.png" },
-    "dd2": { name: "Vintage Board B", price: 25, img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/B.png" },
-    "dg1": { name: "Vintage Board C", price: 28, img: "https://strikerrs.github.io/vintage-lumber-bg/PRODUCTS/C.png" }
-  };
+const form = document.querySelector('form');
+const cartField = document.getElementById('vl-order-cart-contents');
+const summaryField = document.getElementById('order_summary');
 
-  const form = document.querySelector('form');
-  const cartField = document.getElementById('vl-order-cart-contents');
-  const summaryField = document.getElementById('order_summary');
+form.addEventListener('submit', () => {
+  // --- данни за клиента ---
+  const name    = form.querySelector('[name="name"]')?.value || "";
+  const phone   = form.querySelector('[name="phone"]')?.value || "";
+  const address = form.querySelector('[name="address"]')?.value || "";
+  const email   = form.querySelector('[name="email"]')?.value || "";
 
-  if(form && cartField && summaryField) {
-    form.addEventListener('submit', () => {
-      let items = cartField.value;
-      items = items.replace(/&quot;/g,'"');
+  let html = '';
+  html += `КЛИЕНТ:<br>`;
+  if(name) html += `Име: ${name}<br>`;
+  if(phone) html += `Телефон: ${phone}<br>`;
+  if(address) html += `Адрес: ${address}<br>`;
+  if(email) html += `Email: ${email}<br>`;
+  html += `<br>ПОРЪЧКА:<br><br>`;
 
-      let arr;
-      try { arr = JSON.parse(items); }
-      catch { summaryField.value = "ERROR PARSING CART"; return; }
+  // --- продукти ---
+  let raw = cartField.value.replace(/&quot;/g,'"');
+  let items = [];
+  try { items = JSON.parse(raw); } catch(e){}
 
-      const grouped = {};
-      arr.forEach(id => grouped[id] = (grouped[id] || 0) + 1);
+  const counts = {};
+  items.forEach(p => counts[p] = (counts[p] || 0) + 1);
 
-      let total = 0;
-      let table = `ПОРЪЧАНИ ПРОДУКТИ:\n\n`;
-      table += `Продукт | Брой | Цена | Общо\n`;
-      table += `-----------------------------------------\n`;
+  let total = 0;
 
-      for(const id in grouped) {
-        const qty = grouped[id];
-        const data = PRODUCT_DATA[id] || {name: id, price: 0};
-        const sum = data.price * qty;
-        total += sum;
-        table += `${data.name} | ${qty} | ${data.price}€ | ${sum}€\n`;
-      }
+  for(const id in counts){
+    const d = PRODUCT_DATA[id] || {};
+    const qty = counts[id];
+    const price = d.price || 0;
+    const sum = qty * price;
+    total += sum;
 
-      table += `-----------------------------------------\n`;
-      table += `ОБЩО: ${total}€ (без доставка)\n`;
-
-      summaryField.value = table;
-    });
+    if(d.img) html += `<img src="${d.img}" width="120" style="margin-bottom:4px;"><br>`;
+    html += `${d.name || id} — ${qty} бр × ${price}€ = ${sum}€<br><br>`;
   }
+
+  html += `-----------------------------<br>`;
+  html += `Общо: ${total}€ (без доставка)<br>`;
+
+  summaryField.value = html;
+});
 </script>
 
 </body>
 </html>
+
 
 
 
