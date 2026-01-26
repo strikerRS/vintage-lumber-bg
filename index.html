@@ -1109,9 +1109,10 @@ const PRODUCT_DATA = {
     "V": { name: "Vintage Board V", price: 50 }
   };
 
+    // ---- НАЧАЛО НА НОВИЯ КОД ЗА РЕЗЮМЕ ----
   if (orderForm && orderCartField) {
     orderForm.addEventListener('submit', function () {
-      // четем кошницата от скритото поле
+      // четем количката от скритото поле
       let cart = [];
       try {
         cart = JSON.parse(orderCartField.value || '[]');
@@ -1119,36 +1120,73 @@ const PRODUCT_DATA = {
         cart = [];
       }
 
-      // броим бройките
+      // броим бройките по продукт
       const counts = {};
       cart.forEach(id => {
         counts[id] = (counts[id] || 0) + 1;
       });
 
-      // правим редове "Продукт B – 3 бр. × 25€ = 75€"
+      // генерираме редове + суми
       let total = 0;
-      const lines = [];
+      const rows = [];
+      const textLines = [];
 
       Object.keys(counts).forEach(id => {
-        const qty = counts[id];
+        const qty  = counts[id];
         const data = PRODUCT_DATA[id] || { name: id, price: 0 };
         const rowTotal = data.price * qty;
         total += rowTotal;
-        lines.push(`${data.name} – ${qty} бр. × ${data.price}€ = ${rowTotal}€`);
+
+        // за HTML таблицата
+        rows.push(`
+          <tr>
+            <td>${data.name}</td>
+            <td style="text-align:center;">${qty} бр.</td>
+            <td style="text-align:right;">${data.price}€</td>
+            <td style="text-align:right;">${rowTotal}€</td>
+          </tr>
+        `);
+
+        // за текстов fallback
+        textLines.push(`${data.name} – ${qty} бр. × ${data.price}€ = ${rowTotal}€`);
       });
 
-      const summary =
+      const htmlTable = `
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; max-width:600px;">
+  <thead>
+    <tr>
+      <th>Продукт</th>
+      <th>Количество</th>
+      <th>Ед. цена</th>
+      <th>Общо</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${rows.join('')}
+    <tr>
+      <td colspan="3" style="text-align:right;"><strong>Общо:</strong></td>
+      <td style="text-align:right;"><strong>${total}€</strong></td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+      const textFallback =
         `ПОРЪЧКА:\n` +
-        lines.join('\n') +
+        textLines.join('\n') +
         `\n-------------------------\n` +
         `Общо: ${total}€ (без доставка)`;
 
       const summaryField = document.getElementById('order_summary');
-      if (summaryField) summaryField.value = summary;
-      // ВАЖНО: не спираме submit-а, няма preventDefault()
+      if (summaryField) {
+        // HTML таблица + текст за fallback в един стринг
+        summaryField.value = htmlTable + '\n\n' + textFallback;
+      }
+      // не спираме submit-а, няма preventDefault()
     });
   }
   // ---- Край на новия код ----
+
 
     function openOrderModal(){
       try {
@@ -1797,6 +1835,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
