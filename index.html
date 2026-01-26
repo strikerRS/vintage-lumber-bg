@@ -1070,6 +1070,10 @@ const PRODUCT_DATA = {
       <span class="lang-en hidden">Order Form</span>
     </h3>
     <form id="vl-order-form" action="https://formspree.io/f/mjggggpl" method="POST">
+      <input type="hidden" name="order_summary" id="order_summary">
+<input type="hidden" name="customer_email" id="customer_email">oninput="document.getElementById('customer_email').value=this.value"
+
+
       <label><span class="lang-bg">Име:</span><span class="lang-en hidden">Name:</span></label>
       <input type="text" name="name" required>
 
@@ -1104,7 +1108,6 @@ const PRODUCT_DATA = {
     const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
     const checkoutBtn = document.getElementById('vl-checkout');
     const orderCartField = document.getElementById('vl-order-cart-contents');
-    const orderForm = document.getElementById('vl-order-form');
   // ---- НОВО: обобщение на поръчката за имейла ----
   const PRODUCT_DATA = {
     "A": { name: "Vintage Board A", price: 50 },
@@ -1113,8 +1116,6 @@ const PRODUCT_DATA = {
   };
 
     // ---- НАЧАЛО НА НОВИЯ КОД ЗА РЕЗЮМЕ ----
-  if (orderForm && orderCartField) {
-    orderForm.addEventListener('submit', function () {
       // ---- AUTOREPLY до клиента ----
 
 // 1) взимаме имейла на клиента
@@ -1861,9 +1862,55 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
+<script>
+const PRODUCT = { "A":50, "B":50, "V":50 };
+
+const orderForm = document.getElementById('orderForm');
+const orderSummaryField = document.getElementById('order_summary');
+const customerEmailField = document.getElementById('customer_email');
+
+orderForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  
+  const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
+  let total = 0;
+  let lines = [];
+
+  cart.forEach(p=>{
+    total += PRODUCT[p];
+    lines.push(`${p} - 1 бр × ${PRODUCT[p]}€ = ${PRODUCT[p]}€`);
+  });
+
+  const summary = lines.join('\n') + `\nОбщо: ${total}€`;
+  orderSummaryField.value = summary;
+
+  const adminHTML = summary.replace(/\n/g,'<br>');
+  const clientHTML = `<h2>Успешна поръчка!</h2><br>` + adminHTML;
+
+  Email.send({
+    SecureToken: "ТВОЯ_TOKEN",
+    To: "ТВОЯ_АДМИН_EMAIL",
+    From: "ТВОЯ_АДМИН_EMAIL",
+    Subject: "Нова поръчка",
+    Body: adminHTML
+  }).then(()=>{
+    return Email.send({
+      SecureToken: "ТВОЯ_TOKEN",
+      To: customerEmailField.value,
+      From: "ТВОЯ_АДМИН_EMAIL",
+      Subject: "Поръчката е приета",
+      Body: clientHTML
+    });
+  }).then(()=>{
+    alert("ПОРЪЧКАТА Е ПРИЕТА");
+    orderForm.reset();
+  });
+});
+</script>
 
 </body>
 </html>
+
 
 
 
