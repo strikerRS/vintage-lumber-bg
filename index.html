@@ -38,7 +38,7 @@ hr, .divider, .line { border: 0 !important; height: 0 !important; box-shadow: no
 
 body {
   scroll-behavior: smooth;
-  background: #f4eadf url('images/aaw.png') top center / cover no-repeat fixed;
+  background: #f4eadf;   /* старият светъл фон без дървото */
   color: #333;
 }
 
@@ -255,9 +255,19 @@ html {
 .nav-link:hover::after,
 .nav-active::after {
   width: 100%;
+    .nav-active::after {
+    width: 100%;
+  }
+}
+
+/* Фонът aaw.png да важи само за секция Интериор */
+#interior {
+  background: #111 url('images/aaw.png') top center / cover no-repeat fixed;
+  color: #f5f5f5;
 }
 
 </style>
+</head>
 </head>
 <body>
 
@@ -1872,5 +1882,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
