@@ -255,9 +255,6 @@ html {
 .nav-link:hover::after,
 .nav-active::after {
   width: 100%;
-    .nav-active::after {
-    width: 100%;
-  }
 }
 
 /* Фонът aaw.png да важи само за секция Интериор */
@@ -282,7 +279,6 @@ html {
 
 </style>
 </head>
-</head>
 <body>
 
 <header>
@@ -297,13 +293,16 @@ html {
       <span class="lang-en hidden">Home</span>
     </a>
     
-    <a id="navProducts" class="ml-2">
-      <span class="lang-bg">Продукти</span>
-      <span class="lang-en hidden">Products</span>
-      <a href="#interior" class="nav-link ml-2">
+   <a id="navProducts" class="ml-2">
+  <span class="lang-bg">Продукти</span>
+  <span class="lang-en hidden">Products</span>
+</a>
+    
+<a id="navInterior" href="#interior" class="nav-link ml-2">
   <span class="lang-bg">Интериор</span>
   <span class="lang-en hidden">Interior</span>
-  </a>
+</a>
+
       
     </a>
     <a id="navContact" class="ml-2">
@@ -473,10 +472,6 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 
 <!-- ===================== START: Cart UI + Buy Buttons (paste BEFORE </body>) ===================== -->
 <!-- Cart panel (will be created only if not present) -->
-<div id="vl-cart-wrapper-placeholder"></div>
-
-<!-- Toast (only if not present) -->
-<div id="vl-cart-toast-placeholder"></div>
 
 <script>
 /* ===================== Cart + Buy buttons injection =====================
@@ -833,104 +828,6 @@ if(rightCol){
 
 })(); /* end IIFE */
 </script>
- <!-- ===== START: Extra long & narrow board-look backgrounds for Buy buttons ===== -->
-<style>
-  .vl-buy-btn-card {
-    width: clamp(200px, 50vw, 320px) !important;
-    height: clamp(40px, 6vh, 56px) !important;
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    background-size: auto 100% !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: hidden !important;
-    position: relative !important;
-    padding: 0 1rem !important;
-    border: none !important;
-    border-radius: 0.5rem !important;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
-    color: #fff !important;
-    font-weight: 700 !important;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.25) !important;
-    white-space: nowrap !important;
-  }
-  .vl-buy-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.22); pointer-events: none; z-index: 0; }
-  .vl-buy-text { position: relative; z-index: 1; font-size: 0.95rem; }
-  .vl-buy-btn-card::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); z-index: 2; pointer-events: none; }
-  @media (max-width: 520px) {
-    .vl-buy-btn-card { width: 90vw !important; max-width: 420px !important; height: clamp(40px, 7vh, 56px) !important; }
-  }
-</style>
-
-<script>
-(function(){
-  const IMG = [
-    'images/board_5.png',
-    'images/board_6.png',
-    'images/board_7.png'
-  ];
-
-  function enhanceButton(btn, src) {
-    if(!btn) return;
-    if(btn.dataset.vlBgApplied === '1') return;
-
-    btn.style.backgroundImage = src ? `url("${src}")` : '';
-
-    if(!btn.querySelector('.vl-buy-bg-overlay')) {
-      const overlay = document.createElement('span');
-      overlay.className = 'vl-buy-bg-overlay';
-      btn.insertAdjacentElement('afterbegin', overlay);
-    }
-
-    if(!btn.querySelector('.vl-buy-text')) {
-      const raw = btn.innerHTML;
-      btn.innerHTML = '';
-      const overlay = btn.querySelector('.vl-buy-bg-overlay');
-      if(overlay) btn.appendChild(overlay);
-      const txt = document.createElement('span');
-      txt.className = 'vl-buy-text';
-      txt.innerHTML = raw;
-      btn.appendChild(txt);
-    }
-
-    btn.dataset.vlBgApplied = '1';
-  }
-
-  function applyToAll() {
-    const buttons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
-    if(!buttons.length) return;
-
-    buttons.forEach((btn, i) => {
-      const src = IMG[i % IMG.length] || IMG[0];
-      enhanceButton(btn, src);
-    });
-  }
-
-  function init(){
-    applyToAll();
-
-    const main = document.getElementById('mainPage') || document.body;
-    if(window.MutationObserver && main) {
-      const mo = new MutationObserver((mut) => {
-        applyToAll();
-      });
-      mo.observe(main, { childList: true, subtree: true });
-    }
-
-    window.addEventListener('resize', () => {
-      applyToAll();
-    }, { passive: true });
-  }
-
-  if(document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-</script>
-<!-- ===== END: Extra long & narrow board-look for Buy buttons ===== -->
 
 <!-- ===== START: Contact Modal ===== -->
 <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
@@ -1073,19 +970,15 @@ document.addEventListener('DOMContentLoaded', function(){
     color:#6B4226; font-size:18px; cursor:pointer; 
   }
   #orderSection label { display:block; margin:8px 0 4px; color:#333; }
-  #orderSection input, #orderSection textarea {
-    width:100%; padding:8px; margin-bottom:12px; 
-    border:1px solid #ccc; border-radius:4px; box-sizing: border-box;
-    // НОВО: генериране на резюме
-const PRODUCT_DATA = {
-  "A": { name: "Vintage Board A", price: 49.99 },
-  "B": { name: "Vintage Board B", price: 49.99 },
-  "V": { name: "Vintage Board V", price: 49.99 }
-};
-
+#orderSection input, #orderSection textarea {
+  width:100%;
+  padding:8px;
+  margin-bottom:12px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  box-sizing: border-box;
 }
 
-  }
   #orderSection button[type="submit"] {
     background:#6B4226; color:#fff; padding:10px 16px; 
     border:none; border-radius:4px; cursor:pointer;
@@ -1129,8 +1022,6 @@ const PRODUCT_DATA = {
 
 <script>
   // Показване и скриване на формата за поръчка
-  (function(){
-    const orderModal = document.getElementById('orderSection');
     if(!orderModal) return;
     const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
     const checkoutBtn = document.getElementById('vl-checkout');
@@ -1423,62 +1314,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // всички бутони "Купи"
-  const buyButtons = document.querySelectorAll('.vl-buy-btn');
 
-  if (!buyButtons.length) return;
-
-  buyButtons.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-     
-      if (!img) {
-        const productPage = document.getElementById('productPage');
-        if (productPage) img = productPage.querySelector('img');
-      }
-      if (!img) return;
-
-      const imgRect = img.getBoundingClientRect();
-
-      // координати на "целта" – горен десен ъгъл (около количката)
-      const targetX = window.innerWidth - 40; // малко навътре от десния край
-      const targetY = 20;                     // малко надолу от горния край
-
-      const startX = imgRect.left + imgRect.width / 2;
-      const startY = imgRect.top + imgRect.height / 2;
-
-      const translateX = targetX - startX;
-      const translateY = targetY - startY;
-
-      // клонираме снимката (дъската)
-      const clone = img.cloneNode(true);
-      clone.style.position = 'fixed';
-      clone.style.left = (imgRect.left) + 'px';
-      clone.style.top = (imgRect.top) + 'px';
-      clone.style.width = imgRect.width + 'px';
-      clone.style.height = imgRect.height + 'px';
-      clone.style.zIndex = '9999';
-      clone.style.pointerEvents = 'none';
-      clone.style.borderRadius = '8px';
-      clone.style.objectFit = 'cover';
-      clone.style.transition = 'transform 0.7s ease-in-out, opacity 0.7s ease-in-out';
-
-      document.body.appendChild(clone);
-
-      // стартираме анимацията в следващ кадър
-      requestAnimationFrame(function () {
-        clone.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(0.2)';
-        clone.style.opacity = '0';
-      });
-
-      clone.addEventListener('transitionend', function () {
-        clone.remove();
-      });
-    });
-  });
-});
-</script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   // всички бутони "Купи" – ако класът е друг, смени '.vl-buy-btn'
@@ -1778,14 +1614,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // секции от страницата + съответните бутони
-    const map = [
-      { sectionId: 'hero',     navId: 'navHome' },
-      { sectionId: 'products', navId: 'navProducts' },
-      { sectionId: 'interior', navId: 'navInterior' },
-      { sectionId: 'contacts', navId: 'navContact' },
-      { sectionId: 'about',    navId: 'navAbout' }
-    ];
-
+   
     const pairs = map.map(item => {
       const section = document.getElementById(item.sectionId);
       const nav = document.getElementById(item.navId);
@@ -1829,11 +1658,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 </script>
 <!-- === GLOBAL SMOOTH SCROLL + AUTO HEADER OFFSET === -->
-<style>
-  /* по умолчание – плавен скрол */
-  html {
-    scroll-behavior: smooth;
-  }
 </style>
 
 <script>
@@ -1896,6 +1720,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
