@@ -951,123 +951,83 @@ document.addEventListener('DOMContentLoaded', function(){
     try{ if(typeof applyBackgroundsToBuyButtons === 'function') applyBackgroundsToBuyButtons(); } catch(e){}
   }, 50);
 });
+</script>
+
+<!-- ====== ORDER FORM MODAL (INTEGRATED) ====== -->
+<style>
+  /* Модален фон и стилове */
+  #orderSection { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; z-index: 2200; }
+  #orderSection.open { display: flex; }
+  #orderSection .overlay { position:absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
+  #orderSection .box { 
+    position: relative; z-index: 2201; width: 360px; max-width: 92%; 
+    background: #fff; border-radius: 10px; padding: 18px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25); font-family: inherit; 
+  }
+  #orderSection .box h3 { margin:0 0 8px; color:#6B4226; font-size:1.15rem; }
+  #orderSection .close-btn {
+    position:absolute; right:10px; top:8px; border:none; background:transparent; 
+    color:#6B4226; font-size:18px; cursor:pointer; 
+  }
+  #orderSection label { display:block; margin:8px 0 4px; color:#333; }
+#orderSection input, #orderSection textarea {
+  width:100%;
+  padding:8px;
+  margin-bottom:12px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  box-sizing: border-box;
+}
+
+  #orderSection button[type="submit"] {
+    background:#6B4226; color:#fff; padding:10px 16px; 
+    border:none; border-radius:4px; cursor:pointer;
+  }
+  #orderSection button[type="submit"]:hover { background:#A66B3C; }
+  @media (max-width:520px){ #orderSection .box{ width:92%; padding:14px; } }
+</style>
+
+<div id="orderSection" aria-hidden="true" role="dialog">
+  <div class="overlay" data-close="true"></div>
+  <div class="box" role="document">
+    <button class="close-btn" aria-label="Затвори" data-close="true">✕</button>
+    <h3 id="orderTitle">
+      <span class="lang-bg">Формуляр за поръчка</span>
+      <span class="lang-en hidden">Order Form</span>
+    </h3>
+    <form id="vl-order-form" action="https://formspree.io/f/mjggggpl" method="POST">
+      <label><span class="lang-bg">Име:</span><span class="lang-en hidden">Name:</span></label>
+      <input type="text" name="name" required>
+
+      <label><span class="lang-bg">Телефон:</span><span class="lang-en hidden">Phone:</span></label>
+      <input type="tel" name="phone" required>
+
+      <label><span class="lang-bg">Имейл:</span><span class="lang-en hidden">Email:</span></label>
+      <input type="email" name="_replyto" required>
+
+      <label><span class="lang-bg">Адрес:</span><span class="lang-en hidden">Address:</span></label>
+      <input type="text" name="address">
+
+      <!-- невидимо поле с продуктовата информация (попълва се автоматично) -->
+      <input type="hidden" name="cart_contents" id="vl-order-cart-contents">
+      <input type="hidden" name="order_summary" id="order_summary">
+    <button type="submit" class="bg-[#6B4226] hover:bg-[#A66B3C] text-white px-4 py-2 rounded">
+  <span class="lang-bg">Изпрати поръчката</span>
+  <span class="lang-en hidden">Submit Order</span>
+</button>
+      
+    </form>
+  </div>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const orderModal      = document.getElementById('orderSection');
-  if (!orderModal) return;
-
-  const closeOrderBtns  = orderModal.querySelectorAll('[data-close="true"]');
-  const orderCartField  = document.getElementById('vl-order-cart-contents');
-  const orderForm       = document.getElementById('vl-order-form');
-  const checkoutBtn     = document.getElementById('vl-checkout');
-  const summaryField    = document.getElementById('order_summary');
-
-  // Данни за продуктите (за имейл обобщението)
-  const PRODUCT_DATA = {
-    "A": { name: "Vintage Board A", price: 49.99 },
-    "B": { name: "Vintage Board B", price: 49.99 },
-    "V": { name: "Vintage Board V", price: 49.99 }
-  };
-
-  // Обобщение на поръчката за имейла
-  if (orderForm && orderCartField && summaryField) {
-    orderForm.addEventListener('submit', function () {
-      let cart = [];
-      try {
-        cart = JSON.parse(orderCartField.value || '[]');
-      } catch (e) {
-        cart = [];
-      }
-
-      const counts = {};
-      cart.forEach(id => {
-        counts[id] = (counts[id] || 0) + 1;
-      });
-
-      let total = 0;
-      const lines = [];
-
-      Object.keys(counts).forEach(id => {
-        const qty  = counts[id];
-        const data = PRODUCT_DATA[id] || { name: id, price: 0 };
-        const rowTotal = data.price * qty;
-        total += rowTotal;
-        lines.push(`${data.name} – ${qty} бр. × ${data.price}€ = ${rowTotal}€`);
-      });
-
-      const summary =
-        `ПОРЪЧКА:\n` +
-        lines.join('\n') +
-        `\n-------------------------\n` +
-        `Общо: ${total}€ (без доставка)`;
-
-      summaryField.value = summary;
-      // няма preventDefault – Formspree си праща формата нормално
-    });
-  }
-
-  function openOrderModal() {
-    try {
-      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-      if (orderCartField) orderCartField.value = JSON.stringify(cart);
-    } catch (e) {
-      if (orderCartField) orderCartField.value = '[]';
-    }
-
-    orderModal.classList.add('open');
-    orderModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-
-    const panel = document.getElementById('vl-cart-panel');
-    if (panel) panel.classList.add('hidden');
-  }
-
-  function closeOrderModal() {
-    orderModal.classList.remove('open');
-    orderModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  // Отваряне от бутона "Финализирай поръчката" в кошницата
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-      if (!cart.length) {
-        alert('Нямате добавени продукти в кошницата.');
-        return;
-      }
-      openOrderModal();
-    });
-  }
-
-  // Затваряне от X и overlay
-  closeOrderBtns.forEach(btn => {
-    btn.addEventListener('click', closeOrderModal);
-  });
-
-  const overlay = orderModal.querySelector('.overlay');
-  if (overlay) {
-    overlay.addEventListener('click', closeOrderModal);
-  }
-
-  // ESC затваря модала
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      if (orderModal.classList.contains('open')) {
-        closeOrderModal();
-      }
-    }
-  });
-});
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const orderModal     = document.getElementById('orderSection');
-  const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
-  const checkoutBtn    = document.getElementById('vl-checkout');
-  const orderCartField = document.getElementById('vl-order-cart-contents');
-  const orderForm      = document.getElementById('vl-order-form');
-
+  // Показване и скриване на формата за поръчка
+    if(!orderModal) return;
+    const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
+    const checkoutBtn = document.getElementById('vl-checkout');
+    const orderCartField = document.getElementById('vl-order-cart-contents');
+    const orderForm = document.getElementById('vl-order-form');
+  // ---- НОВО: обобщение на поръчката за имейла ----
   const PRODUCT_DATA = {
     "A": { name: "Vintage Board A", price: 49.99 },
     "B": { name: "Vintage Board B", price: 49.99 },
@@ -1076,6 +1036,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (orderForm && orderCartField) {
     orderForm.addEventListener('submit', function () {
+      // четем кошницата от скритото поле
       let cart = [];
       try {
         cart = JSON.parse(orderCartField.value || '[]');
@@ -1083,16 +1044,18 @@ document.addEventListener('DOMContentLoaded', function () {
         cart = [];
       }
 
+      // броим бройките
       const counts = {};
       cart.forEach(id => {
         counts[id] = (counts[id] || 0) + 1;
       });
 
+      // правим редове "Продукт B – 3 бр. × 25€ = 75€"
       let total = 0;
       const lines = [];
 
       Object.keys(counts).forEach(id => {
-        const qty  = counts[id];
+        const qty = counts[id];
         const data = PRODUCT_DATA[id] || { name: id, price: 0 };
         const rowTotal = data.price * qty;
         total += rowTotal;
@@ -1107,77 +1070,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const summaryField = document.getElementById('order_summary');
       if (summaryField) summaryField.value = summary;
+      // ВАЖНО: не спираме submit-а, няма preventDefault()
     });
   }
+  // ---- Край на новия код ----
 
-  function openOrderModal() {
-    try {
-      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-      if (orderCartField) orderCartField.value = JSON.stringify(cart);
-    } catch (e) {
-      if (orderCartField) orderCartField.value = '';
+    function openOrderModal(){
+      try {
+        const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
+        if(orderCartField) orderCartField.value = JSON.stringify(cart);
+      } catch(e) { if(orderCartField) orderCartField.value = ''; }
+
+      orderModal.classList.add('open');
+      orderModal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      const panel = document.getElementById('vl-cart-panel');
+      if(panel) panel.classList.add('hidden');
     }
 
-    orderModal.classList.add('open');
-    orderModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    const panel = document.getElementById('vl-cart-panel');
-    if (panel) panel.classList.add('hidden');
-  }
+    function closeOrderModal(){
+      orderModal.classList.remove('open');
+      orderModal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
 
-  function closeOrderModal() {
-    orderModal.classList.remove('open');
-    orderModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
+    if(checkoutBtn){
+      checkoutBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
+        if(!cart.length){ alert('Нямате добавени продукти в кошницата.'); return; }
+        openOrderModal();
+      });
+    }
 
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
-      if (!cart.length) {
-        alert('Нямате добавени продукти в кошницата.');
-        return;
-      }
-      openOrderModal();
-    });
-  }
+    closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
 
-  closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
-});
+    // Затваряне при кликане извън формата
+   
+    // ESC затваря
+   
+    // При подаване на формата — Formspree ще обработи изпращането.
+    // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
+    
+  })();
 </script>
+<!-- ====== END ORDER FORM MODAL ====== -->
 
-<!-- ====== ORDER FORM MODAL (INTEGRATED) ====== -->
-<div id="orderSection" aria-hidden="true" class="modal">
-  <!-- Тук си е HTML на формата ти (не го пипаме) -->
-</div>
-
+<!-- ====== LANGUAGE TOGGLE: applies to all elements with .lang-bg / .lang-en ====== -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const orderModal = document.getElementById('orderSection');
-  const checkoutBtn = document.getElementById('vl-checkout');
-  const closeBtn = orderModal.querySelector('[data-close="true"]');
-
-  function openModal() {
-    orderModal.classList.add('open');
-  }
-
-  function closeModal() {
-    orderModal.classList.remove('open');
-  }
-
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', function(e){
-      e.preventDefault();
-      openModal();
-    });
-  }
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-  }
-});
-
 document.addEventListener('DOMContentLoaded', function(){
   const toggle = document.getElementById('toggleLang');
   function applyLang(lang){
@@ -1780,9 +1720,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
-
-
-
 
 
 
