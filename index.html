@@ -1060,14 +1060,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const orderModal     = document.getElementById('orderSection');
+  const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
+  const checkoutBtn    = document.getElementById('vl-checkout');
+  const orderCartField = document.getElementById('vl-order-cart-contents');
+  const orderForm      = document.getElementById('vl-order-form');
 
-  // Показване и скриване на формата за поръчка
-    const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
-    const checkoutBtn = document.getElementById('vl-checkout');
-    const orderCartField = document.getElementById('vl-order-cart-contents');
-    const orderForm = document.getElementById('vl-order-form');
-  // ---- НОВО: обобщение на поръчката за имейла ----
   const PRODUCT_DATA = {
     "A": { name: "Vintage Board A", price: 49.99 },
     "B": { name: "Vintage Board B", price: 49.99 },
@@ -1076,7 +1076,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (orderForm && orderCartField) {
     orderForm.addEventListener('submit', function () {
-      // четем кошницата от скритото поле
       let cart = [];
       try {
         cart = JSON.parse(orderCartField.value || '[]');
@@ -1084,18 +1083,16 @@ document.addEventListener('DOMContentLoaded', function () {
         cart = [];
       }
 
-      // броим бройките
       const counts = {};
       cart.forEach(id => {
         counts[id] = (counts[id] || 0) + 1;
       });
 
-      // правим редове "Продукт B – 3 бр. × 25€ = 75€"
       let total = 0;
       const lines = [];
 
       Object.keys(counts).forEach(id => {
-        const qty = counts[id];
+        const qty  = counts[id];
         const data = PRODUCT_DATA[id] || { name: id, price: 0 };
         const rowTotal = data.price * qty;
         total += rowTotal;
@@ -1110,54 +1107,77 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const summaryField = document.getElementById('order_summary');
       if (summaryField) summaryField.value = summary;
-      // ВАЖНО: не спираме submit-а, няма preventDefault()
     });
   }
-  // ---- Край на новия код ----
 
-    function openOrderModal(){
-      try {
-        const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
-        if(orderCartField) orderCartField.value = JSON.stringify(cart);
-      } catch(e) { if(orderCartField) orderCartField.value = ''; }
-
-      orderModal.classList.add('open');
-      orderModal.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      const panel = document.getElementById('vl-cart-panel');
-      if(panel) panel.classList.add('hidden');
+  function openOrderModal() {
+    try {
+      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
+      if (orderCartField) orderCartField.value = JSON.stringify(cart);
+    } catch (e) {
+      if (orderCartField) orderCartField.value = '';
     }
 
-    function closeOrderModal(){
-      orderModal.classList.remove('open');
-      orderModal.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
+    orderModal.classList.add('open');
+    orderModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const panel = document.getElementById('vl-cart-panel');
+    if (panel) panel.classList.add('hidden');
+  }
 
-    if(checkoutBtn){
-      checkoutBtn.addEventListener('click', function(e){
-        e.preventDefault();
-        const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
-        if(!cart.length){ alert('Нямате добавени продукти в кошницата.'); return; }
-        openOrderModal();
-      });
-    }
+  function closeOrderModal() {
+    orderModal.classList.remove('open');
+    orderModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
 
-    closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
+      if (!cart.length) {
+        alert('Нямате добавени продукти в кошницата.');
+        return;
+      }
+      openOrderModal();
+    });
+  }
 
-    // Затваряне при кликане извън формата
-   
-    // ESC затваря
-   
-    // При подаване на формата — Formspree ще обработи изпращането.
-    // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
-    
-  })();
+  closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
+});
 </script>
-<!-- ====== END ORDER FORM MODAL ====== -->
 
-<!-- ====== LANGUAGE TOGGLE: applies to all elements with .lang-bg / .lang-en ====== -->
+<!-- ====== ORDER FORM MODAL (INTEGRATED) ====== -->
+<div id="orderSection" aria-hidden="true" class="modal">
+  <!-- Тук си е HTML на формата ти (не го пипаме) -->
+</div>
+
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const orderModal = document.getElementById('orderSection');
+  const checkoutBtn = document.getElementById('vl-checkout');
+  const closeBtn = orderModal.querySelector('[data-close="true"]');
+
+  function openModal() {
+    orderModal.classList.add('open');
+  }
+
+  function closeModal() {
+    orderModal.classList.remove('open');
+  }
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal();
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+});
+
 document.addEventListener('DOMContentLoaded', function(){
   const toggle = document.getElementById('toggleLang');
   function applyLang(lang){
@@ -1760,6 +1780,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
