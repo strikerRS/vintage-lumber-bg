@@ -1118,93 +1118,101 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-  // ---- НОВО: обобщение на поръчката за имейла ----
-  const PRODUCT_DATA = {
+// --- НОВО: обобщение на поръчката за имейла ---
+const PRODUCT_DATA = {
     "A": { name: "Vintage Board A", price: 49.99 },
     "B": { name: "Vintage Board B", price: 49.99 },
     "V": { name: "Vintage Board V", price: 49.99 }
-  };
+};
 
-  if (orderForm && orderCartField) {
-    orderForm.addEventListener('submit', function () {
-      // четем кошницата от скритото поле
-      let cart = [];
-      try {
-        cart = JSON.parse(orderCartField.value || '[]');
-      } catch (e) {
-        cart = [];
-      }
+if (orderForm && orderCartField) {
+    orderForm.addEventListener('submit', function() {
+        // четем кошницата от скритото поле
+        let cart = [];
+        try {
+            cart = JSON.parse(orderCartField.value || '[]');
+        } catch(e) {
+            cart = [];
+        }
 
-      // броим бройките
-      const counts = {};
-      cart.forEach(id => {
-        counts[id] = (counts[id] || 0) + 1;
-      });
+        // броим бройките
+        const counts = {};
+        cart.forEach(id => {
+            counts[id] = (counts[id] || 0) + 1;
+        });
 
-      // правим редове "Продукт B – 3 бр. × 25€ = 75€"
-      let total = 0;
-      const lines = [];
+        // правим редове "Продукт B – 3 бр. × 25€ = 75€"
+        let total = 0;
+        const lines = [];
 
-      Object.keys(counts).forEach(id => {
-        const qty = counts[id];
-        const data = PRODUCT_DATA[id] || { name: id, price: 0 };
-        const rowTotal = data.price * qty;
-        total += rowTotal;
-        lines.push(`${data.name} – ${qty} бр. × ${data.price}€ = ${rowTotal}€`);
-      });
+        Object.keys(counts).forEach(id => {
+            const qty = counts[id];
+            const data = PRODUCT_DATA[id] || { name: id, price: 0 };
+            const rowTotal = data.price * qty;
+            total += rowTotal;
+            lines.push(`${data.name} – ${qty} бр. × ${data.price}€ = ${rowTotal}€`);
+        });
 
-      const summary =
-        `ПОРЪЧКА:\n` +
-        lines.join('\n') +
-        `\n-------------------------\n` +
-        `Общо: ${total}€ (без доставка)`;
+        const summary =
+            `ПОРЪЧКА:\n` +
+            lines.join('\n') +
+            `\n-------------------------\n` +
+            `Общо: ${total}€ (без доставка)`;
 
-      const summaryField = document.getElementById('order_summary');
-      if (summaryField) summaryField.value = summary;
-      // ВАЖНО: не спираме submit-а, няма preventDefault()
+        const summaryField = document.getElementById('order_summary');
+        if(summaryField) summaryField.value = summary;
+        // ВАЖНО: не спираме submit-а, няма preventDefault()
     });
-  }
-  // ---- Край на новия код ----
+}
+// --- Край на новия код ---
 
-    function openOrderModal(){
-      try {
-        const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
+function openOrderModal() {
+    try {
+        const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
         if(orderCartField) orderCartField.value = JSON.stringify(cart);
-      } catch(e) { if(orderCartField) orderCartField.value = ''; }
-
-      orderModal.classList.add('open');
-      orderModal.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      const panel = document.getElementById('vl-cart-panel');
-      if(panel) panel.classList.add('hidden');
+    } catch(e) {
+        if(orderCartField) orderCartField.value = '';
     }
 
-    function closeOrderModal(){
-      orderModal.classList.remove('open');
-      orderModal.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
+    orderModal.classList.add('open');
+    orderModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const panel = document.getElementById('vl-cart-panel');
+    if(panel) panel.classList.add('hidden');
+}
 
-    if(checkoutBtn){
-      checkoutBtn.addEventListener('click', function(e){
+function closeOrderModal() {
+    orderModal.classList.remove('open');
+    orderModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+if(checkoutBtn) {
+    checkoutBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        const cart = JSON.parse(localStorage.getItem('vl_cart_v1')||'[]');
-        if(!cart.length){ alert('Нямате добавени продукти в кошницата.'); return; }
+        const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
+        if(!cart.length) {
+            alert('Нямате добавени продукти в кошницата.');
+            return;
+        }
         openOrderModal();
-      });
+    });
+}
+
+closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
+
+// Затваряне при кликане извън формата
+orderModal.querySelector('.overlay').addEventListener('click', closeOrderModal);
+
+// ESC затваря
+document.addEventListener('keydown', function(e) {
+    if(e.key === 'Escape' && orderModal.classList.contains('open')) {
+        closeOrderModal();
     }
+});
 
-    closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
-
-    // Затваряне при кликане извън формата
-   
-    // ESC затваря
-   
-    // При подаване на формата — Formspree ще обработи изпращането.
-    // Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
-    
-  })();
-</script>
+// При подаване на формата — Formspree ще обработи изпращането.
+// Ако искаш след успешно изпращане да изчиства кошницата, можем да добавим AJAX.
 <!-- ====== END ORDER FORM MODAL ====== -->
 
 <!-- ====== LANGUAGE TOGGLE: applies to all elements with .lang-bg / .lang-en ====== -->
@@ -1811,6 +1819,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
