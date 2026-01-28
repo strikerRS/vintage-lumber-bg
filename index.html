@@ -1021,12 +1021,103 @@ document.addEventListener('DOMContentLoaded', function(){
 </div>
 
 <script>
-  // Показване и скриване на формата за поръчка
-    if(!orderModal) return;
-    const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
-    const checkoutBtn = document.getElementById('vl-checkout');
-    const orderCartField = document.getElementById('vl-order-cart-contents');
-    const orderForm = document.getElementById('vl-order-form');
+document.addEventListener('DOMContentLoaded', function() {
+  const orderModal = document.getElementById('orderSection');
+  const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
+  const checkoutBtn = document.getElementById('vl-checkout');
+  const orderCartField = document.getElementById('vl-order-cart-contents');
+  const orderForm = document.getElementById('vl-order-form');
+
+  function openOrderModal() {
+    try {
+      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
+      if (orderCartField) orderCartField.value = JSON.stringify(cart);
+    } catch (e) {
+      if (orderCartField) orderCartField.value = '';
+    }
+
+    orderModal.classList.add('open');
+    orderModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const panel = document.getElementById('vl-cart-panel');
+    if (panel) panel.classList.add('hidden');
+  }
+
+  function closeOrderModal() {
+    orderModal.classList.remove('open');
+    orderModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Отваряне на модала при клик на "Финализирай поръчката"
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const cart = JSON.parse(localStorage.getItem('vl_cart_v1') || '[]');
+      if (!cart.length) {
+        alert('Нямате добавени продукти в кошницата.');
+        return;
+      }
+      openOrderModal();
+    });
+  }
+
+  // Затваряне при клик на бутоните за затваряне
+  closeOrderBtns.forEach(b => b.addEventListener('click', closeOrderModal));
+
+  // Затваряне при клик извън прозореца
+  orderModal.querySelector('.overlay').addEventListener('click', closeOrderModal);
+
+  // Затваряне с ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && orderModal.classList.contains('open')) {
+      closeOrderModal();
+    }
+  });
+
+  // Формата за поръчка - обработка на обобщението
+  const PRODUCT_DATA = {
+    "A": { name: "Vintage Board A", price: 49.99 },
+    "B": { name: "Vintage Board B", price: 49.99 },
+    "V": { name: "Vintage Board V", price: 49.99 }
+  };
+
+  if (orderForm && orderCartField) {
+    orderForm.addEventListener('submit', function() {
+      let cart = [];
+      try {
+        cart = JSON.parse(orderCartField.value || '[]');
+      } catch (e) {
+        cart = [];
+      }
+
+      const counts = {};
+      cart.forEach(id => {
+        counts[id] = (counts[id] || 0) + 1;
+      });
+
+      let total = 0;
+      const lines = [];
+      Object.keys(counts).forEach(id => {
+        const qty = counts[id];
+        const data = PRODUCT_DATA[id] || { name: id, price: 0 };
+        const rowTotal = data.price * qty;
+        total += rowTotal;
+        lines.push(`${data.name} – ${qty} бр. × ${data.price}€ = ${rowTotal}€`);
+      });
+
+      const summary =
+        `ПОРЪЧКА:\n` +
+        lines.join('\n') +
+        `\n-------------------------\n` +
+        `Общо: ${total}€ (без доставка)`;
+
+      const summaryField = document.getElementById('order_summary');
+      if (summaryField) summaryField.value = summary;
+    });
+  }
+});
+</script>
   // ---- НОВО: обобщение на поръчката за имейла ----
   const PRODUCT_DATA = {
     "A": { name: "Vintage Board A", price: 49.99 },
@@ -1720,6 +1811,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
