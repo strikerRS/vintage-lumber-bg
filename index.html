@@ -988,6 +988,7 @@ document.addEventListener('DOMContentLoaded', function(){
 </style>
 
 <div id="orderSection" aria-hidden="true" role="dialog">
+  <script>const orderModal = document.getElementById('orderSection');</script>
   <div class="overlay" data-close="true"></div>
   <div class="box" role="document">
     <button class="close-btn" aria-label="Затвори" data-close="true">✕</button>
@@ -1022,7 +1023,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <script>
   // Показване и скриване на формата за поръчка
-    if(!orderModal) return;
     const closeOrderBtns = orderModal.querySelectorAll('[data-close="true"]');
     const checkoutBtn = document.getElementById('vl-checkout');
     const orderCartField = document.getElementById('vl-order-cart-contents');
@@ -1720,6 +1720,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
