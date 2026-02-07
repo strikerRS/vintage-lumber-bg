@@ -333,21 +333,21 @@ html {
 <div id="mainPage" class="mt-24">
 <main class="max-w-7xl mx-auto p-10 grid md:grid-cols-3 gap-8">
 <a href="index.html?product=A" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/A.png" class="h-56 w-full object-cover rounded-t-xl">
+<img src="PRODUCTS/A.png" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
 </div>
 </a>
 <a href="index.html?product=B" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/B.png" class="h-56 w-full object-cover rounded-t-xl">
+<img src="PRODUCTS/B.png" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
 </div>
 </a>
 <a href="index.html?product=V" class="bg-white rounded-xl shadow hover:scale-105 transition">
-<img src="images/V.png" class="h-56 w-full object-cover rounded-t-xl">
+<img src="PRODUCTS/V.png" class="h-56 w-full object-cover rounded-t-xl">
 <div class="p-4 text-center">
 <h3 class="font-semibold text-lg">Стара дървена дъска</h3>
 <p class="text-[#6B4226] font-bold">Разгледай продукта</p>
@@ -414,7 +414,7 @@ html {
 </div>
 
 <script>
-const products={ A:{title:"Стара дървена дъска",images:["PRODUCTS/V.png","images/B.png","images/V.png"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, B:{title:"Ръстик дъска",images:["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],description:"Автентична ръстик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, V:{title:"Стара масивна греда",images:["PRODUCTS/A.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
+const products={ A:{title:"Стара дървена дъска",images:["PRODUCTS/A.png","PRODUCTS/B.png","PRODUCTS/V.png"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, B:{title:"Ръстик дъска",images:["PRODUCTS/B.png"],description:"Автентична ръстик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, V:{title:"Стара масивна греда",images:["PRODUCTS/A.png","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
 
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
@@ -1816,6 +1816,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
