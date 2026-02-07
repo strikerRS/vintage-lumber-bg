@@ -481,9 +481,9 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
   const FALLBACK = {
-    A:{title:"Стара дървена дъска", images:["PRODUCTS/A.png"], price:49.99},
+    A:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:49.99},
     B:{title:"Стара дървена дъска", images:["PRODUCTS/B.png"], price:49.99},
-    V:{title:"Стара дървена дъска", images:["PRODUCTS/V.png"], price:49.99}
+    V:{title:"Стара дървена дъска", images:["PRODUCTS/A.png"], price:49.99}
   };
 
   // --- ensure cart panel DOM exists (create only if not present) ---
@@ -1395,11 +1395,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const imgs = document.querySelectorAll('#mainPage a[href*="product"] img');
 
   // пътищата до новите снимки
-const srcs = [
-  'PRODUCTS/V.png',
-  'PRODUCTS/B.png',
-  'PRODUCTS/A.png'
-];
+  const srcs = [
+    'PRODUCTS/V.png', // първи продукт (ляв)
+    'PRODUCTS/B.png', // втори продукт (среден)
+    'PRODUCTS/A.png'  // трети продукт (десен)
+  ];
 
   imgs.forEach((img, index) => {
     if (index < srcs.length) {
@@ -1816,8 +1816,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
-
-
 
 
 
