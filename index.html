@@ -92,7 +92,6 @@ nav a:hover{color:#A66B3C;}
   box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }
 .vl-buy-bg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.22); pointer-events: none; z-index: 0; }
-.vl-buy-text { position: relative; z-index: 1; font-weight: 700; letter-spacing: 0.2px; white-space: nowrap; text-shadow: 0 1px 0 rgba(0,0,0,0.25); font-size: 0.95rem; }
 .vl-buy-btn-card::before{ content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); z-index: 2; pointer-events: none; }
 
 /* responsive for buy buttons */
@@ -152,13 +151,6 @@ nav a:hover{color:#A66B3C;}
 }
 
 /* Текстът върху бутона (цената) - черен, без текстова сянка, по-дебел */
-.vl-buy-text {
-  color: #000 !important;
-  text-shadow: none !important;
-  font-weight: 800 !important;
-  white-space: nowrap;
-  font-size: 0.98rem !important;
-}
 
 /* Премахваме потенциални класове, които правят текста бял (Tailwind) */
 .vl-buy-btn-card.text-white, .vl-buy-btn-card.bg-\[\#6B4226\] {
@@ -1291,18 +1283,7 @@ document.addEventListener('DOMContentLoaded', function(){
     border: none !important;
     border-radius: 0 !important;
   }
-
-  .vl-buy-text {
-    font-size: 1.0rem !important;      /* ВРЪЩАМЕ ГОЛЕМИЯ ТЕКСТ */
-    font-weight: 700 !important;
-    white-space: nowrap !important;
-    line-height: 1 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    color: #000 !important;
-  }
-<style>
-<style>
+  
 /* --- унифицирани дървени бутони (вън & вътре) --- */
 
 .vl-buy-btn-card,
@@ -1330,16 +1311,6 @@ document.addEventListener('DOMContentLoaded', function(){
 }
 
 /* --- текст върху бутона --- */
-
-.vl-buy-text {
-  font-size: 1.22rem !important;
-  font-weight: 800 !important;
-  white-space: nowrap !important;
-  color: #000 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: 1 !important;
-}
 
 /* --- пулс ефект при клик --- */
 .vl-buy-btn-card:active,
@@ -1811,6 +1782,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
