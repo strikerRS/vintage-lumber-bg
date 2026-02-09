@@ -45,10 +45,12 @@ body {
 
 #hero-bg {
   background-image: url('images/bg-old-bulgarian-farm.png');
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-  height: 110vh;
+  background-attachment: scroll;      /* по-стабилно от fixed */
+  background-size: contain;           /* показва цялата снимка */
+  background-position: center top;    /* отгоре да започва */
+  background-repeat: no-repeat;
+  background-color: #f4eadf;          /* фон около снимката */
+  height: 100vh;
 }
 
 header { position: fixed; top:0; left:0; width:100%; background: rgba(255,255,255,0.95); z-index:50; display:flex; justify-content:space-between; align-items:center; padding:0.2rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
@@ -1859,6 +1861,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
