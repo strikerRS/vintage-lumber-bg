@@ -442,127 +442,119 @@ window.products = {
 };
 
 const products = window.products;
-  <script>
-    
-const params=new URLSearchParams(window.location.search);
-const productKey=params.get("product");
+
+const params = new URLSearchParams(window.location.search);
+const productKey = params.get("product");
+
 if(productKey && products[productKey]){
- const p=products[productKey];
- document.getElementById("mainPage").style.display="none";
- document.getElementById("productPage").style.display="block";
- document.getElementById("hero-bg").style.display="none"; 
- document.getElementById("title").innerText=p.title;
- document.getElementById("description").innerText=p.description;
- document.getElementById("delivery").innerText=p.delivery;
- const mainImage=document.getElementById("mainImage");
- const thumbsContainer=document.getElementById("galleryThumbs");
- const lightbox=document.getElementById("lightboxOverlay");
- const lightboxImage=document.getElementById("lightboxImage");
- const leftBtn=document.getElementById("lightboxLeft");
- const rightBtn=document.getElementById("lightboxRight");
- let currentIndex=0;
- function showImage(index){ currentIndex=index; mainImage.src=p.images[currentIndex]; Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index)); lightboxImage.src=p.images[currentIndex]; }
- p.images.forEach((imgSrc,i)=>{ const thumb=document.createElement("img"); thumb.src=imgSrc; if(i===0) thumb.classList.add('active'); thumb.addEventListener('click',()=> showImage(i)); thumbsContainer.appendChild(thumb); });
- document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
- document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
-let lbScale = 1;
+  const p = products[productKey];
 
-const lightboxOverlay = document.getElementById("lightboxOverlay");
+  document.getElementById("mainPage").style.display="none";
+  document.getElementById("productPage").style.display="block";
+  document.getElementById("hero-bg").style.display="none";
 
-function lbApplyZoom(){
-  lightboxImage.style.transform = `scale(${lbScale})`;
-  lightboxImage.style.cursor = (lbScale > 1) ? 'zoom-out' : 'zoom-in';
+  document.getElementById("title").innerText = p.title;
+  document.getElementById("description").innerText = p.description;
+  document.getElementById("delivery").innerText = p.delivery;
+
+  const mainImage = document.getElementById("mainImage");
+  const thumbsContainer = document.getElementById("galleryThumbs");
+  const leftArrow = document.querySelector('.arrow-left');
+  const rightArrow = document.querySelector('.arrow-right');
+
+  const overlay = document.getElementById("lightboxOverlay");
+  const lbImg = document.getElementById("lightboxImage");
+
+  let currentIndex = 0;
+
+  function showImage(index){
+    currentIndex = (index + p.images.length) % p.images.length;
+    mainImage.src = p.images[currentIndex];
+    [...thumbsContainer.children].forEach((img,i)=> img.classList.toggle('active', i===currentIndex));
+    if(!overlay.classList.contains('hidden')) lbImg.src = p.images[currentIndex];
+  }
+
+  thumbsContainer.innerHTML = "";
+  p.images.forEach((src,i)=>{
+    const t=document.createElement("img");
+    t.src=src;
+    t.addEventListener("click", ()=>showImage(i));
+    thumbsContainer.appendChild(t);
+  });
+
+  if(leftArrow) leftArrow.addEventListener("click", ()=>showImage(currentIndex-1));
+  if(rightArrow) rightArrow.addEventListener("click", ()=>showImage(currentIndex+1));
+
+  showImage(0);
+
+  // specs
+  const specs = document.getElementById("specs");
+  specs.innerHTML = "";
+  p.specs.forEach(s=>{
+    const li=document.createElement("li");
+    li.textContent=s;
+    specs.appendChild(li);
+  });
+
+  // Lightbox + zoom
+  let lbScale = 1;
+  const lbStage = document.getElementById("lbStage");
+
+  function lbApplyZoom(){
+    lbImg.style.transform = `scale(${lbScale})`;
+    lbImg.style.cursor = (lbScale>1) ? "zoom-out" : "zoom-in";
+  }
+  function lbResetZoom(){ lbScale=1; lbApplyZoom(); }
+
+  function lbOpen(){
+    lbImg.src = p.images[currentIndex];
+    lbResetZoom();
+    overlay.classList.remove("hidden");
+    overlay.classList.add("flex");
+    document.body.style.overflow="hidden";
+  }
+  function lbClose(){
+    overlay.classList.add("hidden");
+    overlay.classList.remove("flex");
+    document.body.style.overflow="";
+  }
+
+  mainImage.addEventListener("click", lbOpen);
+  document.getElementById("lbClose").addEventListener("click", lbClose);
+  overlay.querySelector('[data-lb-close="1"]').addEventListener("click", lbClose);
+
+  document.getElementById("lbZoomIn").addEventListener("click", (e)=>{
+    e.stopPropagation();
+    lbScale = Math.min(4, +(lbScale+0.25).toFixed(2));
+    lbApplyZoom();
+  });
+  document.getElementById("lbZoomOut").addEventListener("click", (e)=>{
+    e.stopPropagation();
+    lbScale = Math.max(1, +(lbScale-0.25).toFixed(2));
+    lbApplyZoom();
+  });
+
+  lbStage.addEventListener("wheel", (e)=>{
+    e.preventDefault();
+    const dir = Math.sign(e.deltaY);
+    lbScale = (dir>0) ? Math.max(1, lbScale-0.15) : Math.min(4, lbScale+0.15);
+    lbScale = +lbScale.toFixed(2);
+    lbApplyZoom();
+  }, {passive:false});
+
+  lbImg.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    lbScale = (lbScale===1) ? 2 : 1;
+    lbApplyZoom();
+  });
+
+  document.getElementById("lightboxLeft").addEventListener("click", (e)=>{ e.stopPropagation(); showImage(currentIndex-1); });
+  document.getElementById("lightboxRight").addEventListener("click", (e)=>{ e.stopPropagation(); showImage(currentIndex+1); });
+
+  document.addEventListener("keydown", (e)=>{
+    if(e.key==="Escape" && !overlay.classList.contains("hidden")) lbClose();
+  });
 }
-
-function lbResetZoom(){
-  lbScale = 1;
-  lbApplyZoom();
-}
-
-function lbOpen(){
-  lbResetZoom();
-  lightboxOverlay.classList.remove('hidden');
-  lightboxOverlay.classList.add('flex');
-  document.body.style.overflow = 'hidden';
-}
-
-function lbClose(){
-  lightboxOverlay.classList.add('hidden');
-  lightboxOverlay.classList.remove('flex');
-  document.body.style.overflow = '';
-}
-
-mainImage.addEventListener('click', lbOpen);
-
-// X
-document.getElementById('lbClose').addEventListener('click', lbClose);
-
-// click on dark background closes
-document.querySelector('#lightboxOverlay [data-lb-close="1"]').addEventListener('click', lbClose);
-
-// zoom +/-
-document.getElementById('lbZoomIn').addEventListener('click', (e)=>{
-  e.stopPropagation();
-  lbScale = Math.min(4, +(lbScale + 0.25).toFixed(2));
-  lbApplyZoom();
-});
-
-document.getElementById('lbZoomOut').addEventListener('click', (e)=>{
-  e.stopPropagation();
-  lbScale = Math.max(1, +(lbScale - 0.25).toFixed(2));
-  lbApplyZoom();
-});
-
-// mouse wheel zoom (over the image area)
-document.getElementById('lbStage').addEventListener('wheel', (e)=>{
-  e.preventDefault();
-  const dir = Math.sign(e.deltaY);
-  lbScale = (dir > 0) ? Math.max(1, lbScale - 0.15) : Math.min(4, lbScale + 0.15);
-  lbScale = +lbScale.toFixed(2);
-  lbApplyZoom();
-}, { passive:false });
-
-// click on image toggles zoom
-lightboxImage.addEventListener('click', (e)=>{
-  e.stopPropagation();
-  lbScale = (lbScale === 1) ? 2 : 1;
-  lbApplyZoom();
-});
-
-// ESC closes
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape' && !lightboxOverlay.classList.contains('hidden')) lbClose();
-});
-
- leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
- rightBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex+1)%p.images.length); });
- showImage(0);
- p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
-}
-const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; }
-document.getElementById('homeBtn').addEventListener('click',goHome);
-document.getElementById('navHome').addEventListener('click',goHome);
-
-// About modal
-const aboutModal = document.getElementById('aboutModal');
-const closeAboutModal = document.getElementById('closeAboutModal');
-document.getElementById('navAbout').addEventListener('click',()=>{
- aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex');
-});
-closeAboutModal.addEventListener('click',()=>{
- aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex');
-});
-aboutModal.addEventListener('click', e => { if(e.target===aboutModal){ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); } });
-document.querySelectorAll('.aboutNavLink').forEach(link=>{
- link.addEventListener('click', e=>{
- e.preventDefault();
- const target=document.querySelector(link.getAttribute('href'));
- target.scrollIntoView({behavior:'smooth'});
- });
-});
-
-document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop - 120, behavior:'smooth'}); });
-// keep original navContact behavior where present later (some contact handlers below also use navContact)
 </script>
 
 <!-- ===================== START: Cart UI + Buy Buttons (paste BEFORE </body>) ===================== -->
@@ -992,43 +984,6 @@ if(navContactBtn && contactModal && closeContactModal){
     } catch(e){ /* silent */ }
   });
 
-  // 2) Функция за прилагане на фон + обвивка
-  function enhance(btn, src){
-    if(!btn) return;
-    if(btn.dataset.vlBgApplied === '1') return;
-    if(src) {
-      btn.style.backgroundImage = `url("${src}")`;
-      btn.style.backgroundSize = 'cover';
-      btn.style.backgroundPosition = 'center';
-      btn.style.backgroundRepeat = 'no-repeat';
-    }
-    if(!btn.querySelector('.vl-buy-bg-overlay')){
-      const overlay = document.createElement('span');
-      overlay.className = 'vl-buy-bg-overlay';
-      btn.insertAdjacentElement('afterbegin', overlay);
-    }
-
-  // 3) Приложи фон на картите (първите 3 продукта) — базирано на data-key или подредба
-  const cardButtons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
-  cardButtons.forEach((btn, idx) => {
-    const key = btn.dataset.key;
-    const src = (key && mapping[key]) ? mapping[key] : Object.values(mapping)[idx % 3];
-    enhance(btn, src);
-  });
-
-  // 4) Продуктова страница — ако има .vl-buy-btn-product, сложи board_5.png (или съответния за продукта)
-  const productBtn = document.querySelector('.vl-buy-btn-product');
-  if(productBtn){
-    const key = new URLSearchParams(location.search).get('product');
-    const src = mapping[key] || mapping['A'];
-    enhance(productBtn, src);
-  }
-
-  // 5) run the original background appliers (if present) after our fixes
-  setTimeout(()=> {
-    try{ if(typeof applyBackgroundsToBuyButtons === 'function') applyBackgroundsToBuyButtons(); } catch(e){}
-  }, 50);
-});
 </script>
 
 <!-- ====== ORDER FORM MODAL (INTEGRATED) ====== -->
@@ -1844,161 +1799,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })();
 </script>
-<!-- === END GLOBAL SMOOTH SCROLL === -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const products = window.products || {};
-  const params = new URLSearchParams(location.search);
-  const key = params.get('product');
-  if (!key || !products[key]) return;
-
-  const p = products[key];
-
-  // Pages
-  const mainPage = document.getElementById('mainPage');
-  const productPage = document.getElementById('productPage');
-  const hero = document.getElementById('hero-bg');
-  if (mainPage) mainPage.style.display = 'none';
-  if (productPage) productPage.style.display = 'block';
-  if (hero) hero.style.display = 'none';
-
-  // Fill text
-  const titleEl = document.getElementById('title');
-  const descEl  = document.getElementById('description');
-  const delEl   = document.getElementById('delivery');
-  if (titleEl) titleEl.textContent = p.title || '';
-  if (descEl)  descEl.textContent  = p.description || '';
-  if (delEl)   delEl.textContent   = p.delivery || '';
-
-  // Specs
-  const specsUl = document.getElementById('specs');
-  if (specsUl) {
-    specsUl.innerHTML = '';
-    (p.specs || []).forEach(s => {
-      const li = document.createElement('li');
-      li.textContent = s;
-      specsUl.appendChild(li);
-    });
-  }
-
-  // Gallery
-  const mainImage = document.getElementById('mainImage');
-  const thumbs = document.getElementById('galleryThumbs');
-  const leftArrow = document.querySelector('.arrow-left');
-  const rightArrow = document.querySelector('.arrow-right');
-
-  if (!mainImage || !thumbs) return;
-
-  let currentIndex = 0;
-
-  function showImage(i){
-    currentIndex = (i + p.images.length) % p.images.length;
-    mainImage.src = p.images[currentIndex];
-    [...thumbs.children].forEach((t, idx) => t.classList.toggle('active', idx === currentIndex));
-    // sync lightbox image if open
-    const lbImg = document.getElementById('lightboxImage');
-    if (lbImg && !document.getElementById('lightboxOverlay').classList.contains('hidden')) {
-      lbImg.src = p.images[currentIndex];
-      lbResetZoom();
-    }
-  }
-
-  thumbs.innerHTML = '';
-  (p.images || []).forEach((src, i) => {
-    const t = document.createElement('img');
-    t.src = src;
-    t.addEventListener('click', () => showImage(i));
-    thumbs.appendChild(t);
-  });
-
-  if (leftArrow) leftArrow.addEventListener('click', () => showImage(currentIndex - 1));
-  if (rightArrow) rightArrow.addEventListener('click', () => showImage(currentIndex + 1));
-
-  showImage(0);
-
-  // ===== Lightbox + Zoom =====
-  const overlay = document.getElementById('lightboxOverlay');
-  const lbImg = document.getElementById('lightboxImage');
-  const lbCloseBtn = document.getElementById('lbClose');
-  const lbZoomIn = document.getElementById('lbZoomIn');
-  const lbZoomOut = document.getElementById('lbZoomOut');
-  const lbStage = document.getElementById('lbStage');
-  const lbLeft = document.getElementById('lightboxLeft');
-  const lbRight = document.getElementById('lightboxRight');
-  const lbBgClose = overlay ? overlay.querySelector('[data-lb-close="1"]') : null;
-
-  if (!overlay || !lbImg) return;
-
-  let lbScale = 1;
-
-  function lbApplyZoom(){
-    lbImg.style.transform = `scale(${lbScale})`;
-    lbImg.style.cursor = (lbScale > 1) ? 'zoom-out' : 'zoom-in';
-  }
-
-  function lbResetZoom(){
-    lbScale = 1;
-    lbApplyZoom();
-  }
-  window.lbResetZoom = lbResetZoom; // used above
-
-  function openLB(){
-    lbImg.src = p.images[currentIndex];
-    lbResetZoom();
-    overlay.classList.remove('hidden');
-    overlay.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLB(){
-    overlay.classList.add('hidden');
-    overlay.classList.remove('flex');
-    document.body.style.overflow = '';
-  }
-
-  mainImage.addEventListener('click', openLB);
-  if (lbCloseBtn) lbCloseBtn.addEventListener('click', closeLB);
-  if (lbBgClose) lbBgClose.addEventListener('click', closeLB);
-
-  if (lbZoomIn) lbZoomIn.addEventListener('click', (e)=> {
-    e.stopPropagation();
-    lbScale = Math.min(4, +(lbScale + 0.25).toFixed(2));
-    lbApplyZoom();
-  });
-
-  if (lbZoomOut) lbZoomOut.addEventListener('click', (e)=> {
-    e.stopPropagation();
-    lbScale = Math.max(1, +(lbScale - 0.25).toFixed(2));
-    lbApplyZoom();
-  });
-
-  if (lbStage) lbStage.addEventListener('wheel', (e)=> {
-    e.preventDefault();
-    const dir = Math.sign(e.deltaY);
-    lbScale = (dir > 0) ? Math.max(1, lbScale - 0.15) : Math.min(4, lbScale + 0.15);
-    lbScale = +lbScale.toFixed(2);
-    lbApplyZoom();
-  }, { passive:false });
-
-  lbImg.addEventListener('click', (e)=> {
-    e.stopPropagation();
-    lbScale = (lbScale === 1) ? 2 : 1;
-    lbApplyZoom();
-  });
-
-  if (lbLeft) lbLeft.addEventListener('click', (e)=> { e.stopPropagation(); showImage(currentIndex - 1); });
-  if (lbRight) lbRight.addEventListener('click', (e)=> { e.stopPropagation(); showImage(currentIndex + 1); });
-
-  document.addEventListener('keydown', (e)=> {
-    if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeLB();
-    if (e.key === 'ArrowLeft' && !overlay.classList.contains('hidden')) showImage(currentIndex - 1);
-    if (e.key === 'ArrowRight' && !overlay.classList.contains('hidden')) showImage(currentIndex + 1);
-  });
-});
-</script>
 
 </body>
 </html>
+
 
 
 
