@@ -414,7 +414,7 @@ html {
 </div>
 
 <script>
-const products={ A:{title:"Стара дървена дъска",images:["PRODUCTS/11.jpg","images/B.png","images/V.png"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, B:{title:"Ръстик дъска",images:["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],description:"Автентична ръстик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, V:{title:"Стара масивна греда",images:["PRODUCTS/10.jpg","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
+window.products = { A:{title:"Стара дървена дъска",images:["PRODUCTS/11.jpg","images/B.png","images/V.png"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, B:{title:"Ръстик дъска",images:["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],description:"Автентична ръстик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, V:{title:"Стара масивна греда",images:["PRODUCTS/10.jpg","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
 
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
@@ -480,12 +480,11 @@ document.getElementById('navProducts').addEventListener('click',()=>{ if(documen
 
 (function(){
   // --- fallback product info (only used if your `products` object lacks price/images) ---
-  FALLBACK[id].price
-  "10": { title:"Стара дървена дъска", images:["PRODUCTS/10.jpg"], price:49.99 },
+ const FALLBACK = {
+  "A":  { title:"Стара дървена дъска", images:["PRODUCTS/11.jpg"], price:49.99 },
   "B":  { title:"Стара дървена дъска", images:["PRODUCTS/B.png"],  price:49.99 },
-  "11": { title:"Стара дървена дъска", images:["PRODUCTS/11.jpg"], price:49.99 }
+  "V":  { title:"Стара дървена дъска", images:["PRODUCTS/10.jpg"], price:49.99 }
 };
-
 
   // --- ensure cart panel DOM exists (create only if not present) ---
   function ensureCartDOM(){
@@ -869,11 +868,6 @@ if(navContactBtn && contactModal && closeContactModal){
 }
 </script>
 <!-- ===== END: Contact Modal ===== -->
-
-<!-- ===================== FIX: final small script that ensures buy-buttons exist and backgrounds are applied ========== -->
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  const mapping = { A: 'images/board_5.png', B: 'images/board_6.png', V: 'images/board_7.png' };
 
   // 1) Създай липсващи buy бутони (ако оригиналният инжектор не е сработил)
   document.querySelectorAll('a[href*="product="]').forEach(a=>{
@@ -1817,6 +1811,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
