@@ -368,10 +368,22 @@ html {
 </div>
 </div>
 
-<div id="lightboxOverlay" class="flex">
-<button id="lightboxLeft">←</button>
-<img id="lightboxImage" src="" alt="Продукт">
-<button id="lightboxRight">→</button>
+<div id="lightboxOverlay" class="fixed inset-0 hidden items-center justify-center z-[9999]">
+  <div class="absolute inset-0 bg-black/90" data-lb-close="1"></div>
+
+  <div class="absolute top-4 right-4 flex gap-2 z-[10000]">
+    <button id="lbZoomOut" class="px-3 py-2 rounded bg-[#6B4226] text-white" title="Zoom out">🔍−</button>
+    <button id="lbZoomIn"  class="px-3 py-2 rounded bg-[#6B4226] text-white" title="Zoom in">🔍+</button>
+    <button id="lbClose"   class="px-3 py-2 rounded bg-[#6B4226] text-white" title="Close">✕</button>
+  </div>
+
+  <button id="lightboxLeft" class="absolute left-3 top-1/2 -translate-y-1/2 px-4 py-3 rounded bg-[#6B4226] text-white z-[10000]">←</button>
+  <button id="lightboxRight" class="absolute right-3 top-1/2 -translate-y-1/2 px-4 py-3 rounded bg-[#6B4226] text-white z-[10000]">→</button>
+
+  <div id="lbStage" class="relative z-[10000] max-w-[92vw] max-h-[88vh] overflow-hidden">
+    <img id="lightboxImage" src="" alt="Продукт"
+         style="max-width:92vw; max-height:88vh; transform-origin:center center; transform:scale(1); cursor:zoom-in;">
+  </div>
 </div>
 
 <!-- Инпрегниран модал за За нас -->
@@ -475,8 +487,75 @@ if(productKey && products[productKey]){
  p.images.forEach((imgSrc,i)=>{ const thumb=document.createElement("img"); thumb.src=imgSrc; if(i===0) thumb.classList.add('active'); thumb.addEventListener('click',()=> showImage(i)); thumbsContainer.appendChild(thumb); });
  document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
  document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
- mainImage.addEventListener('click',()=> lightbox.style.display='flex');
- lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
+let lbScale = 1;
+
+const lightboxOverlay = document.getElementById("lightboxOverlay");
+
+function lbApplyZoom(){
+  lightboxImage.style.transform = `scale(${lbScale})`;
+  lightboxImage.style.cursor = (lbScale > 1) ? 'zoom-out' : 'zoom-in';
+}
+
+function lbResetZoom(){
+  lbScale = 1;
+  lbApplyZoom();
+}
+
+function lbOpen(){
+  lbResetZoom();
+  lightboxOverlay.classList.remove('hidden');
+  lightboxOverlay.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+
+function lbClose(){
+  lightboxOverlay.classList.add('hidden');
+  lightboxOverlay.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+
+mainImage.addEventListener('click', lbOpen);
+
+// X
+document.getElementById('lbClose').addEventListener('click', lbClose);
+
+// click on dark background closes
+document.querySelector('#lightboxOverlay [data-lb-close="1"]').addEventListener('click', lbClose);
+
+// zoom +/-
+document.getElementById('lbZoomIn').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  lbScale = Math.min(4, +(lbScale + 0.25).toFixed(2));
+  lbApplyZoom();
+});
+
+document.getElementById('lbZoomOut').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  lbScale = Math.max(1, +(lbScale - 0.25).toFixed(2));
+  lbApplyZoom();
+});
+
+// mouse wheel zoom (over the image area)
+document.getElementById('lbStage').addEventListener('wheel', (e)=>{
+  e.preventDefault();
+  const dir = Math.sign(e.deltaY);
+  lbScale = (dir > 0) ? Math.max(1, lbScale - 0.15) : Math.min(4, lbScale + 0.15);
+  lbScale = +lbScale.toFixed(2);
+  lbApplyZoom();
+}, { passive:false });
+
+// click on image toggles zoom
+lightboxImage.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  lbScale = (lbScale === 1) ? 2 : 1;
+  lbApplyZoom();
+});
+
+// ESC closes
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && !lightboxOverlay.classList.contains('hidden')) lbClose();
+});
+
  leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
  rightBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex+1)%p.images.length); });
  showImage(0);
@@ -1803,6 +1882,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
