@@ -421,25 +421,38 @@ window.products = {
       "Подходящо за интериор и декорация"
     ],
     delivery: "Доставка..."
-  }, B:{title:"Ръстик дъска",
-        images:[
-          "PRODUCTS/A.png",
-        description:"Автентична ръстик дъска...",
-        specs:["Ръчно подбрана","Уникален релеф"],
-        delivery:"Доставка..."}, 
-  V:{
-  title:"Стара масивна греда",
-  images:[
-    "PRODUCTS/10.jpg",
-    "PRODUCTS/10.png",
-    "PRODUCTS/11.png",
-    "PRODUCTS/12.png"],
-  ],
-  description:"Масивна греда...",
-  specs:["Масивно дърво","Естествена патина"],
-  delivery:"Доставка..."
-}
- };
+  },
+
+  B: {
+    title: "Ръстик дъска",
+    images: [
+      "PRODUCTS/A.png"
+    ],
+    description: "Автентична ръстик дъска...",
+    specs: [
+      "Ръчно подбрана",
+      "Уникален релеф"
+    ],
+    delivery: "Доставка..."
+  },
+
+  V: {
+    title: "Стара масивна греда",
+    images: [
+      "PRODUCTS/10.jpg",
+      "PRODUCTS/10.png",
+      "PRODUCTS/11.png",
+      "PRODUCTS/12.png"
+    ],
+    description: "Масивна греда...",
+    specs: [
+      "Масивно дърво",
+      "Естествена патина"
+    ],
+    delivery: "Доставка..."
+  }
+};
+</script>
 
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
@@ -1847,6 +1860,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
