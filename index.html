@@ -417,58 +417,33 @@ html {
 </div>
 
 <script>
-<script>
 window.products = {
   A: {
     title: "Стара дървена дъска",
-    images: [
-      "PRODUCTS/11.jpg",
-      "PRODUCTS/10.1.png",
-      "PRODUCTS/10.2.png",
-      "PRODUCTS/10.3.jpg"
-    ],
+    images: ["PRODUCTS/11.jpg","PRODUCTS/10.1.png","PRODUCTS/10.2.png","PRODUCTS/10.3.jpg"],
     description: "Автентична стара дървена дъска...",
-    specs: [
-      "Естествено старо дърво",
-      "Ръчна селекция",
-      "Подходящо за интериор и декорация"
-    ],
+    specs: ["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],
     delivery: "Доставка..."
   },
-
   B: {
     title: "Ръстик дъска",
-    images: [
-      "PRODUCTS/B.png",
-      "images/dd4.jpg",
-      "images/dd5.jpg"
-    ],
+    images: ["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],
     description: "Автентична ръстик дъска...",
-    specs: [
-      "Ръчно подбрана",
-      "Уникален релеф"
-    ],
+    specs: ["Ръчно подбрана","Уникален релеф"],
     delivery: "Доставка..."
   },
-
   V: {
     title: "Стара масивна греда",
-    images: [
-      "PRODUCTS/10.jpg",
-      "images/product1.jpg"
-    ],
+    images: ["PRODUCTS/10.jpg","images/product1.jpg"],
     description: "Масивна греда...",
-    specs: [
-      "Масивно дърво",
-      "Естествена патина"
-    ],
+    specs: ["Масивно дърво","Естествена патина"],
     delivery: "Доставка..."
   }
 };
 
-// ✅ ЕДИНСТВЕНОТО място за този ред е ТУК (след window.products)
 const products = window.products;
 </script>
+
   <script>
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
@@ -1780,19 +1755,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // секции от страницата + съответните бутони
-   
-    const pairs = map.map(item => {
-      const section = document.getElementById(item.sectionId);
-      const nav = document.getElementById(item.navId);
-      return section && nav ? { section, nav } : null;
-    }).filter(Boolean);
-
-    const activeClass = 'nav-active';
-
-    function setActiveNav(targetNav) {
-      pairs.forEach(({ nav }) => {
-        nav.classList.toggle(activeClass, nav === targetNav);
-      });
+    
     }
 
     // IntersectionObserver за следене на секции при скрол
@@ -1886,6 +1849,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
