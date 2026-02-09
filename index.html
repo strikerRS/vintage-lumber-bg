@@ -417,7 +417,6 @@ html {
 </div>
 
 <script>
-  
 <script>
 window.products = {
   A: {
@@ -470,7 +469,7 @@ window.products = {
 // ✅ ЕДИНСТВЕНОТО място за този ред е ТУК (след window.products)
 const products = window.products;
 </script>
-
+  <script>
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
 if(productKey && products[productKey]){
@@ -1887,6 +1886,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
