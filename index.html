@@ -61,7 +61,7 @@ nav a:hover{color:#A66B3C;}
 .gallery-container { position: relative; display: flex; flex-direction: column; }
 .gallery-main { width: 100%; height: 300px; object-fit: cover; border-radius:0.5rem; margin-bottom:1rem; cursor:pointer; }
 .gallery-thumbs { display: flex; gap:0.5rem; }
-.gallery-thumbs img { width:70px;height:70px;object-fit:cover;border-radius:0.25rem;cursor:pointer;border:2px solid transparent; }
+.gallery-thumbs img { width:70px;height:70px;object-fit:cover;border-radius:0.25rem;cursor:pointer;border:2px солид transparent; }
 .gallery-thumbs img.active{border-color:#6B4226;}
 .arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(107,66,38,0.8);color:white;border:none;font-size:2rem;padding:0.25rem 0.5rem;cursor:pointer;border-radius:0.25rem;}
 .arrow-left{left:0;}
@@ -368,22 +368,10 @@ html {
 </div>
 </div>
 
-<div id="lightboxOverlay" class="fixed inset-0 hidden items-center justify-center z-[9999]">
-  <div class="absolute inset-0 bg-black/90" data-lb-close="1"></div>
-
-  <div class="absolute top-4 right-4 flex gap-2 z-[10000]">
-    <button id="lbZoomOut" class="px-3 py-2 rounded bg-[#6B4226] text-white" title="Zoom out">🔍−</button>
-    <button id="lbZoomIn"  class="px-3 py-2 rounded bg-[#6B4226] text-white" title="Zoom in">🔍+</button>
-    <button id="lbClose"   class="px-3 py-2 rounded bg-[#6B4226] text-white" title="Close">✕</button>
-  </div>
-
-  <button id="lightboxLeft" class="absolute left-3 top-1/2 -translate-y-1/2 px-4 py-3 rounded bg-[#6B4226] text-white z-[10000]">←</button>
-  <button id="lightboxRight" class="absolute right-3 top-1/2 -translate-y-1/2 px-4 py-3 rounded bg-[#6B4226] text-white z-[10000]">→</button>
-
-  <div id="lbStage" class="relative z-[10000] max-w-[92vw] max-h-[88vh] overflow-hidden">
-    <img id="lightboxImage" src="" alt="Продукт"
-         style="max-width:92vw; max-height:88vh; transform-origin:center center; transform:scale(1); cursor:zoom-in;">
-  </div>
+<div id="lightboxOverlay" class="flex">
+<button id="lightboxLeft">←</button>
+<img id="lightboxImage" src="" alt="Продукт">
+<button id="lightboxRight">→</button>
 </div>
 
 <!-- Инпрегниран модал за За нас -->
@@ -417,144 +405,60 @@ html {
 </div>
 
 <script>
-window.products = {
-  A: {
-    title: "Стара дървена дъска",
-    images: ["PRODUCTS/11.jpg","PRODUCTS/10.1.png","PRODUCTS/10.2.png","PRODUCTS/10.3.jpg"],
-    description: "Автентична стара дървена дъска...",
-    specs: ["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],
-    delivery: "Доставка..."
-  },
-  B: {
-    title: "Ръстик дъска",
-    images: ["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],
-    description: "Автентична ръстик дъска...",
-    specs: ["Ръчно подбрана","Уникален релеф"],
-    delivery: "Доставка..."
-  },
-  V: {
-    title: "Стара масивна греда",
-    images: ["PRODUCTS/10.jpg","images/product1.jpg"],
-    description: "Масивна греда...",
-    specs: ["Масивно дърво","Естествена патина"],
-    delivery: "Доставка..."
-  }
-};
+window.products = { A:{title:"Стара дървена дъска",images:["PRODUCTS/11.jpg","images/B.png","images/V.png"],description:"Автентична стара дървена дъска...",specs:["Естествено старо дърво","Ръчна селекция","Подходящо за интериор и декорация"],delivery:"Доставка..."}, B:{title:"Ръстик дъска",images:["PRODUCTS/B.png","images/dd4.jpg","images/dd5.jpg"],description:"Автентична ръстик дъска...",specs:["Ръчно подбрана","Уникален релеф"],delivery:"Доставка..."}, V:{title:"Стара масивна греда",images:["PRODUCTS/10.jpg","images/prоduct1.jpg"],description:"Масивна греда...",specs:["Масивно дърво","Естествена патина"],delivery:"Доставка..."} };
 
-const products = window.products;
-
-const params = new URLSearchParams(window.location.search);
-const productKey = params.get("product");
-
+const params=new URLSearchParams(window.location.search);
+const productKey=params.get("product");
 if(productKey && products[productKey]){
-  const p = products[productKey];
-
-  document.getElementById("mainPage").style.display="none";
-  document.getElementById("productPage").style.display="block";
-  document.getElementById("hero-bg").style.display="none";
-
-  document.getElementById("title").innerText = p.title;
-  document.getElementById("description").innerText = p.description;
-  document.getElementById("delivery").innerText = p.delivery;
-
-  const mainImage = document.getElementById("mainImage");
-  const thumbsContainer = document.getElementById("galleryThumbs");
-  const leftArrow = document.querySelector('.arrow-left');
-  const rightArrow = document.querySelector('.arrow-right');
-
-  const overlay = document.getElementById("lightboxOverlay");
-  const lbImg = document.getElementById("lightboxImage");
-
-  let currentIndex = 0;
-
-  function showImage(index){
-    currentIndex = (index + p.images.length) % p.images.length;
-    mainImage.src = p.images[currentIndex];
-    [...thumbsContainer.children].forEach((img,i)=> img.classList.toggle('active', i===currentIndex));
-    if(!overlay.classList.contains('hidden')) lbImg.src = p.images[currentIndex];
-  }
-
-  thumbsContainer.innerHTML = "";
-  p.images.forEach((src,i)=>{
-    const t=document.createElement("img");
-    t.src=src;
-    t.addEventListener("click", ()=>showImage(i));
-    thumbsContainer.appendChild(t);
-  });
-
-  if(leftArrow) leftArrow.addEventListener("click", ()=>showImage(currentIndex-1));
-  if(rightArrow) rightArrow.addEventListener("click", ()=>showImage(currentIndex+1));
-
-  showImage(0);
-
-  // specs
-  const specs = document.getElementById("specs");
-  specs.innerHTML = "";
-  p.specs.forEach(s=>{
-    const li=document.createElement("li");
-    li.textContent=s;
-    specs.appendChild(li);
-  });
-
-  // Lightbox + zoom
-  let lbScale = 1;
-  const lbStage = document.getElementById("lbStage");
-
-  function lbApplyZoom(){
-    lbImg.style.transform = `scale(${lbScale})`;
-    lbImg.style.cursor = (lbScale>1) ? "zoom-out" : "zoom-in";
-  }
-  function lbResetZoom(){ lbScale=1; lbApplyZoom(); }
-
-  function lbOpen(){
-    lbImg.src = p.images[currentIndex];
-    lbResetZoom();
-    overlay.classList.remove("hidden");
-    overlay.classList.add("flex");
-    document.body.style.overflow="hidden";
-  }
-  function lbClose(){
-    overlay.classList.add("hidden");
-    overlay.classList.remove("flex");
-    document.body.style.overflow="";
-  }
-
-  mainImage.addEventListener("click", lbOpen);
-  document.getElementById("lbClose").addEventListener("click", lbClose);
-  overlay.querySelector('[data-lb-close="1"]').addEventListener("click", lbClose);
-
-  document.getElementById("lbZoomIn").addEventListener("click", (e)=>{
-    e.stopPropagation();
-    lbScale = Math.min(4, +(lbScale+0.25).toFixed(2));
-    lbApplyZoom();
-  });
-  document.getElementById("lbZoomOut").addEventListener("click", (e)=>{
-    e.stopPropagation();
-    lbScale = Math.max(1, +(lbScale-0.25).toFixed(2));
-    lbApplyZoom();
-  });
-
-  lbStage.addEventListener("wheel", (e)=>{
-    e.preventDefault();
-    const dir = Math.sign(e.deltaY);
-    lbScale = (dir>0) ? Math.max(1, lbScale-0.15) : Math.min(4, lbScale+0.15);
-    lbScale = +lbScale.toFixed(2);
-    lbApplyZoom();
-  }, {passive:false});
-
-  lbImg.addEventListener("click", (e)=>{
-    e.stopPropagation();
-    lbScale = (lbScale===1) ? 2 : 1;
-    lbApplyZoom();
-  });
-
-  document.getElementById("lightboxLeft").addEventListener("click", (e)=>{ e.stopPropagation(); showImage(currentIndex-1); });
-  document.getElementById("lightboxRight").addEventListener("click", (e)=>{ e.stopPropagation(); showImage(currentIndex+1); });
-
-  document.addEventListener("keydown", (e)=>{
-    if(e.key==="Escape" && !overlay.classList.contains("hidden")) lbClose();
-  });
+ const p=products[productKey];
+ document.getElementById("mainPage").style.display="none";
+ document.getElementById("productPage").style.display="block";
+ document.getElementById("hero-bg").style.display="none"; 
+ document.getElementById("title").innerText=p.title;
+ document.getElementById("description").innerText=p.description;
+ document.getElementById("delivery").innerText=p.delivery;
+ const mainImage=document.getElementById("mainImage");
+ const thumbsContainer=document.getElementById("galleryThumbs");
+ const lightbox=document.getElementById("lightboxOverlay");
+ const lightboxImage=document.getElementById("lightboxImage");
+ const leftBtn=document.getElementById("lightboxLeft");
+ const rightBtn=document.getElementById("lightboxRight");
+ let currentIndex=0;
+ function showImage(index){ currentIndex=index; mainImage.src=p.images[currentIndex]; Array.from(thumbsContainer.children).forEach((img,i)=> img.classList.toggle('active', i===index)); lightboxImage.src=p.images[currentIndex]; }
+ p.images.forEach((imgSrc,i)=>{ const thumb=document.createElement("img"); thumb.src=imgSrc; if(i===0) thumb.classList.add('active'); thumb.addEventListener('click',()=> showImage(i)); thumbsContainer.appendChild(thumb); });
+ document.querySelector('.arrow-left').addEventListener('click',()=> showImage((currentIndex-1+p.images.length)%p.images.length));
+ document.querySelector('.arrow-right').addEventListener('click',()=> showImage((currentIndex+1)%p.images.length));
+ mainImage.addEventListener('click',()=> lightbox.style.display='flex');
+ lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
+ leftBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex-1+p.images.length)%p.images.length); });
+ rightBtn.addEventListener('click', e=>{ e.stopPropagation(); showImage((currentIndex+1)%p.images.length); });
+ showImage(0);
+ p.specs.forEach(s=>{ const li=document.createElement('li'); li.innerText=s; document.getElementById('specs').appendChild(li); });
 }
+const goHome=()=>{ window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('mainPage').style.display='block'; document.getElementById('productPage').style.display='none'; document.getElementById('hero-bg').style.display='block'; }
+document.getElementById('homeBtn').addEventListener('click',goHome);
+document.getElementById('navHome').addEventListener('click',goHome);
+
+// About modal
+const aboutModal = document.getElementById('aboutModal');
+const closeAboutModal = document.getElementById('closeAboutModal');
+document.getElementById('navAbout').addEventListener('click',()=>{
+ aboutModal.classList.remove('hidden'); aboutModal.classList.add('flex');
+});
+closeAboutModal.addEventListener('click',()=>{
+ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex');
+});
+aboutModal.addEventListener('click', e => { if(e.target===aboutModal){ aboutModal.classList.add('hidden'); aboutModal.classList.remove('flex'); } });
+document.querySelectorAll('.aboutNavLink').forEach(link=>{
+ link.addEventListener('click', e=>{
+ e.preventDefault();
+ const target=document.querySelector(link.getAttribute('href'));
+ target.scrollIntoView({behavior:'smooth'});
+ });
+});
+
+document.getElementById('navProducts').addEventListener('click',()=>{ if(document.getElementById('productPage').style.display==='block'){ goHome(); } window.scrollTo({top:document.getElementById('mainPage').offsetTop - 120, behavior:'smooth'}); });
+// keep original navContact behavior where present later (some contact handlers below also use navContact)
 </script>
 
 <!-- ===================== START: Cart UI + Buy Buttons (paste BEFORE </body>) ===================== -->
@@ -984,6 +888,43 @@ if(navContactBtn && contactModal && closeContactModal){
     } catch(e){ /* silent */ }
   });
 
+  // 2) Функция за прилагане на фон + обвивка
+  function enhance(btn, src){
+    if(!btn) return;
+    if(btn.dataset.vlBgApplied === '1') return;
+    if(src) {
+      btn.style.backgroundImage = `url("${src}")`;
+      btn.style.backgroundSize = 'cover';
+      btn.style.backgroundPosition = 'center';
+      btn.style.backgroundRepeat = 'no-repeat';
+    }
+    if(!btn.querySelector('.vl-buy-bg-overlay')){
+      const overlay = document.createElement('span');
+      overlay.className = 'vl-buy-bg-overlay';
+      btn.insertAdjacentElement('afterbegin', overlay);
+  }
+
+  // 3) Приложи фон на картите (първите 3 продукта) — базирано на data-key или подредба
+  const cardButtons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
+  cardButtons.forEach((btn, idx) => {
+    const key = btn.dataset.key;
+    const src = (key && mapping[key]) ? mapping[key] : Object.values(mapping)[idx % 3];
+    enhance(btn, src);
+  });
+
+  // 4) Продуктова страница — ако има .vl-buy-btn-product, сложи board_5.png (или съответния за продукта)
+  const productBtn = document.querySelector('.vl-buy-btn-product');
+  if(productBtn){
+    const key = new URLSearchParams(location.search).get('product');
+    const src = mapping[key] || mapping['A'];
+    enhance(productBtn, src);
+  }
+
+  // 5) run the original background appliers (if present) after our fixes
+  setTimeout(()=> {
+    try{ if(typeof applyBackgroundsToBuyButtons === 'function') applyBackgroundsToBuyButtons(); } catch(e){}
+  }, 50);
+});
 </script>
 
 <!-- ====== ORDER FORM MODAL (INTEGRATED) ====== -->
@@ -1709,7 +1650,19 @@ document.addEventListener('DOMContentLoaded', function () {
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // секции от страницата + съответните бутони
-    
+   
+    const pairs = map.map(item => {
+      const section = document.getElementById(item.sectionId);
+      const nav = document.getElementById(item.navId);
+      return section && nav ? { section, nav } : null;
+    }).filter(Boolean);
+
+    const activeClass = 'nav-active';
+
+    function setActiveNav(targetNav) {
+      pairs.forEach(({ nav }) => {
+        nav.classList.toggle(activeClass, nav === targetNav);
+      });
     }
 
     // IntersectionObserver за следене на секции при скрол
@@ -1799,21 +1752,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 })();
 </script>
+<!-- === END GLOBAL SMOOTH SCROLL === -->
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
