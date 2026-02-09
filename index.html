@@ -417,8 +417,9 @@ html {
 </div>
 
 <script>
+  
+<script>
 window.products = {
-  const products = window.products;
   A: {
     title: "Стара дървена дъска",
     images: [
@@ -435,7 +436,7 @@ window.products = {
     ],
     delivery: "Доставка..."
   },
-  
+
   B: {
     title: "Ръстик дъска",
     images: [
@@ -452,11 +453,11 @@ window.products = {
   },
 
   V: {
-  title: "Стара масивна греда",
-  images: [
-    "PRODUCTS/10.jpg",
-    "images/product1.jpg"
-  ],
+    title: "Стара масивна греда",
+    images: [
+      "PRODUCTS/10.jpg",
+      "images/product1.jpg"
+    ],
     description: "Масивна греда...",
     specs: [
       "Масивно дърво",
@@ -464,9 +465,12 @@ window.products = {
     ],
     delivery: "Доставка..."
   }
-
 };
-  
+
+// ✅ ЕДИНСТВЕНОТО място за този ред е ТУК (след window.products)
+const products = window.products;
+</script>
+
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
 if(productKey && products[productKey]){
@@ -1883,6 +1887,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
