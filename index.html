@@ -31,7 +31,8 @@ html, body { height: 100%; margin: 0; }
 /* Понякога fixed background прави seam на мобилни/някои браузъри.
    Превключваме на scroll за малки екрани за да избегнем линията */
 @media (max-width: 900px) {
-  #hero-bg { background-attachment: scroll !important; }
+#hero-bg { background-attachment: scroll; }
+
 }
 
 /* допълнителна защита: премахваме 1px линии от hr и подобни */
@@ -1856,9 +1857,62 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
+<!-- ===== MOBILE FIX: paste right before </body> ===== -->
+<style>
+  /* 1) Никога да няма хоризонтален скрол */
+  html, body { width:100%; max-width:100%; overflow-x:hidden; }
+
+  /* 2) Всички елементи да не могат да излизат извън екрана */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* 3) Медията да се свива правилно */
+  img, video, canvas, svg { max-width:100%; height:auto; }
+
+  /* 4) Main контейнерите да не бутат страницата встрани */
+  #mainPage, main, #productPage, .content { max-width:100%; }
+
+  /* 5) Хедърът да се събира на телефон (flex wrap) */
+  header { flex-wrap: wrap; gap: 8px; padding: 8px 12px !important; }
+  header nav { flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+
+  /* 6) Малко по-малък текст в менюто на телефон */
+  @media (max-width: 520px) {
+    header nav a { margin-left: 0 !important; font-size: 14px; }
+    .cart-btn { width: 2.2rem !important; height: 2.2rem !important; }
+    .cart-count { top: -0.35rem !important; right: -0.35rem !important; }
+    #mainPage { margin-top: 84px !important; } /* заради fixed header */
+    main { padding: 16px !important; }
+  }
+
+  /* 7) Grid да става 1 колона на телефон */
+  @media (max-width: 768px) {
+    main.grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+
+<script>
+  /* 8) Ако някой елемент все пак бута странично – намира виновника в конзолата */
+  (function(){
+    function findOverflow(){
+      const docW = document.documentElement.clientWidth;
+      const all = document.querySelectorAll('body *');
+      for (const el of all){
+        const r = el.getBoundingClientRect();
+        if (r.right > docW + 1 || r.left < -1){
+          console.log('OVERFLOW ELEMENT:', el, r);
+          el.style.maxWidth = '100%';
+        }
+      }
+    }
+    window.addEventListener('load', findOverflow);
+    window.addEventListener('resize', findOverflow);
+  })();
+</script>
+<!-- ===== END MOBILE FIX ===== -->
 
 </body>
 </html>
+
 
 
 
