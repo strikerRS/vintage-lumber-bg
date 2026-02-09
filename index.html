@@ -1769,9 +1769,67 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 <!-- === END GLOBAL SMOOTH SCROLL === -->
+<script>
+// Допълнителни параметри за всеки продукт – попълнете според реалните данни.
+const productExtras = {
+  A: {
+    sizes: '200 × 30 × 3 см',
+    priceNote: 'Цената е за квадратен метър',
+    shortText: 'Подходящ за настилка и облицовки.'
+  },
+  B: {
+    sizes: '150 × 25 × 2,5 см',
+    priceNote: 'Цената е за квадратен метър',
+    shortText: 'Идеален за стенни панели и декорация.'
+  },
+  V: {
+    sizes: '300 × 40 × 4 см',
+    priceNote: 'Цената е за квадратен метър',
+    shortText: 'Подходящ за масивни мебели и носещи конструкции.'
+  }
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Проверяваме дали сме на продуктова страница (URL има ?product=…)
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('product');
+  if (!key || !productExtras[key] || !window.products) return;
+
+  // Елементът UL със списъка с характеристики
+  const specsList = document.getElementById('specs');
+  if (!specsList) return;
+
+  const extras = productExtras[key];
+
+  // 1. Добавяне на размери като нов елемент в списъка
+  if (extras.sizes) {
+    const liSizes = document.createElement('li');
+    liSizes.innerHTML = `<strong>Размери:</strong> ${extras.sizes}`;
+    specsList.appendChild(liSizes);
+  }
+
+  // 2. Добавяне на текст, че цената е за квадратен метър
+  if (extras.priceNote) {
+    const liPriceNote = document.createElement('li');
+    liPriceNote.textContent = extras.priceNote;
+    specsList.appendChild(liPriceNote);
+  }
+
+  // 3. Добавяне на кратък текст като отделен параграф (малка колонка)
+  if (extras.shortText) {
+    const shortPara = document.createElement('p');
+    shortPara.style.marginTop = '1rem';
+    shortPara.style.fontStyle = 'italic';
+    shortPara.textContent = extras.shortText;
+    // Поставяме текста непосредствено след списъка с характеристики
+    specsList.parentNode.appendChild(shortPara);
+  }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
