@@ -442,9 +442,8 @@ window.products = {
 };
 
 const products = window.products;
-</script>
-
   <script>
+    
 const params=new URLSearchParams(window.location.search);
 const productKey=params.get("product");
 if(productKey && products[productKey]){
@@ -1007,7 +1006,7 @@ if(navContactBtn && contactModal && closeContactModal){
       const overlay = document.createElement('span');
       overlay.className = 'vl-buy-bg-overlay';
       btn.insertAdjacentElement('afterbegin', overlay);
-  }
+    }
 
   // 3) Приложи фон на картите (първите 3 продукта) — базирано на data-key или подредба
   const cardButtons = Array.from(document.querySelectorAll('.vl-buy-btn-card'));
@@ -1849,6 +1848,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
